@@ -2,7 +2,7 @@ import { Matrix4 } from "../Math/matrix-4"
 import { Vector3 } from "../Math/vector-3"
 
 export class Node {
-    private parent: Node | null = null
+    protected parent: Node | null = null
     private children: Node[] = []
 
     private position: Vector3 = new Vector3(0, 0, 0)
