@@ -1,0 +1,48 @@
+import { Matrix4 } from "../Math/matrix-4"
+import { Vector3 } from "../Math/vector-3"
+
+export class Node {
+    private parent: Node | null = null
+    private children: Node[] = []
+
+    private position: Vector3 = new Vector3()
+    private scale: Vector3 = new Vector3(1, 1, 1)
+
+
+    private localMatrix: Matrix4 = new Matrix4()
+    private worldMatrix: Matrix4 = new Matrix4()
+
+    constructor() {}
+
+    public setParent(parent: Node) {
+        if (this.parent) {
+        this.parent.children = this.parent.children.filter(child => child !== this)
+        }
+
+        this.parent = parent
+        parent.addChild(this)
+    }
+
+    // Dont make this public, we only use setParent
+    private addChild(child: Node) {
+        this.children.push(child)
+        child.parent = this
+    }
+
+    public updateWorldMatrix(parentWorldMatrix: Matrix4) {
+        this.worldMatrix.copy(parentWorldMatrix).multiply(this.localMatrix)
+        this.children.forEach(child => child.updateWorldMatrix(this.worldMatrix))
+    }
+  
+    public localToWorld(localPosition: Vector3) {
+        return localPosition.clone().applyMatrix4(this.worldMatrix)
+    }
+
+    public worldToLocal(worldPosition: Vector3) {
+        return worldPosition.clone().applyMatrix4(this.worldMatrix.clone().invert())
+    }
+
+    
+
+
+}
