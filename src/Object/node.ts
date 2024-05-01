@@ -2,6 +2,7 @@ import { Matrix4 } from "../Math/matrix-4"
 import { Vector3 } from "../Math/vector-3"
 
 export class Node {
+    public name: string = ''
     protected parent: Node | null = null
     private children: Node[] = []
 
@@ -38,8 +39,23 @@ export class Node {
         return localPosition.clone().applyMatrix4(this.worldMatrix)
     }
 
+    public setPosition(position: Vector3) {
+        this.position = position
+    }
+
+    public getPosition() {
+        return this.position
+    }
+
+    public setScale(scale: Vector3) {
+        this.scale = scale
+    }
+
+    public getScale() {
+        return this.scale
+    }
+
     public worldToLocal(worldPosition: Vector3) {
         return worldPosition.clone().applyMatrix4(this.worldMatrix.clone().invert())
     }
-
 }
