@@ -5,7 +5,7 @@ export class Node {
     private parent: Node | null = null
     private children: Node[] = []
 
-    private position: Vector3 = new Vector3()
+    private position: Vector3 = new Vector3(0, 0, 0)
     private scale: Vector3 = new Vector3(1, 1, 1)
 
 
@@ -41,8 +41,5 @@ export class Node {
     public worldToLocal(worldPosition: Vector3) {
         return worldPosition.clone().applyMatrix4(this.worldMatrix.clone().invert())
     }
-
-    
-
 
 }
