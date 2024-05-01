@@ -11,5 +11,4 @@ class Mesh extends Node {
         this.geometry = geometry
         this.material = material
     }
-    
 }

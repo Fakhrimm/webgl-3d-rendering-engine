@@ -1,14 +1,12 @@
-import { BufferAttribute } from './bufferattribute';
+import { BufferAttribute } from './bufferAttribute'
 
 export class BufferGeometry {
     private _attributes: {[name: string]: BufferAttribute};
     private _indices?: BufferAttribute;
 
-
     constructor() {
         this._attributes = {};
     }
-
 
     get attributes() {
         return this._attributes;
@@ -56,5 +54,13 @@ export class BufferGeometry {
             normal = new BufferAttribute(new Float32Array(position.length), position.size);
         // Lakukan kalkulasi normal disini.
         this.setAttribute('normal', normal);
+    }
+
+    static fromJSON(json: any): BufferGeometry {
+        return new BufferGeometry()
+    }
+
+    public toJSON() {
+        console.log('Geometry toJSON')
     }
 }

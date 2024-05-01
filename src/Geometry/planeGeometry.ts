@@ -1,5 +1,5 @@
 import { BufferGeometry } from './bufferGeometry';
-import { BufferAttribute } from './bufferattribute';
+import { BufferAttribute } from './bufferAttribute';
 
 export class PlaneGeometry extends BufferGeometry {
     width: number;
