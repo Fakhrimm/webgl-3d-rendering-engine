@@ -8,11 +8,14 @@ export class Scene extends Node {
 
     public static createSceneDummy(): Scene {
         const scene = new Scene()
-
+        scene.name = "SceneDummy"
         
         const node1 = new Node()
+        node1.name = "Node1"
         const node2 = new Node()
+        node2.name = "Node2"
         const node3 = new Node()
+        node3.name = "Node3"
 
         node1.setParent(scene)
         node2.setParent(scene)
