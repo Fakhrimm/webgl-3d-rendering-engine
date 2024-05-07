@@ -11,7 +11,7 @@ export class Node {
 
 
     private localMatrix: Matrix4 = new Matrix4()
-    private worldMatrix: Matrix4 = new Matrix4()
+    protected worldMatrix: Matrix4 = new Matrix4()
 
     constructor() {}
 
