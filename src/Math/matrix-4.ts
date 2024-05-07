@@ -238,6 +238,40 @@ class Matrix4 {
 
 	}
 
+	orthographic(left: number, right: number, top: number, bottom: number, near: number, far: number) {
+		const te = this.elements;
+		const w = 1.0 / (right - left);
+		const h = 1.0 / (top - bottom);
+		const p = 1.0 / (far - near);
+	
+		const x = (right + left) * w;
+		const y = (top + bottom) * h;
+	
+		let z, zInv;
+	
+		z = (far + near) * p;
+		zInv = -2 * p;
+	
+		te[0] = 2 * w;
+		te[4] = 0;
+		te[8] = 0;
+		te[12] = -x;
+		te[1] = 0;
+		te[5] = 2 * h;
+		te[9] = 0;
+		te[13] = -y;
+		te[2] = 0;
+		te[6] = 0;
+		te[10] = zInv;
+		te[14] = -z;
+		te[3] = 0;
+		te[7] = 0;
+		te[11] = 0;
+		te[15] = 1;
+	
+		return this;
+	  }
+
 }
 
 // const _v1 = new Vector3();

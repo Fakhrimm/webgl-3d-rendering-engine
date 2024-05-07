@@ -18,12 +18,12 @@ export class Camera extends Node {
 
   computeWorldMatrix() {
     // super.computeWorldMatrix();
-    this._invWorldMatrix = this.worldMatrix.invert();
+    this._invWorldMatrix = this.worldMatrix.clone().invert();
   }
 
   get viewProjectionMatrix() {
     this.computeWorldMatrix();
-    return this.projectionMatrix.premultiply(this._invWorldMatrix);
+    return this._projectionMatrix.premultiply(this._invWorldMatrix);
   }
 
   get projectionMatrix() {
