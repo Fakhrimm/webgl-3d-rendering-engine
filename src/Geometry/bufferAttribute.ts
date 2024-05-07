@@ -105,6 +105,10 @@ export class BufferAttribute {
         this._isDirty = true;
         // Set elemen[index] dengan data (data.length == this._size)
         // Jangan lupa untuk menyesuaikan dengan offset dan stride.
+        const start = index * this._size + this._offset;
+        for (let i = 0; i < this._size; i++) {
+            this._data[start + i * this._stride] = data[i];
+        }
     }
 
 
@@ -114,6 +118,35 @@ export class BufferAttribute {
         const data: number[] = [];
         // Ambil elemen[index] ke data (data.length == size)
         // Jangan lupa untuk menyesuaikan dengan offset dan stride.
+        const start = index + this._offset;
+        for (let i = 0; i < size; i++) {
+            data.push(this._data[start + i * this._stride]);
+        }
         return data;
+    }
+
+    // maybe modify for handling undefined
+    static fromJSON(indices: any): BufferAttribute {
+        const data = new Float32Array(indices.data || []);
+        const size = indices.size || 1;
+        const options = {
+            dtype: indices.dtype,
+            normalize: indices.normalize,
+            stride: indices.stride,
+            offset: indices.offset,
+        };
+
+        return new BufferAttribute(data, size, options);
+    }
+    
+    static toJSON(bufferAttribute: BufferAttribute): object {
+        return {
+            data: Array.from(bufferAttribute._data),
+            size: bufferAttribute._size,
+            dtype: bufferAttribute._dtype,
+            normalize: bufferAttribute._normalize,
+            stride: bufferAttribute._stride,
+            offset: bufferAttribute._offset,
+        };
     }
 }

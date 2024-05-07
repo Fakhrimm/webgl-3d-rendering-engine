@@ -57,10 +57,24 @@ export class BufferGeometry {
     }
 
     static fromJSON(json: any): BufferGeometry {
-        return new BufferGeometry()
+        const geometry = new BufferGeometry();
+        if (json.indices) {
+            geometry._indices = BufferAttribute.fromJSON(json.indices);
+        }
+        for (const name in json.attributes) {
+            geometry._attributes[name] = BufferAttribute.fromJSON(json.attributes[name]);
+        }
+        return geometry;
     }
 
-    public toJSON() {
-        console.log('Geometry toJSON')
+    public toJSON(): object {
+        const attributes: {[name: string]: object} = {};
+        for (const name in this._attributes) {
+            attributes[name] = BufferAttribute.toJSON(this._attributes[name]);
+        }
+        return {
+            attributes: attributes,
+            indices: this._indices ? BufferAttribute.toJSON(this._indices) : undefined,
+        };
     }
 }
