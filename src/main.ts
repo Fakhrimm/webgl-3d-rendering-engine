@@ -1,6 +1,6 @@
 import "./style.css";
 import { ProgramInfo } from "./WebGL/program-info";
-import { loadShader } from "./Shaders/shader-loader";
+import { loadShader, ShaderType } from "./Shaders/shader-loader";
 import { WebGLRenderer } from "./WebGL/webgl-renderer";
 
 // document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
@@ -20,8 +20,8 @@ if (!gl) {
   throw new Error("No webgl support");
 }
 
-const vertexShaderSource = loadShader("vertex");
-const fragmentShaderSource = loadShader("fragment-basic");
+const vertexShaderSource = loadShader(ShaderType.VERTEX_REGULAR);
+const fragmentShaderSource = loadShader(ShaderType.FRAGMENT_BASIC);
 
 const programInfo = new ProgramInfo(gl, vertexShaderSource, fragmentShaderSource);
 
