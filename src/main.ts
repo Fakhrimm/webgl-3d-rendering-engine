@@ -1,32 +1,39 @@
 import "./style.css";
-import { ProgramInfo } from "./WebGL/program-info";
+import { ProgramInfo } from "./Webgl/program-info";
 import { loadShader, ShaderType } from "./Shaders/shader-loader";
-import { WebGLRenderer } from "./WebGL/webgl-renderer";
+import { WebGLRenderer } from "./Webgl/webgl-renderer";
 
-// document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-//   <div>
-//     <h1>Vite + TypeScript</h1>
-//     <div class="card">
-//       <button id="counter" type="button"></button>
-//     </div>
-//     <p class="read-the-docs">
-//       Click on the Vite and TypeScript logos to learn more
-//     </p>
-//   </div>
-// `;
-const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-const gl = canvas.getContext("webgl");
-if (!gl) {
-  throw new Error("No webgl support");
-}
+const main = async () => {
+  // Get Canvas and WebGL context
+  const canvas = document.getElementById("canvas") as HTMLCanvasElement | null;
+  if (!canvas) {
+    console.error("Canvas element not found!");
+    return;
+  }
 
-const vertexShaderSource = loadShader(ShaderType.VERTEX_REGULAR);
-const fragmentShaderSource = loadShader(ShaderType.FRAGMENT_BASIC);
+  const gl = canvas.getContext("webgl");
+  if (!gl) {
+    console.error(
+      "Unable to initialize WebGL. Your browser may not support it."
+    );
+    return;
+  }
 
-const programInfo = new ProgramInfo(gl, vertexShaderSource, fragmentShaderSource);
+  // Load shaders
+  const vertexShaderSource = loadShader(ShaderType.VERTEX_REGULAR);
+  const fragmentShaderSource = loadShader(ShaderType.FRAGMENT_BASIC);
 
-const webGLRenderer = new WebGLRenderer(canvas, programInfo);
-webGLRenderer.adjustCanvas();
+  // Create program info
+  const programInfo = new ProgramInfo(
+    gl,
+    vertexShaderSource,
+    fragmentShaderSource
+  );
+  const webGLRenderer = new WebGLRenderer(canvas, programInfo);
 
-webGLRenderer.render();
+  // Setup and render
+  webGLRenderer.adjustCanvas();
+  webGLRenderer.render();
+};
 
+main();
