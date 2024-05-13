@@ -1,4 +1,5 @@
 import { Matrix4 } from "../Math/matrix-4";
+import { CameraType } from "../Types/camera-types";
 import { Camera } from "./camera";
 
 export class OrthographicCamera extends Camera {
