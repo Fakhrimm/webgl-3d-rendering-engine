@@ -1,16 +1,28 @@
 import { AttributeMapSetters, AttributeSingleDataType, UniformSetters } from "../Types/webgl-types";
 import { createAttributeSetters, createProgram, createUniformSetters } from "./webgl-utils";
+import {BufferGeometry} from "../Geometry/bufferGeometry.ts";
 
 export class ProgramInfo {
     program: WebGLProgram;
     uniformSetters: UniformSetters;
     attributeSetters: AttributeMapSetters;
+    gl: WebGLRenderingContext;
 
     constructor(gl: WebGLRenderingContext, vertexShaderSources: string, fragmentShaderSource: string) {
         this.program = createProgram(gl, vertexShaderSources, fragmentShaderSource);
         this.uniformSetters = createUniformSetters(gl, this.program);
         this.attributeSetters = createAttributeSetters(gl, this.program);
+        this.gl = gl;
     }
+
+    public setAttributesAndIndices(bufferGeometry: BufferGeometry) {
+        const { attributes, indices } = bufferGeometry;
+        this.setAttributes(attributes);
+        if (indices) {
+            this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indices);
+        }
+    }
+
 
     public setAttributes(attribs: { [key: string]: AttributeSingleDataType }) {
         Object.keys(attribs).forEach((name) => {
