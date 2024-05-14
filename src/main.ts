@@ -1,12 +1,17 @@
 import "./style.css";
 import { loadShader, ShaderType } from "./Shaders/shader-loader";
-import { ProgramInfo } from "./WebGL/program-info";
+import { ProgramInfo } from "./WebGL/program-info.ts";
 import { WebGLRenderer } from "./WebGL/webgl-renderer";
 import { Scene } from "./Object/scene.ts";
+import { Container } from "./utils/Container.ts";
+import { Variables } from "./utils/Variables.ts";
+import { Render } from "./utils/Render.ts";
+import { elementListner } from "./utils/ElementListener.ts";
 
 const main = async () => {
   // Get Canvas and WebGL context
-  const canvas = document.getElementById("canvas") as HTMLCanvasElement | null;
+  const container = new Container();
+  const canvas = container.getElement("canvas") as HTMLCanvasElement | null;
   if (!canvas) {
     console.error("Canvas element not found!");
     return;
@@ -34,12 +39,23 @@ const main = async () => {
   const webGLRenderer = new WebGLRenderer(canvas, programInfo);
 
   // Setup and render
+  const renderer = new Render(webGLRenderer);
+  // tree
 
-  const sceneDummy = Scene.createSceneDummy(canvas);
-  webGLRenderer.adjustCanvas();
-  // webGLRenderer.render(sceneDummy)
+  const variables = new Variables({
+    container,
+    webGLRenderer,
+    renderer,
+  });
 
-    webGLRenderer.renderTest3();
+  // element listener
+  elementListner(variables);
+
+  // const sceneDummy = Scene.createSceneDummy(canvas);
+  // webGLRenderer.adjustCanvas();
+  // // webGLRenderer.render(sceneDummy)
+
+  // webGLRenderer.renderTest();
 };
 
 main();
