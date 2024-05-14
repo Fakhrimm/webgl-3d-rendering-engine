@@ -28,7 +28,7 @@
           <div class="flex justify-end col-span-1 gap-2">
             <!-- Load button -->
             <label
-              for="load"
+              for="loadFile"
               class="flex flex-col items-center gap-2 px-4 py-2.5 bg-gray-800 border border-gray-700 text-xs font-bold rounded-lg hover:bg-blue-600 active:bg-blue-700 cursor-pointer"
             >
               <i data-lucide="file-up"></i>
@@ -38,13 +38,13 @@
               class="hidden"
               type="file"
               accept=".json"
-              id="load"
+              id="loadFile"
               name="filename"
             />
 
             <!-- Save button -->
             <button
-              id="save"
+              id="saveFile"
               class="flex flex-col items-center gap-2 px-4 py-2.5 bg-gray-800 border border-gray-700 text-xs font-bold rounded-lg hover:bg-green-600 active:bg-green-700"
             >
               <i data-lucide="save"></i>
@@ -106,19 +106,7 @@
                 <input
                   class="w-full"
                   type="range"
-                  id="cameraX"
-                  name="camera"
-                  min="-3.3"
-                  max="3.3"
-                  step="0.05"
-                />
-              </div>
-              <div class="flex hidden">
-                <label class="text-sm font-semibold w-2/12">Angle</label>
-                <input
-                  class="w-10/12"
-                  type="range"
-                  id="cameraY"
+                  id="camera"
                   name="camera"
                   min="-3.3"
                   max="3.3"
@@ -137,13 +125,13 @@
               <h1 class="text-xl font-bold">Change Cam Radius</h1>
               <div class="flex gap-3">
                 <button
-                  id="button-zoom-in"
+                  id="zoomIn"
                   class="w-1/3 flex flex-col items-center py-1 bg-gray-800 border border-gray-600 text-xs font-bold rounded-lg active:bg-violet-500"
                 >
                   <i data-lucide="circle-plus"></i>
                 </button>
                 <button
-                  id="button-zoom-out"
+                  id="zoomOut"
                   class="w-1/3 flex flex-col items-center py-1 bg-gray-800 border border-gray-600 text-xs font-bold rounded-lg active:bg-violet-500"
                 >
                   <i data-lucide="circle-minus"></i>
@@ -158,7 +146,7 @@
                 <input id="shader" type="checkbox" />
               </div>
               <button
-                id="button-reset"
+                id="reset"
                 class="w-9/12 flex flex-col items-center py-1.5 bg-red-500 border border-gray-600 text-sm font-bold rounded-lg hover:bg-red-600 active:bg-red-700"
               >
                 Reset
@@ -173,13 +161,13 @@
             <div class="flex flex-col gap-2">
               <div class="flex gap-10">
                 <button
-                  id="button-proj-orthographic"
+                  id="orthographic"
                   class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Orthographic
                 </button>
                 <button
-                  id="button-proj-perspective"
+                  id="perspective"
                   class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Perspective
@@ -188,7 +176,7 @@
               <div class="flex flex-row">
                 <div class="w-1/4"></div>
                 <button
-                  id="button-proj-oblique"
+                  id="oblique"
                   class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Oblique
@@ -350,7 +338,6 @@
                   name="translate"
                   min="0.1"
                   max="5"
-                  step="0.05"
                 />
               </div>
             </div>
@@ -364,13 +351,13 @@
             <div class="flex flex-col gap-2">
               <div class="flex gap-3">
                 <button
-                  id="button-texture-bump"
+                  id="bump"
                   class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Bump
                 </button>
                 <button
-                  id="button-texture-environment"
+                  id="environment"
                   class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Image
@@ -378,13 +365,13 @@
               </div>
               <div class="flex gap-3">
                 <button
-                  id="button-texture-reflective"
+                  id="reflective"
                   class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Reflective
                 </button>
                 <button
-                  id="button-texture-none"
+                  id="none"
                   class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   None
@@ -401,13 +388,13 @@
             <div class="flex flex-col gap-2">
               <div class="flex gap-2">
                 <button
-                  id="button-animation-play"
+                  id="play"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Play
                 </button>
                 <button
-                  id="button-animation-pause"
+                  id="pause"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Pause
@@ -415,13 +402,13 @@
               </div>
               <div class="flex gap-2">
                 <button
-                  id="button-animation-reverse"
+                  id="reverse"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Reverse
                 </button>
                 <button
-                  id="button-animation-replay"
+                  id="autoPlay"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Auto Replay
@@ -429,13 +416,13 @@
               </div>
               <div class="flex gap-2">
                 <button
-                  id="button-animation-next"
+                  id="next"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Next
                 </button>
                 <button
-                  id="button-animation-prev"
+                  id="prev"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Prev
@@ -443,13 +430,13 @@
               </div>
               <div class="flex gap-2">
                 <button
-                  id="button-animation-first"
+                  id="first"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   First
                 </button>
                 <button
-                  id="button-animation-last"
+                  id="last"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Last
@@ -464,13 +451,13 @@
             <div class="flex flex-col gap-2">
               <div class="flex gap-2">
                 <button
-                  id="save-as-frame"
+                  id="saveFrame"
                   class="w-full flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Save as Frame
                 </button>
                 <button
-                  id="delete-frame"
+                  id="deleteFrame"
                   class="w-full flex flex-col items-center py-1.5 bg-red-500 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                 >
                   Delete Frame
@@ -481,84 +468,102 @@
         </div>
       </div>
     </div>
-    <div id="modal-container" class="fixed top-0 left-0 w-full h-full hidden">
-      <div id="modal-backdrop" class="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20">
-        <div id="modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white z-30 p-[2vw] rounded-[0.5vw] flex flex-col max-h-[80%] animate-bounceInDown">
-          <div id="modal-header" class="flex justify-center items-center text-[2vw] font-bold gap-[1vw] mb-[1vw]">
-          <h1 id="modal-title">Help Instructions</h1>
+    <div
+      id="modalContainer"
+      class="modalContainer fixed top-0 left-0 w-full h-full hidden"
+    >
+      <div
+        id="modalBackdrop"
+        class="modalBackdrop fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20"
+      ></div>
+      <div
+        id="modalContent"
+        class="modalContent fixed top-1/2 left-1/2 text-black -translate-x-1/2 -translate-y-1/2 bg-white z-30 p-[2vw] rounded-[0.5vw] flex flex-col max-h-[80%] animate-bounceInDown"
+      >
+        <div
+          id="modalHeader"
+          class="flex justify-center items-center text-center text-xl font-bold gap-[1vw] mb-[1vw]"
+        >
+          <h1 class="text-5xl" id="modalTitle">Help Instructions</h1>
         </div>
-        <div id="modal-body" class="overflow-y-auto">
-          <h1>Save and Load</h1>
+        <div id="modalBody" class="overflow-y-auto">
+          <h1 class="text-2xl font-bold pt-8">Save and Load</h1>
           <p>
-            Klik tombol save di kanan atas untuk menyimpan model Klik tombol
-            load untuk memilih file model yang akan di-load
+            Use the 'Save' button at the top right to store your model. Click
+            the 'Load' button to select and load a model file.
           </p>
 
-          <h1>Component Tree</h1>
+          <h1 class="text-2xl font-bold pt-8">Component Tree</h1>
+          <p>Select a component on the left panel to modify it as needed.</p>
+
+          <h1 class="text-2xl font-bold pt-8">Projection</h1>
           <p>
-            Klik komponen yang ingin diubah pada bagian di kiri atas Lakukan
-            perubahan sesuai dengan yang Anda inginkan
+            Switch projections by clicking 'Orthographic', 'Oblique', or
+            'Perspective'. The default projection is 'Orthographic'.
           </p>
 
-          <h1>Projection</h1>
+          <h1 class="text-2xl font-bold pt-8">Shading</h1>
           <p>
-            Klik tombol “Orthographic”, “Oblique”, atau “Perspective” untuk
-            mengganti proyeksi dari program Default proyeksi yang digunakan akan
-            “Orthographic”
-          </p>
-          <h1>Shading</h1>
-          <p>
-            Klik input checkbox shading di sidebar kiri bagian tengah untuk
-            menghidupmatikan shading program
+            Toggle shading using the checkbox located in the middle left
+            sidebar.
           </p>
 
-          <h1>Camera</h1>
+          <h1 class="text-2xl font-bold pt-8">Camera</h1>
           <p>
-            Slide nilai pada camera angle untuk mengganti sudut camera Klik
-            button zoom in dan zoom out untuk mengubah radius camera
+            Adjust the camera angle using the slider. Use the zoom in and zoom
+            out buttons to change the camera radius.
           </p>
 
-          <h1>Animation</h1>
-          <h2>Animation</h2>
-          <p>Animasi dapat dimanipulasi pada bagian animation</p>
+          <h1 class="text-2xl font-bold pt-8">Animation</h1>
+          <h2 class="text-lg font-semibold pt-4">Animation Control</h2>
+          <p>Control animations from the 'Animation' section.</p>
 
-          <h2>Frame controller</h2>
+          <h2 class="text-lg font-semibold pt-4">Frame Controller</h2>
+          <p>Manage frames in the 'Frame Controller' section.</p>
 
-          <p>Frame dapat dimanipulasi pada bagian frame controller</p>
-          <h1>Reset</h1>
-
+          <h1 class="text-2xl font-bold pt-8">Reset</h1>
           <p>
-            Tombol ini digunakan untuk mereset model yang ditampilkan saat ini
-            sesuai dengan model awal (default).
+            Click the 'Reset' button to revert the model to its initial state.
           </p>
-          <h1>Transformation</h1>
-          <h2>Translasi</h2>
 
+          <h1 class="text-2xl font-bold pt-8">Transformation</h1>
+          <h2 class="text-lg font-semibold pt-4">Translation</h2>
           <p>
-            Pada baris pertama adalah tombol untuk men-translasi model objek ke
-            kanan/kiri. Pada baris kedua adalah tombol untuk men-translasi model
-            objek ke atas/bawah. Pada baris ketiga adalah tombol untuk
-            men-translasi model objek ke depan/belakang.
+            Use the translation buttons to move the object along the X, Y, and Z
+            axes.
           </p>
-          <h2>Rotasi</h2>
 
+          <h2 class="text-lg font-semibold pt-4">Rotation</h2>
           <p>
-            Pada baris pertama adalah tombol untuk merotasi model objek ke
-            kanan/kiri. (X-axis) Pada baris kedua adalah tombol untuk merotasi
-            model objek ke atas/bawah. (Y-axis) Pada baris ketiga adalah tombol
-            untuk merotasi model objek ke depan/belakang. (Z-axis)
+            Rotate the object along the X, Y, and Z axes using the rotation
+            controls.
           </p>
-          <h2>Scale</h2>
 
+          <h2 class="text-lg font-semibold pt-4">Scaling</h2>
           <p>
-            Pada baris pertama adalah tombol untuk melakukan scale model objek
-            ke kanan/kiri. Pada baris kedua adalah tombol untuk melakukan scale
-            model objek ke atas/bawah. Pada baris ketiga adalah tombol untuk
-            men-translasi model objek ke depan/belakang.
+            Adjust the scale of the object along the X, Y, and Z axes using the
+            scaling sliders.
           </p>
         </div>
       </div>
     </div>
+
+    <script>
+      document.getElementById("help").addEventListener("click", function () {
+        const modal = document.getElementById("modalContainer");
+        modal.classList.remove("hidden");
+        modal.classList.add("scale-100");
+      });
+
+      document
+        .getElementById("modalBackdrop")
+        .addEventListener("click", function () {
+          const modal = document.getElementById("modalContainer");
+          modal.classList.add("hidden");
+          modal.classList.remove("scale-100");
+        });
+    </script>
+
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
       lucide.createIcons();
