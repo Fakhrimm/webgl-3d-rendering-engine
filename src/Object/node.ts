@@ -82,6 +82,10 @@ export class Node {
         return this.scale;
     }
 
+    public getRotation() {
+        return this.quaternion;
+    }
+
     public setRotationFromEuler(euler: Euler) {
         this.quaternion.setFromEuler( euler, true );
     }

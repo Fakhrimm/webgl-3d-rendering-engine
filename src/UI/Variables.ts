@@ -5,7 +5,7 @@ import { Render } from "./Render";
 import { TreeInterface } from "./Tree";
 
 export interface VariableInterface {
-  model: Scene;
+  scene: Scene;
   container: Container;
   webGLRenderer: WebGLRenderer;
   tree: TreeInterface;
@@ -13,24 +13,24 @@ export interface VariableInterface {
 }
 
 export class Variables {
-  private _model: Scene;
+  private _scene: Scene;
   private _container: Container;
   private _webGLRenderer: WebGLRenderer;
   private _tree: TreeInterface;
   private _renderer: Render;
 
   constructor(props: VariableInterface) {
-    const {model, container, webGLRenderer, tree, renderer } = props;
+    const {scene, container, webGLRenderer, tree, renderer } = props;
 
-    this._model = model;
+    this._scene = scene;
     this._container = container;
     this._webGLRenderer = webGLRenderer;
     this._tree = tree;
     this._renderer = renderer;
   }
 
-  public getModel() {
-    return this._model;
+  public getScene() {
+    return this._scene;
   }
 
   public getContainer() {

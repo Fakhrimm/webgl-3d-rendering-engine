@@ -3,37 +3,11 @@ import { loadShader, ShaderType } from "./Shaders/shader-loader";
 import { ProgramInfo } from "./WebGL/program-info.ts";
 import { WebGLRenderer } from "./WebGL/webgl-renderer";
 import { Scene } from "./Object/scene.ts";
-import { Container } from "./utils/Container.ts";
-import { Variables } from "./utils/Variables.ts";
-import { Render } from "./utils/Render.ts";
-import { elementListner } from "./utils/ElementListener.ts";
-import { Tree } from "./utils/Tree.ts";
-
-const buildTreeHtml = (node: any) => {
-    let html = `<li>${node.name}`;
-    if (node.children.length > 0) {
-        html += `<ul>`;
-        node.children.forEach((child: any) => {
-            html += buildTreeHtml(child);
-        });
-        html += `</ul>`;
-    }
-    html += `</li>`;
-    return html;
-};
-
-const findNode = (root: any, name: string): any | null => {
-    if (root.name === name) {
-        return root;
-    }
-    for (const child of root.children) {
-        const result = findNode(child, name);
-        if (result) {
-            return result;
-        }
-    }
-    return null;
-};
+import { Container } from "./UI/Container.ts";
+import { Variables } from "./UI/Variables.ts";
+import { Render } from "./UI/Render.ts";
+import { elementListner } from "./UI/ElementListener.ts";
+import { Tree } from "./UI/Tree.ts";
 
 const main = async () => {
     // Get Canvas and WebGL context
@@ -74,7 +48,7 @@ const main = async () => {
     const treeRoot = Tree.mapSceneToTree(sceneDummy);
 
     const variables = new Variables({
-        model: sceneDummy,
+        scene: sceneDummy,
         container,
         webGLRenderer,
         tree: treeRoot,
@@ -83,11 +57,22 @@ const main = async () => {
 
     // element listener
     elementListner(variables);
+    container.getElement("activeComponent").innerHTML = treeRoot.name;
 
     // Render tree
     Tree.resetTree(container);
     Tree.mapTreeToComponentTree(container, treeRoot, variables);
 
+    requestAnimationFrame(renderScene);
+
+    function renderScene(now: number) {
+        now *= 0.001;
+
+        // const sceneDummy = Scene.createSceneDummy(canvas, now);
+
+        webGLRenderer.render(sceneDummy);
+        requestAnimationFrame(renderScene);
+    }
     // webGLRenderer.renderTest();
 };
 

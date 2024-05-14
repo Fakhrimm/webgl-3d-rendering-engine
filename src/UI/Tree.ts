@@ -22,16 +22,6 @@ export class Tree {
                 .getChildren()
                 .map((child) => Tree.mapSceneToTree(child as Scene, level + 1)),
         } as const;
-
-        console.log("");
-        console.log("");
-        console.log("CESSKU");
-        console.log(scene);
-        console.log(level);
-        console.log("CESSKU");
-        console.log(treeNode);
-        console.log("");
-        console.log("");
         return treeNode;
     }
 

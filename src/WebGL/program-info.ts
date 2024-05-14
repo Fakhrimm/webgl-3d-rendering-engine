@@ -44,7 +44,6 @@ export class ProgramInfo {
   public setAttributes(attribs: { [key: string]: AttributeSingleDataType }) {
     Object.keys(attribs).forEach((name) => {
       const setter = this.attributeSetters[name];
-      console.log(name, setter, attribs[name]);
       if (setter) {
         setter(attribs[name]);
       }
