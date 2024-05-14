@@ -17,13 +17,13 @@ export class PlaneGeometry extends BufferGeometry {
             -hw, hh, 0, 1,
         ]);
 
-        const indices = new Float32Array([
+        const indices = new Uint16Array([
             0, 1, 2,
             0, 2, 3,
         ]);
 
         this.setAttribute('a_position', new BufferAttribute(vertices, 4));
-        this.setAttribute('a_indices', new BufferAttribute(indices, 3));
+        this.setIndices(new BufferAttribute(indices, 3));
 
         this.calculateNormals();
     }
