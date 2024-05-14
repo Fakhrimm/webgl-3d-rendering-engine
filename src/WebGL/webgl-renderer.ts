@@ -23,22 +23,39 @@ export class WebGLRenderer {
         this.gl.clearColor(0, 0, 0, 0);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
         this.gl.useProgram(this.programInfo.program);
-
+    
         const positionData = new Float32Array([
+            // Vertices for both triangles
             0, 0, 0, 1,
             0, 100, 0, 1,
             1072, 0, 0, 1, 
+            0, 100, 0, 1,
+            1072, 100, 0, 1,
+            1072, 0, 0, 1, 
         ])
-
+    
         const colorData = new Float32Array([
+            // Colors for all vertices
             1, 0, 0, 1,
             0, 1, 0, 1,
-            0, 0, 1, 1
+            0, 0, 1, 1,
+            0, 0, 0, 1,
+            0, 0, 0, 1,
+            0, 0, 0, 1
         ])
-
+    
+        const indices = new Uint16Array([
+            // Indices for the triangles
+            0, 1, 2, // First triangle
+            3, 4, 5  // Second triangle
+        ])
+    
         const bufferPositionAttribute = new BufferAttribute(positionData, 4)
         const bufferColorAttribute = new BufferAttribute(colorData, 4)
-
+        const indexBuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+        this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, indices, this.gl.STATIC_DRAW);
+    
         this.programInfo.setAttributes({
             a_position: bufferPositionAttribute,
             a_color: bufferColorAttribute
@@ -47,12 +64,13 @@ export class WebGLRenderer {
             u_matrix: [1, 0, 0, 0,
                         0, 1, 0, 0,
                         0, 0, 1, 0,
-                        0, 0, 0, 1],
+                        0, 0, 0, 1,
+                    ]
         });
         this.programInfo.setUniforms({
             u_resolution: [this.canvas.width, this.canvas.height]
         });
-        this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
+        this.gl.drawElements(this.gl.TRIANGLES, indices.length, this.gl.UNSIGNED_SHORT, 0);
     }
 
     adjustCanvas() {
