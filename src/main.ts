@@ -26,8 +26,8 @@ const main = async () => {
   }
 
   // Load shaders
-  const vertexShaderSource = loadShader(ShaderType.VERTEX_REGULAR);
-  // const vertexShaderSource = loadShader(ShaderType.VERTEX_ADV);
+  // const vertexShaderSource = loadShader(ShaderType.VERTEX_REGULAR);
+  const vertexShaderSource = loadShader(ShaderType.VERTEX_ADV);
   const fragmentShaderSource = loadShader(ShaderType.FRAGMENT_BASIC);
 
   // Create program info
@@ -51,9 +51,9 @@ const main = async () => {
   // element listener
   elementListner(variables);
 
-  // const sceneDummy = Scene.createSceneDummy(canvas);
+  const sceneDummy = Scene.createSceneDummy(canvas, 0);
   // webGLRenderer.adjustCanvas();
-  // // webGLRenderer.render(sceneDummy)
+  webGLRenderer.render(sceneDummy)
 
   // webGLRenderer.renderTest();
 };
