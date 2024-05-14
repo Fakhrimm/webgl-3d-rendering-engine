@@ -44,7 +44,6 @@ export function createUniformSetters(gl: WebGLRenderingContext, program: WebGLPr
         const location = gl.getUniformLocation(program, uniformInfo.name);
         const type = uniformInfo.type;
         const isArray = uniformInfo.size > 1 && uniformInfo.name.substring(-3) === "[0]";
-        console.log('createUniformSetter', uniformInfo.name, type, isArray);
         if (type === gl.FLOAT && isArray) {
             return function (v: Iterable<number>) {
                 gl.uniform1fv(location, v);
