@@ -1,3 +1,4 @@
+import { CameraType } from "../Types/camera-types";
 import {Camera} from "./camera";
 
 export class OrthographicCamera extends Camera {
@@ -39,5 +40,9 @@ export class OrthographicCamera extends Camera {
       this.near,
       this.far
     );
+  }
+
+  override getCameraType() {
+    return CameraType.ORTHOGRAPHIC;
   }
 }
