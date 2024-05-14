@@ -20,118 +20,6 @@ export class WebGLRenderer {
         this.gl = gl
         this.programInfo = programInfo;
     }
-    renderTest() {
-        this.gl.clearColor(0, 0, 0, 0);
-        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
-        this.gl.useProgram(this.programInfo.program);
-
-        this.programInfo.setUniforms({
-            u_world: [
-                1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1
-            ],
-            u_viewProjection: [
-                1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1
-            ],
-        });
-
-        const positionData = new Float32Array([
-            0, 0, 0, 1,
-            0, 100, 0, 1,
-            1072, 0, 0, 1, 
-        ])
-
-        const colorData = new Float32Array([
-            1, 0, 0, 1,
-            0, 1, 0, 1,
-            0, 0, 1, 1
-        ])
-
-        const bufferPositionAttribute = new BufferAttribute(positionData, 4)
-        const bufferColorAttribute = new BufferAttribute(colorData, 4)
-
-        const planarGeom = new PlaneGeometry(100, 100);
-        const positionAttribute = planarGeom.attributes.position;
-
-        const colorDataPlane = new Float32Array([
-            1, 0, 0, 1,
-            0, 1, 0, 1,
-            0, 0, 1, 1,
-            1, 0, 0, 1,
-            0, 1, 0, 1,
-            0, 0, 1, 1
-        ])
-        const bufferColorPlane = new BufferAttribute(colorDataPlane, 4);
-
-        this.programInfo.setAttributes({
-            a_position: positionAttribute,
-            a_color: bufferColorPlane
-        });
-
-        // this.programInfo.setAttributes({
-        //     a_position: bufferPositionAttribute,
-        //     a_color: bufferColorAttribute
-        // });
-        this.programInfo.setUniforms({
-            u_matrix: [1, 0, 0, 0,
-                        0, 1, 0, 0,
-                        0, 0, 1, 0,
-                        0, 0, 0, 1],
-        });
-        this.programInfo.setUniforms({
-            u_resolution: [this.canvas.width, this.canvas.height]
-        });
-        this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
-    }
-
-    renderTest2() {
-        this.gl.clearColor(0, 0, 0, 0);
-        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
-        this.gl.useProgram(this.programInfo.program);
-
-        const planarGeom = new PlaneGeometry(100, 100);
-        this.programInfo.setAttributesAndIndices(planarGeom);
-
-        this.programInfo.setUniforms({
-            u_matrix: [1, 0, 0, 0,
-                        0, 1, 0, 0,
-                        0, 0, 1, 0,
-                        0, 0, 0, 1],
-            u_resolution: [this.canvas.width, this.canvas.height]
-        });
-        this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
-    }
-
-    renderTest3() {
-        this.gl.clearColor(0, 0, 0, 0);
-        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
-        this.gl.useProgram(this.programInfo.program);
-
-        const planarGeom = new PlaneGeometry(100, 100);
-        this.programInfo.setAttributesAndIndices(planarGeom);
-
-        const orthographicCamera = new OrthographicCamera(-this.canvas.width/2, this.canvas.width/2, -this.canvas.height/2, this.canvas.height/2, -1, 1);
-
-
-        this.programInfo.setUniforms({
-            u_world: [
-                1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1
-            ],
-            u_viewProjection: orthographicCamera.viewProjectionMatrix.elements,
-        });
-        this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
-    }
 
     adjustCanvas() {
         // Lookup the size the browser is displaying the canvas in CSS pixels.
@@ -154,6 +42,7 @@ export class WebGLRenderer {
         this.adjustCanvas();
         this.gl.clearColor(0, 0, 0, 0);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
         this.gl.useProgram(this.programInfo.program);
 
         const camera = this.getCamera(scene, OrthographicCamera)
@@ -171,13 +60,11 @@ export class WebGLRenderer {
         scene.traverse(node => {
             if (node instanceof Mesh) {
                 const geometry = node.geometry;
-                const positionAttribute = geometry.attributes.position;
-                const colorAttribute = geometry.attributes.color;
-                this.programInfo.setAttributes({
-                    a_position: positionAttribute,
-                    a_color: colorAttribute
+                this.programInfo.setAttributesAndIndices(geometry);
+                this.programInfo.setUniforms({
+                    u_world: node.getWorldMatrix().elements
                 });
-                this.gl.drawArrays(this.gl.TRIANGLES, 0, positionAttribute.data.length);
+                this.gl.drawElements(this.gl.TRIANGLES, geometry.indices.length, this.gl.UNSIGNED_SHORT, 0)
             }
         })
     }
