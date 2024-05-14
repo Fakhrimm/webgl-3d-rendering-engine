@@ -82,6 +82,10 @@ export class Node {
         return this.scale;
     }
 
+    public setRotationFromEuler(euler: Euler) {
+        this.quaternion.setFromEuler( euler, true );
+    }
+
     setRotationFromAxisAngle(axis: Vector3, angle: number) {
         // assumes axis is normalized
         this.quaternion.setFromAxisAngle(axis, angle);
