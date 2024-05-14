@@ -17,6 +17,7 @@ export class RingGeometry extends BufferGeometry {
         const vertices = [];
         const indices = [];
         const normals = [];
+        const texcoord = [];
 
         for (let i = 0; i <= phiSegments; i++) {
             const phiFraction = i / phiSegments;
@@ -30,6 +31,10 @@ export class RingGeometry extends BufferGeometry {
 
                 vertices.push(x, y, 0, 1);
                 normals.push(0, 0, 1);
+
+                const u = (x / outerRadius + 1) / 2;
+                const v = (y / outerRadius + 1) / 2;
+                texcoord.push(u, v);
             }
         }
 
@@ -49,6 +54,21 @@ export class RingGeometry extends BufferGeometry {
 
         this.setAttribute('a_position', new BufferAttribute(new Float32Array(vertices), 4));
         this.setAttribute('a_normal', new BufferAttribute(new Float32Array(normals), 3));
+        this.setAttribute('a_texcoord', new BufferAttribute(new Float32Array(texcoord), 2));
         this.setIndices(new BufferAttribute(new Uint16Array(indices), 1));
+    }
+
+    static fromJSON(json: any): RingGeometry {
+        return new RingGeometry(json.width, json.height);
+    }
+
+    public toJSON(): object {
+        return {
+            ...super.toJSON(),
+            innerRadius: this.innerRadius,
+            outerRadius: this.outerRadius,
+            thetaSegments: this.thetaSegments,
+            phiSegments: this.phiSegments,
+        };
     }
 }

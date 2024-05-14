@@ -21,6 +21,7 @@ export class CylinderGeometry extends BufferGeometry {
         const vertices = [];
         const indices = [];
         const normals = [];
+        const texcoord = [];
 
         const halfHeight = height / 2;
 
@@ -43,6 +44,7 @@ export class CylinderGeometry extends BufferGeometry {
 
                 vertices.push(vertexX, vertexY, vertexZ, 1);
                 normals.push(cosTheta, 0, sinTheta);
+                texcoord.push(u, v);
             }
         }
 
@@ -64,6 +66,7 @@ export class CylinderGeometry extends BufferGeometry {
             const bottomCenterIndex = vertices.length / 4;
             vertices.push(0, -halfHeight, 0, 1); // Center vertex
             normals.push(0, -1, 0);
+            texcoord.push(0.5, 0.5);
 
             for (let x = 0; x <= radialSegments; x++) {
                 const u = x / radialSegments;
@@ -77,6 +80,7 @@ export class CylinderGeometry extends BufferGeometry {
 
                 vertices.push(vertexX, -halfHeight, vertexZ, 1);
                 normals.push(0, -1, 0);
+                texcoord.push((cosTheta + 1) / 2, (sinTheta + 1) / 2);
 
                 if (x > 0) {
                     indices.push(bottomCenterIndex, bottomCenterIndex + x, bottomCenterIndex + x + 1);
@@ -87,6 +91,7 @@ export class CylinderGeometry extends BufferGeometry {
             const topCenterIndex = vertices.length / 4;
             vertices.push(0, halfHeight, 0, 1); // Center vertex
             normals.push(0, 1, 0);
+            texcoord.push(0.5, 0.5);
 
             for (let x = 0; x <= radialSegments; x++) {
                 const u = x / radialSegments;
@@ -100,6 +105,7 @@ export class CylinderGeometry extends BufferGeometry {
 
                 vertices.push(vertexX, halfHeight, vertexZ, 1);
                 normals.push(0, 1, 0);
+                texcoord.push((cosTheta + 1) / 2, (sinTheta + 1) / 2);
 
                 if (x > 0) {
                     indices.push(topCenterIndex, topCenterIndex + x, topCenterIndex + x + 1);
@@ -109,6 +115,23 @@ export class CylinderGeometry extends BufferGeometry {
 
         this.setAttribute('a_position', new BufferAttribute(new Float32Array(vertices), 4));
         this.setAttribute('a_normal', new BufferAttribute(new Float32Array(normals), 3));
+        this.setAttribute('a_texcoord', new BufferAttribute(new Float32Array(texcoord), 2));
         this.setIndices(new BufferAttribute(new Uint16Array(indices), 1));
+    }
+
+    static fromJSON(json: any): CylinderGeometry {
+        return new CylinderGeometry(json.radiusTop, json.radiusBottom, json.height, json.radialSegments, json.heightSegments, json.openEnded);
+    }
+
+    public toJSON(): object {
+        return {
+            ...super.toJSON(),
+            radiusTop: this.radiusTop,
+            radiusBottom: this.radiusBottom,
+            height: this.height,
+            radialSegments: this.radialSegments,
+            heightSegments: this.heightSegments,
+            openEnded: this.openEnded
+        };
     }
 }

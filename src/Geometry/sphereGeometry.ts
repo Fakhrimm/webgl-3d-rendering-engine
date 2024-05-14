@@ -14,6 +14,7 @@ export class SphereGeometry extends BufferGeometry {
 
         const vertices = [];
         const indices = [];
+        const texcoord = [];
         const normals = [];
 
         for (let y = 0; y <= heightSegments; y++) {
@@ -34,8 +35,12 @@ export class SphereGeometry extends BufferGeometry {
                 const ny = vy;
                 const nz = vz;
 
+                const u = x / widthSegments;
+                const v = y / heightSegments;
+
                 vertices.push(this.radius * vx, this.radius * vy, this.radius * vz, 1);
                 normals.push(nx, ny, nz);
+                texcoord.push(u, v);
             }
         }
 
@@ -53,6 +58,20 @@ export class SphereGeometry extends BufferGeometry {
 
         this.setAttribute('a_position', new BufferAttribute(new Float32Array(vertices), 4));
         this.setAttribute('a_normal', new BufferAttribute(new Float32Array(normals), 3));
+        this.setAttribute('a_texcoord', new BufferAttribute(new Float32Array(texcoord), 2));
         this.setIndices(new BufferAttribute(new Uint16Array(indices), 1));
+    }
+
+    static fromJSON(json: any): SphereGeometry {
+        return new SphereGeometry(json.radius, json.widthSegments, json.heightSegments);
+    }
+
+    public toJSON(): object {
+        return {
+            ...super.toJSON(),
+            radius: this.radius,
+            widthSegments: this.widthSegments,
+            heightSegments: this.heightSegments
+        };
     }
 }
