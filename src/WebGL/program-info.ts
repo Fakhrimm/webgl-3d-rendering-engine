@@ -19,7 +19,10 @@ export class ProgramInfo {
         const { attributes, indices } = bufferGeometry;
         this.setAttributes(attributes);
         if (indices) {
-            this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indices);
+            const indexBuffer = this.gl.createBuffer();
+            this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+            this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, indices.data, this.gl.STATIC_DRAW);
+
         }
     }
 
