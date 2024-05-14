@@ -11,14 +11,14 @@ export class PlaneGeometry extends BufferGeometry {
         this.height = height;
         const hw = width/2, hh = height/2;
         const vertices = new Float32Array([
-            -hw, 0, -hh,
-            hw,  0, -hh,
-            hw,  0, hh,
-            -hw, 0, hh,
-            -hw, 0, -hh,
-            hw,  0, hh,
+            -hw, -hh, 0, 1,
+            hw, -hh, 0, 1,
+            hw, hh, 0, 1,
+            -hw, hh, 0, 1,
+            -hw, -hh, 0, 1,
+            hw, hh, 0, 1,
         ]);
-        this.setAttribute('position', new BufferAttribute(vertices, 3));
+        this.setAttribute('a_position', new BufferAttribute(vertices, 4));
         this.calculateNormals();
     }
 
