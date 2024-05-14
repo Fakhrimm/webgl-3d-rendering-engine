@@ -1,11 +1,9 @@
-import { Camera } from "../Camera/camera";
-import { OrthographicCamera } from "../Camera/orthographicCamera";
-import { BufferAttribute } from "../Geometry/bufferAttribute";
-import { Scene } from "../Object/scene";
-import { ProgramInfo } from "./program-info";
+import {Camera} from "../Camera/camera";
+import {OrthographicCamera} from "../Camera/orthographicCamera";
+import {Scene} from "../Object/scene";
+import {ProgramInfo} from "./program-info";
 import {Matrix4} from "../Math/matrix-4.ts";
 import {Mesh} from "../Object/mesh.ts";
-import {PlaneGeometry} from "../Geometry/planeGeometry.ts";
 
 export class WebGLRenderer {
     canvas: HTMLCanvasElement
@@ -64,7 +62,11 @@ export class WebGLRenderer {
                 this.programInfo.setUniforms({
                     u_world: node.getWorldMatrix().elements
                 });
-                this.gl.drawElements(this.gl.TRIANGLES, geometry.indices.length, this.gl.UNSIGNED_SHORT, 0)
+                if (geometry.indices) {
+                    this.gl.drawElements(this.gl.TRIANGLES, geometry.indices.length, this.gl.UNSIGNED_SHORT, 0)
+                } else {
+                    this.gl.drawArrays(this.gl.TRIANGLES, 0, geometry.attributes.a_position.data.length / 4);
+                }
             }
         })
     }
