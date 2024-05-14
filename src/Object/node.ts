@@ -49,8 +49,13 @@ export class Node {
     }
 
     public updateWorldMatrix(parentWorldMatrix: Matrix4) {
+        this.updateLocalMatrix()
         this.worldMatrix.copy(parentWorldMatrix).multiply(this.localMatrix)
         this.children.forEach(child => child.updateWorldMatrix(this.worldMatrix))
+    }
+
+    public getWorldMatrix() {
+        return this.worldMatrix
     }
 
     public localToWorld(localPosition: Vector3): Vector3 {
@@ -71,6 +76,11 @@ export class Node {
 
     public getScale() {
         return this.scale
+    }
+
+    setRotationFromAxisAngle( axis: Vector3, angle: number ) {
+        // assumes axis is normalized
+        this.quaternion.setFromAxisAngle( axis, angle );
     }
 
     public worldToLocal(worldPosition: Vector3) {
