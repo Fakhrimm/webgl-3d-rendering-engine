@@ -1,7 +1,7 @@
 import { BufferAttribute } from "./bufferAttribute";
 import { BufferGeometry } from "./bufferGeometry";
 
-class BoxGeometry extends BufferGeometry {
+export class BoxGeometry extends BufferGeometry {
     width: number;
     height: number;
     depth: number;
@@ -43,7 +43,7 @@ class BoxGeometry extends BufferGeometry {
         ]);
 
         this.setAttribute('a_position', new BufferAttribute(vertices, 4));
-        this.setAttribute('a_indices', new BufferAttribute(indices, 6));
+        this.setIndices(new BufferAttribute(indices, 6));
 
         this.calculateNormals();
     }
