@@ -1,6 +1,7 @@
 import {Matrix4} from "./matrix-4.ts";
 import {Euler} from "./euler.ts";
 import {clamp} from "./math-util.ts";
+import {Vector3} from "./vector-3.ts";
 
 class Quaternion {
     public _x: number
@@ -145,6 +146,25 @@ class Quaternion {
 		}
 		this._onChangeCallback();
 		return this;
+	}
+
+	setFromAxisAngle( axis: Vector3, angle: number ) {
+
+		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
+
+		// assumes axis is normalized
+
+		const halfAngle = angle / 2, s = Math.sin( halfAngle );
+
+		this._x = axis.x * s;
+		this._y = axis.y * s;
+		this._z = axis.z * s;
+		this._w = Math.cos( halfAngle );
+
+		this._onChangeCallback();
+
+		return this;
+
 	}
 
 	angleTo( q: Quaternion ) {
