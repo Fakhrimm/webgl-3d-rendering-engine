@@ -5,6 +5,7 @@ import { Scene } from "../Object/scene";
 import { ProgramInfo } from "./program-info";
 import {Matrix4} from "../Math/matrix-4.ts";
 import {Mesh} from "../Object/mesh.ts";
+import {PlaneGeometry} from "../Geometry/planeGeometry.ts";
 
 export class WebGLRenderer {
     canvas: HTMLCanvasElement
@@ -22,55 +23,116 @@ export class WebGLRenderer {
     renderTest() {
         this.gl.clearColor(0, 0, 0, 0);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
         this.gl.useProgram(this.programInfo.program);
-    
+
+        this.programInfo.setUniforms({
+            u_world: [
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            ],
+            u_viewProjection: [
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            ],
+        });
+
         const positionData = new Float32Array([
-            // Vertices for both triangles
             0, 0, 0, 1,
             0, 100, 0, 1,
             1072, 0, 0, 1, 
-            0, 100, 0, 1,
-            1072, 100, 0, 1,
-            1072, 0, 0, 1, 
         ])
-    
+
         const colorData = new Float32Array([
-            // Colors for all vertices
+            1, 0, 0, 1,
+            0, 1, 0, 1,
+            0, 0, 1, 1
+        ])
+
+        const bufferPositionAttribute = new BufferAttribute(positionData, 4)
+        const bufferColorAttribute = new BufferAttribute(colorData, 4)
+
+        const planarGeom = new PlaneGeometry(100, 100);
+        const positionAttribute = planarGeom.attributes.position;
+
+        const colorDataPlane = new Float32Array([
             1, 0, 0, 1,
             0, 1, 0, 1,
             0, 0, 1, 1,
-            0, 0, 0, 1,
-            0, 0, 0, 1,
-            0, 0, 0, 1
+            1, 0, 0, 1,
+            0, 1, 0, 1,
+            0, 0, 1, 1
         ])
-    
-        const indices = new Uint16Array([
-            // Indices for the triangles
-            0, 1, 2, // First triangle
-            3, 4, 5  // Second triangle
-        ])
-    
-        const bufferPositionAttribute = new BufferAttribute(positionData, 4)
-        const bufferColorAttribute = new BufferAttribute(colorData, 4)
-        const indexBuffer = this.gl.createBuffer();
-        this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-        this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, indices, this.gl.STATIC_DRAW);
-    
+        const bufferColorPlane = new BufferAttribute(colorDataPlane, 4);
+
         this.programInfo.setAttributes({
-            a_position: bufferPositionAttribute,
-            a_color: bufferColorAttribute
+            a_position: positionAttribute,
+            a_color: bufferColorPlane
         });
+
+        // this.programInfo.setAttributes({
+        //     a_position: bufferPositionAttribute,
+        //     a_color: bufferColorAttribute
+        // });
         this.programInfo.setUniforms({
             u_matrix: [1, 0, 0, 0,
                         0, 1, 0, 0,
                         0, 0, 1, 0,
-                        0, 0, 0, 1,
-                    ]
+                        0, 0, 0, 1],
         });
         this.programInfo.setUniforms({
             u_resolution: [this.canvas.width, this.canvas.height]
         });
-        this.gl.drawElements(this.gl.TRIANGLES, indices.length, this.gl.UNSIGNED_SHORT, 0);
+        this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+    }
+
+    renderTest2() {
+        this.gl.clearColor(0, 0, 0, 0);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
+        this.gl.useProgram(this.programInfo.program);
+
+        const planarGeom = new PlaneGeometry(100, 100);
+        this.programInfo.setAttributesAndIndices(planarGeom);
+
+        this.programInfo.setUniforms({
+            u_matrix: [1, 0, 0, 0,
+                        0, 1, 0, 0,
+                        0, 0, 1, 0,
+                        0, 0, 0, 1],
+            u_resolution: [this.canvas.width, this.canvas.height]
+        });
+        this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+    }
+
+    renderTest3() {
+        this.gl.clearColor(0, 0, 0, 0);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        this.gl.clear(this.gl.DEPTH_BUFFER_BIT);
+        this.gl.useProgram(this.programInfo.program);
+
+        const planarGeom = new PlaneGeometry(100, 100);
+        this.programInfo.setAttributesAndIndices(planarGeom);
+
+        this.programInfo.setUniforms({
+            u_world: [
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            ],
+            u_viewProjection: [
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            ],
+        });
+        this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
     }
 
     adjustCanvas() {
@@ -117,7 +179,7 @@ export class WebGLRenderer {
                     a_position: positionAttribute,
                     a_color: colorAttribute
                 });
-                this.gl.drawArrays(this.gl.TRIANGLES, 0, positionAttribute.data.length / positionAttribute.size);
+                this.gl.drawArrays(this.gl.TRIANGLES, 0, positionAttribute.data.length);
             }
         })
     }
