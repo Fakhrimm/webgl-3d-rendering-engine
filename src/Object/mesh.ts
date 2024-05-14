@@ -12,3 +12,5 @@ class Mesh extends Node {
         this.material = material
     }
 }
+
+export { Mesh }
