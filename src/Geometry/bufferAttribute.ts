@@ -130,10 +130,10 @@ export class BufferAttribute {
         const data = new Float32Array(indices.data || []);
         const size = indices.size || 1;
         const options = {
-            dtype: indices.dtype,
-            normalize: indices.normalize,
-            stride: indices.stride,
-            offset: indices.offset,
+            dtype: indices.a_dtype,
+            normalize: indices.a_normalize,
+            stride: indices.a_stride,
+            offset: indices.a_offset,
         };
 
         return new BufferAttribute(data, size, options);
@@ -141,12 +141,12 @@ export class BufferAttribute {
     
     static toJSON(bufferAttribute: BufferAttribute): object {
         return {
-            data: Array.from(bufferAttribute._data),
-            size: bufferAttribute._size,
-            dtype: bufferAttribute._dtype,
-            normalize: bufferAttribute._normalize,
-            stride: bufferAttribute._stride,
-            offset: bufferAttribute._offset,
+            a_data: Array.from(bufferAttribute._data),
+            a_size: bufferAttribute._size,
+            a_dtype: bufferAttribute._dtype,
+            a_normalize: bufferAttribute._normalize,
+            a_stride: bufferAttribute._stride,
+            a_offset: bufferAttribute._offset,
         };
     }
 }

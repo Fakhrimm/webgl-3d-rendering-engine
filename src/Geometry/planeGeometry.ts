@@ -15,10 +15,16 @@ export class PlaneGeometry extends BufferGeometry {
             hw, -hh, 0, 1,
             hw, hh, 0, 1,
             -hw, hh, 0, 1,
-            -hw, -hh, 0, 1,
-            hw, hh, 0, 1,
         ]);
+
+        const indices = new Float32Array([
+            0, 1, 2,
+            0, 2, 3,
+        ]);
+
         this.setAttribute('a_position', new BufferAttribute(vertices, 4));
+        this.setAttribute('a_indices', new BufferAttribute(indices, 3));
+
         this.calculateNormals();
     }
 
@@ -29,8 +35,8 @@ export class PlaneGeometry extends BufferGeometry {
     public toJSON(): object {
         return {
             ...super.toJSON(),
-            width: this.width,
-            height: this.height,
+            a_width: this.width,
+            a_height: this.height,
         };
     }
 }
