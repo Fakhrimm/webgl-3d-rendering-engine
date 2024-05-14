@@ -1,5 +1,10 @@
+import { Camera } from "../Camera/camera";
+import { OrthographicCamera } from "../Camera/orthographicCamera";
 import { BufferAttribute } from "../Geometry/bufferAttribute";
+import { Scene } from "../Object/scene";
 import { ProgramInfo } from "./program-info";
+import {Matrix4} from "../Math/matrix-4.ts";
+import {Mesh} from "../Object/mesh.ts";
 
 export class WebGLRenderer {
     canvas: HTMLCanvasElement
@@ -14,7 +19,7 @@ export class WebGLRenderer {
         this.gl = gl
         this.programInfo = programInfo;
     }
-    render() {
+    renderTest() {
         this.gl.clearColor(0, 0, 0, 0);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
         this.gl.useProgram(this.programInfo.program);
@@ -30,8 +35,6 @@ export class WebGLRenderer {
             0, 1, 0, 1,
             0, 0, 1, 1
         ])
-
-
 
         const bufferPositionAttribute = new BufferAttribute(positionData, 4)
         const bufferColorAttribute = new BufferAttribute(colorData, 4)
@@ -69,5 +72,48 @@ export class WebGLRenderer {
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     }
 
+    render(scene: Scene) {
+        this.adjustCanvas();
+        this.gl.clearColor(0, 0, 0, 0);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        this.gl.useProgram(this.programInfo.program);
 
+        const camera = this.getCamera(scene, OrthographicCamera)
+        if (!camera) {
+            throw new Error("No camera found in the scene");
+        }
+
+        scene.updateWorldMatrix(new Matrix4().identity());
+
+        this.programInfo.setUniforms({
+            u_viewProjection: camera.viewProjectionMatrix.elements
+        });
+
+
+        scene.traverse(node => {
+            if (node instanceof Mesh) {
+                const geometry = node.geometry;
+                const positionAttribute = geometry.attributes.position;
+                const colorAttribute = geometry.attributes.color;
+                this.programInfo.setAttributes({
+                    a_position: positionAttribute,
+                    a_color: colorAttribute
+                });
+                this.gl.drawArrays(this.gl.TRIANGLES, 0, positionAttribute.data.length / positionAttribute.size);
+            }
+        })
+    }
+
+    getCamera(scene: Scene, cameraType: new (...args: any[]) => Camera): Camera | null {
+        let foundCamera: Camera | null = null;
+        scene.traverseWithTotalBreak(node => {
+            if (node instanceof cameraType) {
+                foundCamera = node as Camera;
+                return false;  // Found the camera, stop traversal
+            }
+            return true;  // Continue traversal otherwise
+        });
+
+        return foundCamera;
+    }
 }
