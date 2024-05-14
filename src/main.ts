@@ -1,7 +1,8 @@
 import "./style.css";
-import { ProgramInfo } from "./Webgl/program-info";
 import { loadShader, ShaderType } from "./Shaders/shader-loader";
-import { WebGLRenderer } from "./Webgl/webgl-renderer";
+import { ProgramInfo } from "./WebGL/program-info";
+import { WebGLRenderer } from "./WebGL/webgl-renderer";
+import { Scene } from "./Object/scene.ts";
 
 const main = async () => {
   // Get Canvas and WebGL context
@@ -32,8 +33,12 @@ const main = async () => {
   const webGLRenderer = new WebGLRenderer(canvas, programInfo);
 
   // Setup and render
+
+  const sceneDummy = Scene.createSceneDummy(canvas);
   webGLRenderer.adjustCanvas();
-  webGLRenderer.render();
+  // webGLRenderer.render(sceneDummy)
+
+    webGLRenderer.renderTest();
 };
 
 main();
