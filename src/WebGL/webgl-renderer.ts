@@ -118,6 +118,9 @@ export class WebGLRenderer {
         const planarGeom = new PlaneGeometry(100, 100);
         this.programInfo.setAttributesAndIndices(planarGeom);
 
+        const orthographicCamera = new OrthographicCamera(-this.canvas.width/2, this.canvas.width/2, -this.canvas.height/2, this.canvas.height/2, -1, 1);
+
+
         this.programInfo.setUniforms({
             u_world: [
                 1, 0, 0, 0,
@@ -125,12 +128,7 @@ export class WebGLRenderer {
                 0, 0, 1, 0,
                 0, 0, 0, 1
             ],
-            u_viewProjection: [
-                1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1
-            ],
+            u_viewProjection: orthographicCamera.viewProjectionMatrix.elements,
         });
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
     }
