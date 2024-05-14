@@ -319,15 +319,9 @@ class Matrix4 {
 		const te = this.elements;
 		const w = 1.0 / (right - left);
 		const h = 1.0 / (top - bottom);
-		const p = 1.0 / (far - near);
 	
 		const x = (right + left) * w;
 		const y = (top + bottom) * h;
-	
-		let z, zInv;
-	
-		z = (far + near) * p;
-		zInv = -2 * p;
 	
 		const cotTheta = 1.0 / Math.tan(theta); // Cotangent of the oblique angle theta
 	
@@ -343,8 +337,8 @@ class Matrix4 {
 	
 		te[2] = 0;
 		te[6] = 0;
-		te[10] = zInv;
-		te[14] = -z;
+		te[10] = 0;
+		te[14] = 0;
 	
 		te[3] = 0;
 		te[7] = 0;
@@ -374,7 +368,6 @@ class Matrix4 {
 		te[ 3 ] = 0;	te[ 7 ] = 0;	te[ 11 ] = - 1;	te[ 15 ] = 0;
 
 		return this;
-
 	}
 
 }

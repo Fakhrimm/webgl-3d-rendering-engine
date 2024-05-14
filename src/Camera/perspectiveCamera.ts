@@ -2,44 +2,34 @@ import { CameraType } from "../Types/camera-types";
 import { Camera } from "./camera";
 
 export class PerspectiveCamera extends Camera {
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
+    fov: number;
+    zoom: number;
     near: number;
     far: number;
-  
-    constructor(
-      left: number,
-      right: number,
-      bottom: number,
-      top: number,
-      near: number,
-      far: number
-    ) {
-      super(); // Setup Node
-      this.left = left;
-      this.right = right;
-      this.top = top;
-      this.bottom = bottom;
-      this.near = near;
-      this.far = far;
-      // Jangan lupa untuk panggil computeProjectionMatrix() setiap
-      // kali mengubah nilai left, right, top, bottom, near, atau far.
-      this.computeProjectionMatrix();
-    }
+    focus: number;
+    aspect: number;
+
+	constructor(fov = 60, aspect = 1, near = 0.1, far = 2000) {
+		super();
+		this.fov = fov;
+		this.near = near;
+		this.far = far;
+		this.focus = 10;
+		this.aspect = aspect;
+        this.zoom = 0.0005;
+
+		this.computeProjectionMatrix();
+
+	}
 
     computeProjectionMatrix() {
-        // M4.orthographic() menghasilkan proyeksi matriks ortografik
-        // dengan 6 tupel left, right, bottom, top, near, dan far.
-        this._projectionMatrix.perspective(
-          this.left,
-          this.right,
-          this.bottom,
-          this.top,
-          this.near,
-          this.far
-        );
+		const near = this.near;
+		let top = near * Math.tan((Math.PI / 180) * 0.5 * this.fov ) / this.zoom;
+		let height = 2 * top;
+		let width = this.aspect * height;
+		let left = - 0.5 * width;
+
+		this._projectionMatrix.perspective(left, left + width, top, top - height, near, this.far);
       }
 
     override getCameraType() {
