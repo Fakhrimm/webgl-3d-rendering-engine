@@ -157,7 +157,6 @@ export function createAttributeSetters(gl: WebGLRenderingContext, program: WebGL
         const loc = gl.getAttribLocation(program, info.name);
         const buf = gl.createBuffer();
         return (...values) => {
-            console.log('setAttributes', values);
             // Render Time (saat memanggil setAttributes() pada render loop)
             gl.bindBuffer(gl.ARRAY_BUFFER, buf);
             const v = values[0];
