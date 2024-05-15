@@ -42,8 +42,7 @@ const main = async () => {
     // Setup and render
     const renderer = new Render(webGLRenderer);
 
-    const sceneDummy = Scene.createSceneDummy(canvas, 0);
-    webGLRenderer.render(sceneDummy);
+    const sceneDummy = Scene.createSceneDummy(webGLRenderer.canvas, 0);
 
     const treeRoot = Tree.mapSceneToTree(sceneDummy);
 
@@ -65,15 +64,24 @@ const main = async () => {
 
     requestAnimationFrame(renderScene);
 
-    function renderScene(now: number) {
-        now *= 0.001;
+    let isRendering = false;
+    function renderScene() {
+        if (isRendering) {
+            // Still rendering the last frame, return immediately
+            return;
+        }
 
-        // const sceneDummy = Scene.createSceneDummy(canvas, now);
+        isRendering = true;
 
-        webGLRenderer.render(sceneDummy);
+        try {
+            webGLRenderer.render(sceneDummy);
+        } catch (error) {
+            console.error('Failed to render scene:', error);
+        } finally {
+            isRendering = false;
+        }
         requestAnimationFrame(renderScene);
     }
-    // webGLRenderer.renderTest();
 };
 
 main();
