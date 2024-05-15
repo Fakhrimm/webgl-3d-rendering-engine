@@ -28,7 +28,7 @@
         // maka normal perlu dinormalisasi kembali
         vec3 a_normal = normalize(v_normal);
 
-        float light = dot(a_normal, u_reverseLightDirection););
+        float light = dot(a_normal, u_reverseLightDirection);
 //        vec3 surfaceToLight = normalize(v_surfaceToLight);
 //        vec3 surfaceToView = normalize(v_surfaceToView);
 //        vec3 halfVector = normalize(surfaceToLight + surfaceToView);
