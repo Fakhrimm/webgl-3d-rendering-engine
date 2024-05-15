@@ -1,6 +1,5 @@
-
-import { BufferAttribute } from "../Geometry/bufferAttribute";
-import { AttributeMapSetters, AttributeSetters, UniformSetters } from "../Types/webgl-types";
+import {BufferAttribute} from "../Geometry/bufferAttribute";
+import {AttributeMapSetters, AttributeSetters, UniformSetters} from "../Types/webgl-types";
 
 export function createProgram (gl: WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string) {
     const program = gl.createProgram();
@@ -144,8 +143,7 @@ export function createUniformSetters(gl: WebGLRenderingContext, program: WebGLPr
         if (name.substring(-3) === "[0]") {
             name = name.substring(0, name.length - 3);
         }
-        const setter = createUniformSetter(program, uniformInfo);
-        uniformSetters[name] = setter;
+        uniformSetters[name] = createUniformSetter(program, uniformInfo);
     }
     return uniformSetters;
 }
