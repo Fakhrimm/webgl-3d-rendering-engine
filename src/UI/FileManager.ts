@@ -1,3 +1,13 @@
+import { Scene } from "../Object/scene";
+
+export interface RawSceneInterface {
+  name: string;
+  // node: irawnodemodel;
+  // transform: ;
+  children: RawSceneInterface[];
+  texture: "NONE" | "IMAGE" | "REFLECTION" | "BUMP";
+}
+
 export class FileManager {
   public static async readFile(path: string): Promise<string> {
     try {
@@ -48,4 +58,10 @@ export class FileManager {
     };
     return img;
   }
+
+  // public static async saveScene(scene: Scene, filePath: string) {
+  //   const json = JSON.stringify()
+  // }
+
+  // public static convertFromRaw()
 }

@@ -141,29 +141,6 @@ export class Container {
         return button;
     }
 
-    public addSlider(
-        id: string,
-        sliderId: string,
-        min: number,
-        max: number,
-        value: number,
-        onChange: (value: number) => void
-    ): void {
-        const parent = this.getElement(id);
-        const slider = document.createElement("input");
-        slider.type = "range";
-        slider.id = sliderId;
-        slider.min = String(min);
-        slider.max = String(max);
-        slider.value = String(value);
-        slider.oninput = (event: Event) => {
-            const target = event.target as HTMLInputElement;
-            onChange(Number(target.value));
-        };
-        parent.appendChild(slider);
-        this.elementRefs.set(sliderId, slider);
-    }
-
     public clearComponent(selector: string) {
         const elmt = document.querySelector(selector);
         if (!elmt) {

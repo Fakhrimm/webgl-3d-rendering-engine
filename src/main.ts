@@ -82,6 +82,7 @@ const main = async () => {
         }
         requestAnimationFrame(renderScene);
     }
+
 };
 
 main();

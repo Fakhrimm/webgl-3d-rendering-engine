@@ -1,4 +1,4 @@
-import {Variables} from "./Variables";
+import { Variables } from "./Variables";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -47,7 +47,7 @@ export function elementListner(variables: Variables) {
         const val = scaleX.valueAsNumber;
         console.log("X", val);
         console.log(variables.getTree());
-        variables.getTree().reference.setScaleX(val)
+        variables.getTree().reference.setScaleX(val);
     });
     scaleY.addEventListener("input", () => {
         const val = scaleY.valueAsNumber;
@@ -68,21 +68,24 @@ export function elementListner(variables: Variables) {
 
     translateX.addEventListener("input", () => {
         const val = translateX.valueAsNumber;
-        console.log("X", val);
-        console.log(variables.getTree());
-        variables.getTree().reference.setPositionX(val);
+        const canvasWidth = variables.getWebGL().canvas.width;
+        const min = parseFloat(translateX.min);
+        const max = parseFloat(translateX.max);
+        const normalizedVal =
+            ((val - min) / (max - min)) * canvasWidth - canvasWidth / 2;
+        variables.getTree().reference.setPositionX(normalizedVal);
     });
     translateY.addEventListener("input", () => {
         const val = translateY.valueAsNumber;
-        console.log("Y", val);
-        console.log(variables.getTree());
-        variables.getTree().reference.setPositionY(val);
+        const canvasHeight = variables.getWebGL().canvas.height;
+        const min = parseFloat(translateY.min);
+        const max = parseFloat(translateY.max);
+        const normalizedVal =
+            ((val - min) / (max - min)) * canvasHeight - canvasHeight / 2;
+        variables.getTree().reference.setPositionY(normalizedVal);
     });
     translateZ.addEventListener("input", () => {
         const val = translateZ.valueAsNumber;
-        console.log("Z", val);
-        console.log(variables.getTree());
-        variables.getTree().reference.setPositionZ(val);
+        variables.getTree().reference.setPositionZ(val * 100);
     });
-
 }
