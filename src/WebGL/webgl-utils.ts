@@ -160,11 +160,9 @@ export function createAttributeSetters(gl: WebGLRenderingContext, program: WebGL
             gl.bindBuffer(gl.ARRAY_BUFFER, buf);
             const v = values[0];
             if (v instanceof BufferAttribute) {
-                if (v.isDirty) {
-                    // Data Changed Time (note that buffer is already binded)
-                    gl.bufferData(gl.ARRAY_BUFFER, v.data, gl.STATIC_DRAW);
-                    v.consume();
-                }
+
+                // Data Changed Time (note that buffer is already binded)
+                gl.bufferData(gl.ARRAY_BUFFER, v.data, gl.STATIC_DRAW);
                 gl.enableVertexAttribArray(loc);
                 gl.vertexAttribPointer(loc, v.size, v.dtype, v.normalize, v.stride, v.offset);
             } else  {
