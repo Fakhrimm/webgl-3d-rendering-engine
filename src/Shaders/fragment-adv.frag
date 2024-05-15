@@ -2,7 +2,7 @@
      
 //    varying vec4 v_position;
 //    varying vec2 v_texCoord;
-//    varying vec3 v_normal;
+    varying vec3 v_normal;
 //    varying vec3 v_surfaceToLight;
 //    varying vec3 v_surfaceToView;
 //
@@ -12,6 +12,7 @@
 //    uniform vec4 u_specular;
 //    uniform float u_shininess;
 //    uniform float u_specularFactor;
+    uniform vec3 u_reverseLightDirection;
      
 //    vec4 lit(float l ,float h, float m) {
 //        return vec4(1.0,
@@ -22,7 +23,12 @@
      
     void main() {
 //        vec4 diffuseColor = texture2D(u_diffuse, v_texCoord);
-//        vec3 a_normal = normalize(v_normal);
+
+        // Karena normal adalah varying dan hasil interpolasi
+        // maka normal perlu dinormalisasi kembali
+        vec3 a_normal = normalize(v_normal);
+
+        float light = dot(a_normal, u_reverseLightDirection););
 //        vec3 surfaceToLight = normalize(v_surfaceToLight);
 //        vec3 surfaceToView = normalize(v_surfaceToView);
 //        vec3 halfVector = normalize(surfaceToLight + surfaceToView);
@@ -34,4 +40,5 @@
 //          diffuseColor.a);
 //        gl_FragColor = outColor;
         gl_FragColor = vec4(1, 0, 0.5, 1); // return reddish-purple
+        gl_FragColor.rgb *= light;
     }

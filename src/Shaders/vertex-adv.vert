@@ -12,8 +12,8 @@
     varying vec4 v_position;
     varying vec2 v_texCoord;
     varying vec3 v_normal;
-    varying vec3 v_surfaceToLight;
-    varying vec3 v_surfaceToView;
+//    varying vec3 v_surfaceToLight;
+//    varying vec3 v_surfaceToView;
      
     void main() {
         // Memberi koordinat texture ke fragment shader
@@ -21,7 +21,12 @@
 
         // Mendapat koordinat dengan mengalikan matrix world dan view projection
         v_position = (u_viewProjection * u_world * a_position);
-//        v_normal = (u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
+
+        // Dikalikan world inverse transpose untuk mendapatkan normal yang benar
+        // Ketika dilakukan scaling
+        // webglfundamentals.org/webgl/lessons/webgl-3d-lighting-directional.html
+        v_normal = (u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
+
 //        v_surfaceToLight = u_lightWorldPos - (u_world * a_position).xyz;
 //        v_surfaceToView = (u_viewInverse[3] - (u_world * a_position)).xyz;
         gl_Position = v_position;
