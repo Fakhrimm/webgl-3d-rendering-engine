@@ -16,63 +16,60 @@ export class BoxGeometry extends BufferGeometry {
 
         const vertices = new Float32Array([
             // Front face
-            -hw, -hh,  hd, 1,
-             hw, -hh,  hd, 1,
-             hw,  hh,  hd, 1,
-            -hw,  hh,  hd, 1,
+            -hw, -hh,  hd, 1.0,  hw, -hh,  hd, 1.0,  hw,  hh,  hd, 1.0,
+            -hw, -hh,  hd, 1.0,  hw,  hh,  hd, 1.0, -hw,  hh,  hd, 1.0,
             // Back face
-            -hw, -hh, -hd, 1,
-             hw, -hh, -hd, 1,
-             hw,  hh, -hd, 1,
-            -hw,  hh, -hd, 1
-        ]);
-
-        const indices = new Uint16Array([
-            // Front face
-            0, 1, 2, 0, 2, 3,
-            // Back face
-            4, 5, 6, 4, 6, 7,
+            hw, -hh, -hd, 1.0, -hw, -hh, -hd, 1.0, -hw,  hh, -hd, 1.0,
+            hw, -hh, -hd, 1.0, -hw,  hh, -hd, 1.0,  hw,  hh, -hd, 1.0,
             // Top face
-            3, 2, 6, 3, 6, 7,
+            hw,  hh, hd, 1.0,  hw,  hh, -hd, 1.0,  -hw,  hh,  -hd, 1.0,
+            -hw, hh, -hd, 1.0,  -hw,  hh,  +hd, 1.0, +hw,  hh, +hd, 1.0,
             // Bottom face
-            0, 1, 5, 0, 5, 4,
+            hw, -hh,  hd, 1.0,  -hw, -hh,  +hd, 1.0, -hw, -hh, -hd, 1.0,
+            -hw, -hh,  -hd, 1.0,  hw, -hh, -hd, 1.0, hw, -hh, hd, 1.0,
             // Right face
-            1, 2, 6, 1, 6, 5,
+            hw, -hh,  hd, 1.0,  hw, -hh, -hd, 1.0,  hw,  hh, -hd, 1.0,
+            hw, -hh,  hd, 1.0,  hw,  hh, -hd, 1.0,  hw,  hh,  hd, 1.0,
             // Left face
-            0, 3, 7, 0, 7, 4
+            -hw, -hh, -hd, 1.0, -hw, -hh,  hd, 1.0, -hw,  hh,  hd, 1.0,
+            -hw, -hh, -hd, 1.0, -hw,  hh,  hd, 1.0, -hw,  hh, -hd, 1.0
         ]);
 
-        const texcoord = new Float32Array([
-            // Front face
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1,
-            // Back face
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1,
-            // Top face
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1,
-            // Bottom face
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1,
-            // Right face
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1,
+        // Normals for each face
+        const normals = new Float32Array([
+            // Front
+            0.0,  0.0,  1.0,  0.0,  0.0,  1.0,  0.0,  0.0,  1.0,
+            0.0,  0.0,  1.0,  0.0,  0.0,  1.0,  0.0,  0.0,  1.0,
+            // Back
+            0.0,  0.0, -1.0,  0.0,  0.0, -1.0,  0.0,  0.0, -1.0,
+            0.0,  0.0, -1.0,  0.0,  0.0, -1.0,  0.0,  0.0, -1.0,
+            // Top
+            0.0,  1.0,  0.0,  0.0,  1.0,  0.0,  0.0,  1.0,  0.0,
+            0.0,  1.0,  0.0,  0.0,  1.0,  0.0,  0.0,  1.0,  0.0,
+            // Bottom
+            0.0, -1.0,  0.0,  0.0, -1.0,  0.0,  0.0, -1.0,  0.0,
+            0.0, -1.0,  0.0,  0.0, -1.0,  0.0,  0.0, -1.0,  0.0,
+            // Right
+            1.0,  0.0,  0.0,  1.0,  0.0,  0.0,  1.0,  0.0,  0.0,
+            1.0,  0.0,  0.0,  1.0,  0.0,  0.0,  1.0,  0.0,  0.0,
+            // Left
+            -1.0,  0.0,  0.0, -1.0,  0.0,  0.0, -1.0,  0.0,  0.0,
+            -1.0,  0.0,  0.0, -1.0,  0.0,  0.0, -1.0,  0.0,  0.0
+        ]);
+
+        // Texture coordinates for each vertex
+        const texCoords = new Float32Array([
+            0, 0,  1, 0,  1, 1,  0, 0,  1, 1,  0, 1,  // Front
+            1, 0,  0, 0,  0, 1,  1, 0,  0, 1,  1, 1,  // Back
+            0, 1,  1, 1,  1, 0,  0, 1,  1, 0,  0, 0,  // Top
+            0, 0,  1, 0,  1, 1,  0, 0,  1, 1,  0, 1,  // Bottom
+            1, 0,  0, 0,  0, 1,  1, 0,  0, 1,  1, 1,  // Right
+            0, 0,  1, 0,  1, 1,  0, 0,  1, 1,  0, 1   // Left
         ]);
 
         this.setAttribute('a_position', new BufferAttribute(vertices, 4));
-        this.setIndices(new BufferAttribute(indices, 6));
-        this.setAttribute('a_texcoord', new BufferAttribute(texcoord, 2));
+        this.setAttribute('a_texcoord', new BufferAttribute(texCoords, 2));
+        this.setAttribute('a_normal', new BufferAttribute(normals, 3));
 
         this.calculateNormals();
     }
