@@ -1,6 +1,4 @@
-import { Vector3 } from "../Math/vector-3";
-import { Container } from "./Container";
-import { Variables } from "./Variables";
+import {Variables} from "./Variables";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -26,19 +24,19 @@ export function elementListner(variables: Variables) {
         const val = rotateX.valueAsNumber;
         console.log("X", val);
         // console.log(variables.getTree());
-        variables.getTree().reference.setScale({ x: val });
+        variables.getTree().reference.setRotationX(val);
     });
     rotateY.addEventListener("input", () => {
         const val = rotateY.valueAsNumber;
         console.log("Y", val);
         // console.log(variables.getTree());
-        variables.getTree().reference.setScale({ y: val });
+        variables.getTree().reference.setRotationY(val);
     });
     rotateZ.addEventListener("input", () => {
         const val = rotateZ.valueAsNumber;
         console.log("Z", val);
         // console.log(variables.getTree());
-        variables.getTree().reference.setScale({ z: val });
+        variables.getTree().reference.setRotationZ(val);
     });
 
     const scaleX = container.getElement("scaleX") as HTMLInputElement;
@@ -48,20 +46,20 @@ export function elementListner(variables: Variables) {
     scaleX.addEventListener("input", () => {
         const val = scaleX.valueAsNumber;
         console.log("X", val);
-        // console.log(variables.getTree());
-        variables.getTree().reference.setScale({ x: val });
+        console.log(variables.getTree());
+        variables.getTree().reference.setScaleX(val)
     });
     scaleY.addEventListener("input", () => {
         const val = scaleY.valueAsNumber;
         console.log("Y", val);
         // console.log(variables.getTree());
-        variables.getTree().reference.setScale({ y: val });
+        variables.getTree().reference.setScaleY(val);
     });
     scaleZ.addEventListener("input", () => {
         const val = scaleZ.valueAsNumber;
         console.log("Z", val);
         // console.log(variables.getTree());
-        variables.getTree().reference.setScale({ z: val });
+        variables.getTree().reference.setScaleZ(val);
     });
 
     const translateX = container.getElement("translateX") as HTMLInputElement;
@@ -72,19 +70,19 @@ export function elementListner(variables: Variables) {
         const val = translateX.valueAsNumber;
         console.log("X", val);
         console.log(variables.getTree());
-        variables.getTree().reference.setTranslate({ x: val });
+        variables.getTree().reference.setPositionX(val);
     });
     translateY.addEventListener("input", () => {
         const val = translateY.valueAsNumber;
         console.log("Y", val);
         console.log(variables.getTree());
-        variables.getTree().reference.setTranslate({ y: val });
+        variables.getTree().reference.setPositionY(val);
     });
     translateZ.addEventListener("input", () => {
         const val = translateZ.valueAsNumber;
         console.log("Z", val);
         console.log(variables.getTree());
-        variables.getTree().reference.setTranslate({ z: val });
+        variables.getTree().reference.setPositionZ(val);
     });
 
 }

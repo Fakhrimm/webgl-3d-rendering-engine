@@ -50,12 +50,13 @@ export class Node {
         this.localMatrix.compose(this.position, this.quaternion, this.scale);
     }
 
-    public updateWorldMatrix(parentWorldMatrix: Matrix4) {
+    public updateWorldMatrix() {
         this.updateLocalMatrix();
-        this.worldMatrix.copy(parentWorldMatrix).multiply(this.localMatrix);
-        this.children.forEach((child) =>
-            child.updateWorldMatrix(this.worldMatrix)
-        );
+        if (this.parent) {
+            this.worldMatrix = this.parent.worldMatrix.clone().multiply(this.localMatrix);
+        } else {
+            this.worldMatrix = this.localMatrix.clone();
+        }
     }
 
     public getWorldMatrix() {
@@ -70,12 +71,36 @@ export class Node {
         this.position = position;
     }
 
+    public setPositionX(x: number) {
+        this.position.setX(x);
+    }
+
+    public setPositionY(y: number) {
+        this.position.setY(y);
+    }
+
+    public setPositionZ(z: number) {
+        this.position.setZ(z);
+    }
+
     public getPosition() {
         return this.position;
     }
 
     public setScale(scale: Vector3) {
         this.scale = scale;
+    }
+
+    public setScaleX(x: number) {
+        this.scale.setX(x);
+    }
+
+    public setScaleY(y: number) {
+        this.scale.setY(y);
+    }
+
+    public setScaleZ(z: number) {
+        this.scale.setZ(z);
     }
 
     public getScale() {
@@ -88,6 +113,18 @@ export class Node {
 
     public setRotationFromEuler(euler: Euler) {
         this.quaternion.setFromEuler( euler, true );
+    }
+
+    public setRotationX(x: number) {
+        this.rotation.x =  x;
+    }
+
+    public setRotationY(y: number) {
+        this.rotation.y =  y;
+    }
+
+    public setRotationZ(z: number) {
+        this.rotation.z =  z;
     }
 
     setRotationFromAxisAngle(axis: Vector3, angle: number) {
