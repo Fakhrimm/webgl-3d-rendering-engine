@@ -42,7 +42,7 @@ const main = async () => {
     // Setup and render
     const renderer = new Render(webGLRenderer);
 
-    const sceneDummy = Scene.createSceneDummy(webGLRenderer.canvas, 0);
+    const sceneDummy = Scene.createSceneDummy(webGLRenderer.canvas);
 
     const treeRoot = Tree.mapSceneToTree(sceneDummy);
 
