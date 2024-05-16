@@ -62,6 +62,9 @@ export class Node {
     public getWorldMatrix() {
         return this.worldMatrix;
     }
+    public getWorldInverseTransposeMatrix() {
+        return this.worldMatrix.clone().invert().transpose();
+    }
 
     public localToWorld(localPosition: Vector3): Vector3 {
         return localPosition.clone().applyMatrix4(this.worldMatrix);

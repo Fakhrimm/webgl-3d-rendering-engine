@@ -54,15 +54,22 @@ export class WebGLRenderer {
 
         this.programInfo.setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
+            u_ambientColor: [0.2, 0.2, 0.2],
+            u_reverseLightDirection: [-10, 0, -10],
         });
 
         scene.traverse((node) => {
             if (node instanceof Mesh) {
                 node.updateWorldMatrix();
+
+                const material = node.material;
+                material.setUniforms(this.programInfo);
+
                 const geometry = node.geometry;
                 this.programInfo.setAttributesAndIndices(geometry);
                 this.programInfo.setUniforms({
                     u_world: node.getWorldMatrix().elements,
+                    u_worldInverseTranspose: node.getWorldInverseTransposeMatrix().elements,
                 });
                 if (geometry.indices) {
                     this.gl.drawElements(

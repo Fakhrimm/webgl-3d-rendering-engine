@@ -1,8 +1,9 @@
 import {Node} from "./node";
 import {OrthographicCamera} from "../Camera/orthographicCamera.ts";
 import {Mesh} from "./mesh.ts";
-import {Material} from "../Material/material.ts";
 import {BoxGeometry} from "../Geometry/boxGeometry.ts";
+import {BasicMaterial} from "../Material/basic-material.ts";
+import {Color} from "../Math/color.ts";
 
 export class Scene extends Node {
     constructor() {
@@ -28,10 +29,13 @@ export class Scene extends Node {
             101
         );
 
-        let mesh = new Mesh(new BoxGeometry(50, 50, 50), new Material());
+        let material1 = new BasicMaterial();
+        let material2 = new BasicMaterial(Color.RED);
+
+        let mesh = new Mesh(new BoxGeometry(50, 50, 50), material1);
         mesh.name = "Mesh";
 
-        let mesh2 = new Mesh(new BoxGeometry(200, 50, 1), new Material());
+        let mesh2 = new Mesh(new BoxGeometry(200, 50, 1), material2);
         mesh2.name = "Mesh2";
 
         orthographicCamera.setParent(scene);

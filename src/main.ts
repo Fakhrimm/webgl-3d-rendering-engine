@@ -29,7 +29,7 @@ const main = async () => {
     // Load shaders
     // const vertexShaderSource = loadShader(ShaderType.VERTEX_REGULAR);
     const vertexShaderSource = loadShader(ShaderType.VERTEX_ADV);
-    const fragmentShaderSource = loadShader(ShaderType.FRAGMENT_BASIC);
+    const fragmentShaderSource = loadShader(ShaderType.FRAGMENT_ADV);
 
     // Create program info
     const programInfo = new ProgramInfo(
