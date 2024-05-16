@@ -27,6 +27,7 @@
         // webglfundamentals.org/webgl/lessons/webgl-3d-lighting-directional.html
         v_normal = (u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
 
+//        v_normal = a_normal;
 //        v_surfaceToLight = u_lightWorldPos - (u_world * a_position).xyz;
 //        v_surfaceToView = (u_viewInverse[3] - (u_world * a_position)).xyz;
         gl_Position = v_position;

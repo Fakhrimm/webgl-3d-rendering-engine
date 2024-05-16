@@ -7,12 +7,15 @@
 //    varying vec3 v_surfaceToView;
 //
 //    uniform vec4 u_lightColor;
-//    uniform vec4 u_ambient;
+    uniform vec3 u_ambientColor;
+    uniform vec3 u_diffuseColor;
 //    uniform sampler2D u_diffuse;
 //    uniform vec4 u_specular;
 //    uniform float u_shininess;
 //    uniform float u_specularFactor;
+//    uniform int u_lightDirection;
     uniform vec3 u_reverseLightDirection;
+    uniform int u_materialType;
      
 //    vec4 lit(float l ,float h, float m) {
 //        return vec4(1.0,
@@ -22,6 +25,18 @@
 //    }
      
     void main() {
+
+        if (u_materialType == 0) {
+            // https://www.cs.toronto.edu/~jacobson/phong-demo/
+            vec3 a_normal = normalize(v_normal);
+            vec3 light_direction = normalize(u_reverseLightDirection);
+            float lambertian = max(dot(a_normal, light_direction), 0.0);
+
+            gl_FragColor = vec4(u_ambientColor +
+                                u_diffuseColor * lambertian, 1.0);
+//            gl_FragColor = vec4(1, 0, 0.5, 1); // return reddish-purple
+            return;
+        }
 //        vec4 diffuseColor = texture2D(u_diffuse, v_texCoord);
 
         // Karena normal adalah varying dan hasil interpolasi
