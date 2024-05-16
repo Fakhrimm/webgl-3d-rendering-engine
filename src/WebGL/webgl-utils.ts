@@ -38,7 +38,14 @@ function createShader(gl: WebGLRenderingContext, type: number, source: string) {
     return shader;
 }
 
-export function createUniformSetters(gl: WebGLRenderingContext, program: WebGLProgram) {
+function getBindPointForSamplerType(gl: WebGLRenderingContext, type: number) {
+    if (type === gl.SAMPLER_2D)   return gl.TEXTURE_2D;        // eslint-disable-line
+    if (type === gl.SAMPLER_CUBE) return gl.TEXTURE_CUBE_MAP;  // eslint-disable-line
+    throw new Error('unknown type: 0x' + type.toString(16));
+}
+
+export function createUniformSetters(gl: WebGLRenderingContext, program: WebGLProgram)  {
+    let textureUnit = 0;
     function createUniformSetter(program: WebGLProgram, uniformInfo: WebGLActiveInfo) {
         const location = gl.getUniformLocation(program, uniformInfo.name);
         const type = uniformInfo.type;
@@ -128,7 +135,19 @@ export function createUniformSetters(gl: WebGLRenderingContext, program: WebGLPr
                 gl.uniformMatrix4fv(location, false, v);
             };
         }
-        throw "unknown type: 0x" + type.toString(16);
+        if ((type === gl.SAMPLER_2D || type === gl.SAMPLER_CUBE) && isArray) {
+            throw new Error('arrays of samplers are not allowed');
+        }
+        if (type === gl.SAMPLER_2D || type === gl.SAMPLER_CUBE) {
+            return function(bindPoint: number, unit) {
+                return function(texture: WebGLTexture) {
+                    gl.uniform1i(location, unit);
+                    gl.activeTexture(gl.TEXTURE0 + unit);
+                    gl.bindTexture(bindPoint, texture);
+                };
+            }(getBindPointForSamplerType(gl, type), textureUnit++);
+        }
+        throw ('unknown type: 0x' + type.toString(16));
     }
 
     const uniformSetters: UniformSetters = {};
