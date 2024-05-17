@@ -1,6 +1,6 @@
-import { Matrix4 } from "../Math/matrix-4";
-import { Node } from "../Object/node";
-import { CameraType } from "../Types/camera-types";
+import {Matrix4} from "../Math/matrix-4";
+import {Node} from "../Object/node";
+import {CameraType} from "../Types/camera-types";
 
 export class Camera extends Node {
     protected _projectionMatrix = new Matrix4().identity();
@@ -25,7 +25,7 @@ export class Camera extends Node {
 
     get viewProjectionMatrix() {
         this.computeWorldMatrix();
-        return this._projectionMatrix.premultiply(this._invWorldMatrix);
+        return this._projectionMatrix.clone().premultiply(this._invWorldMatrix);
     }
 
     get projectionMatrix() {
