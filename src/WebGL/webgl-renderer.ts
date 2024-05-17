@@ -95,14 +95,14 @@ export class WebGLRenderer {
     public loadProgramInfos() {
         this.programInfos[MaterialTypes.BASIC] = new ProgramInfo(
             this.gl,
-            loadShader(ShaderType.VERTEX_BASIC),
-            loadShader(ShaderType.FRAGMENT_BASIC)
+            loadShader(ShaderType.BASIC_VERTEX),
+            loadShader(ShaderType.BASIC_FRAGMENT)
         );
 
         this.programInfos[MaterialTypes.PHONG] = new ProgramInfo(
             this.gl,
-            loadShader(ShaderType.VERTEX_ADV),
-            loadShader(ShaderType.FRAGMENT_ADV)
+            loadShader(ShaderType.PHONG_VERTEX),
+            loadShader(ShaderType.PHONG_FRAGMENT)
         );
     }
 

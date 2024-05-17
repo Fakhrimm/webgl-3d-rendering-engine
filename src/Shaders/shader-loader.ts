@@ -1,35 +1,27 @@
-import vertexBasic from "./basic-vertex.vert?raw";
-import vertexShaderSource from "./vertex-shader.vert?raw";
-import vertexShaderAdv from "./vertex-adv.vert?raw";
-import fragmentBasic from "./basic-fragment.frag?raw";
-import fragmentShaderSource from "./fragment-shader.frag?raw";
-import fragmentShaderAdv from "./fragment-adv.frag?raw";
+import basicVertexShader from "./basic-vertex.vert?raw";
+import basicFragmentShader from "./basic-fragment.frag?raw";
+import phongVertexShader from "./phong-vertex.vert?raw";
+import phongFragmentShader from "./phong-fragment.frag?raw";
 
 export enum ShaderType {
-    VERTEX_BASIC,
-    VERTEX_REGULAR,
-    VERTEX_ADV,
-    FRAGMENT_BASIC,
-    FRAGMENT_REGULAR,
-    FRAGMENT_ADV
+    BASIC_VERTEX,
+    BASIC_FRAGMENT,
+    PHONG_VERTEX,
+    PHONG_FRAGMENT
 }
 
 
 
 export function loadShader(shaderType: ShaderType): string {
     switch (shaderType) {
-        case ShaderType.VERTEX_BASIC:
-            return vertexBasic
-        case ShaderType.VERTEX_REGULAR:
-            return vertexShaderSource
-        case ShaderType.VERTEX_ADV:
-            return vertexShaderAdv
-        case ShaderType.FRAGMENT_BASIC:
-            return fragmentBasic
-        case ShaderType.FRAGMENT_REGULAR:
-            return fragmentShaderSource
-        case ShaderType.FRAGMENT_ADV:
-            return fragmentShaderAdv
+        case ShaderType.BASIC_VERTEX:
+            return basicVertexShader
+        case ShaderType.PHONG_VERTEX:
+            return phongVertexShader
+        case ShaderType.BASIC_FRAGMENT:
+            return basicFragmentShader
+        case ShaderType.PHONG_FRAGMENT:
+            return phongFragmentShader
         default:
             throw new Error("ShaderType not implemented in loader");
     }
