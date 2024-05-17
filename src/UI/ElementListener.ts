@@ -44,9 +44,8 @@ export function elementListner(variables: Variables) {
         const selectedNode = variables.getTree().reference;
 
         if (selectedNode instanceof Mesh) {
-            let material = selectedNode.material;
+            const material = selectedNode.material;
             if (material instanceof BasicMaterial) {
-                let material = new BasicMaterial();
                 material.setDiffuseColorFromRGB(r, g, b);
             } else if (material instanceof PhongMaterial) {
 
