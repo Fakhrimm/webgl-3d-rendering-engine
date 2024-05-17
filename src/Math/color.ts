@@ -1,3 +1,5 @@
+import {clamp} from "./math-util.ts";
+
 export class Color {
     private r: number;
     private g: number;
@@ -17,6 +19,16 @@ export class Color {
 
     get(): number[] {
         return [this.r, this.g, this.b];
+    }
+
+    setFromRGB(r: number, g: number, b: number) {
+        r = clamp(r, 0, 255)
+        g = clamp(g, 0, 255)
+        b = clamp(b, 0, 255)
+        r /= 255
+        g /= 255
+        b /= 255
+        this.set(r, g, b)
     }
 
     public static WHITE = new Color(1, 1, 1);
