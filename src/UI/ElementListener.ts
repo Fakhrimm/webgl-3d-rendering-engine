@@ -1,5 +1,7 @@
-import { BasicMaterial } from "../Material/basic-material";
-import { Variables } from "./Variables";
+import {BasicMaterial} from "../Material/basic-material";
+import {Variables} from "./Variables";
+import {Mesh} from "../Object/mesh.ts";
+import {PhongMaterial} from "../Material/phong-material.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -40,10 +42,18 @@ export function elementListner(variables: Variables) {
         hexValue.value = hex;
 
         const selectedNode = variables.getTree().reference;
-        let material = new BasicMaterial();
-        material.setDiffuseColorFromRGB(r, g, b);
-        console.log(selectedNode);
 
+        if (selectedNode instanceof Mesh) {
+            let material = selectedNode.material;
+            if (material instanceof BasicMaterial) {
+                let material = new BasicMaterial();
+                material.setDiffuseColorFromRGB(r, g, b);
+            } else if (material instanceof PhongMaterial) {
+
+            }
+        }
+
+        console.log(selectedNode);
         console.log(color);
     });
 
