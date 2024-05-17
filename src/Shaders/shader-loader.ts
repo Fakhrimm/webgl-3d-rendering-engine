@@ -1,7 +1,7 @@
-import vertexBasic from "./vertex-basic.vert?raw";
+import vertexBasic from "./basic-vertex.vert?raw";
 import vertexShaderSource from "./vertex-shader.vert?raw";
 import vertexShaderAdv from "./vertex-adv.vert?raw";
-import fragmentBasic from "./fragment-basic.frag?raw";
+import fragmentBasic from "./basic-fragment.frag?raw";
 import fragmentShaderSource from "./fragment-shader.frag?raw";
 import fragmentShaderAdv from "./fragment-adv.frag?raw";
 

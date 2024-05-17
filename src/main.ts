@@ -27,17 +27,7 @@ const main = async () => {
     }
 
     // Load shaders
-    // const vertexShaderSource = loadShader(ShaderType.VERTEX_REGULAR);
-    const vertexShaderSource = loadShader(ShaderType.VERTEX_ADV);
-    const fragmentShaderSource = loadShader(ShaderType.FRAGMENT_ADV);
-
-    // Create program info
-    const programInfo = new ProgramInfo(
-        gl,
-        vertexShaderSource,
-        fragmentShaderSource
-    );
-    const webGLRenderer = new WebGLRenderer(canvas, programInfo);
+    const webGLRenderer = new WebGLRenderer(canvas);
 
     // Setup and render
     const renderer = new Render(webGLRenderer);

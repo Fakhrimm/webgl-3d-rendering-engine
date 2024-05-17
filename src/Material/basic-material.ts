@@ -10,20 +10,20 @@ export class BasicMaterial extends Material {
 
     constructor(u_diffuseColor: Color = Color.GREEN, diffuseTextureType: DiffuseTextureTypes = DiffuseTextureTypes.IMAGE_0) {
         super()
-        this.u_materialType = MaterialTypes.BASIC
+        this._materialType = MaterialTypes.BASIC
         this.u_diffuseColor = u_diffuseColor
         this.diffuseTextureType = diffuseTextureType
     }
 
+    public setDiffuseColorFromRGB(r: number, g: number, b: number) {
+        this.u_diffuseColor.setFromRGB(r, g, b);
+    }
+
     override setUniforms(programInfo: ProgramInfo): void {
         programInfo.setUniforms({
-            u_materialType: this.u_materialType,
             u_diffuseColor: this.u_diffuseColor.get(),
         })
     }
 
-    public setDiffuseColor(r: number, g: number, b: number) {
-        this.u_diffuseColor.set(r, g, b)
-    }
 
 }
