@@ -70,8 +70,8 @@ export class Node {
         return localPosition.clone().applyMatrix4(this.worldMatrix);
     }
 
-    public setPosition(position: Vector3) {
-        this.position = position;
+    public setPosition(x: number, y: number, z: number) {
+        this.position = new Vector3(x, y, z);
     }
 
     public setPositionX(x: number) {
