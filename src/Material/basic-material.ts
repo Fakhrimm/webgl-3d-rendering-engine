@@ -22,7 +22,7 @@ export class BasicMaterial extends Material {
         })
     }
 
-    setDiffuseColor(r: number, g: number, b: number) {
+    public setDiffuseColor(r: number, g: number, b: number) {
         this.u_diffuseColor.set(r, g, b)
     }
 
