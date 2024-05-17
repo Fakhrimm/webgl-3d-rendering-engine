@@ -28,6 +28,7 @@ export class ProgramInfo {
   }
 
   public setAttributesAndIndices(bufferGeometry: BufferGeometry) {
+    this.gl.useProgram(this.program);
     const { attributes, indices } = bufferGeometry;
     this.setAttributes(attributes);
     if (indices) {
@@ -42,6 +43,7 @@ export class ProgramInfo {
   }
 
   public setAttributes(attribs: { [key: string]: AttributeSingleDataType }) {
+    this.gl.useProgram(this.program);
     Object.keys(attribs).forEach((name) => {
       const setter = this.attributeSetters[name];
       if (setter) {
@@ -51,6 +53,7 @@ export class ProgramInfo {
   }
 
   public setUniforms(...values: { [key: string]: any }[]) {
+    this.gl.useProgram(this.program);
     for (const uniforms of values) {
       Object.keys(uniforms).forEach((name) => {
         const setter = this.uniformSetters[name];
