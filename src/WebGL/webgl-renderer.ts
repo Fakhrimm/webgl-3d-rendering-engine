@@ -51,6 +51,7 @@ export class WebGLRenderer {
         }
 
         scene.updateWorldMatrix();
+        camera.updateWorldMatrix()
 
         this.programInfo.setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
