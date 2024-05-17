@@ -1,3 +1,4 @@
+import { BasicMaterial } from "../Material/basic-material";
 import { Variables } from "./Variables";
 
 export function elementListner(variables: Variables) {
@@ -13,6 +14,37 @@ export function elementListner(variables: Variables) {
 
     modalBackdrop.addEventListener("click", () => {
         modalContainer.style.display = "none";
+    });
+
+    const saveFile = container.getElement("saveFile");
+    const loadFile = container.getElement("loadFile");
+
+    saveFile.addEventListener("click", () => {});
+
+    // LEFT
+    const colorPicker = container.getElement("colorPicker") as HTMLInputElement;
+    const rValue = container.getElement("rValue") as HTMLInputElement;
+    const gValue = container.getElement("gValue") as HTMLInputElement;
+    const bValue = container.getElement("bValue") as HTMLInputElement;
+    const hexValue = container.getElement("hexValue") as HTMLInputElement;
+
+    colorPicker.addEventListener("input", (event) => {
+        const color = (event.target as HTMLInputElement).value;
+        const r = parseInt(color.substr(1, 2), 16);
+        const g = parseInt(color.substr(3, 2), 16);
+        const b = parseInt(color.substr(5, 2), 16);
+        const hex = color.toUpperCase();
+        rValue.value = r.toString();
+        gValue.value = g.toString();
+        bValue.value = b.toString();
+        hexValue.value = hex;
+
+        const selectedNode = variables.getTree().reference;
+        let material = new BasicMaterial();
+        material.setDiffuseColorFromRGB(r, g, b);
+        console.log(selectedNode);
+
+        console.log(color);
     });
 
     // RIGHT
@@ -88,4 +120,13 @@ export function elementListner(variables: Variables) {
         const val = translateZ.valueAsNumber;
         variables.getTree().reference.setPositionZ(val * 100);
     });
+
+    const play = container.getElement("play") as HTMLInputElement;
+    const pause = container.getElement("pause") as HTMLInputElement;
+    const reverse = container.getElement("reverse") as HTMLInputElement;
+    const autoPlay = container.getElement("autoPlay") as HTMLInputElement;
+    const next = container.getElement("next") as HTMLInputElement;
+    const prev = container.getElement("prev") as HTMLInputElement;
+    const first = container.getElement("first") as HTMLInputElement;
+    const last = container.getElement("last") as HTMLInputElement;
 }

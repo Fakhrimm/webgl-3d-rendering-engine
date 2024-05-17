@@ -1,7 +1,10 @@
+import { BasicMaterial } from "../Material/basic-material";
+
 export class Container {
     private elementRefs: Map<string, HTMLElement> = new Map();
     private canvas: HTMLCanvasElement | null = null;
-    private model: HTMLSelectElement | null = null;
+    private scene: HTMLSelectElement | null = null;
+    private material: BasicMaterial | null = null;
 
     constructor() {
         // TOP
@@ -13,7 +16,7 @@ export class Container {
         const modalBackdrop = document.getElementById("modalBackdrop");
 
         // LEFT
-        const model = document.getElementById("model");
+        const scene = document.getElementById("scene");
 
         const camera = document.querySelector("#camera");
 
@@ -26,6 +29,12 @@ export class Container {
         const orthographic = document.querySelector("#orthographic");
         const perspective = document.querySelector("#perspective");
         const oblique = document.querySelector("#oblique");
+
+        const colorPicker = document.getElementById("colorPicker");
+        const rValue = document.getElementById("rValue");
+        const gValue = document.getElementById("gValue");
+        const bValue = document.getElementById("bValue");
+        const hexValue = document.getElementById("hexValue");
 
         // CENTER
         const canvas = document.querySelector("#canvas");
@@ -63,7 +72,7 @@ export class Container {
         const deleteFrame = document.getElementById("deleteFrame");
 
         this.canvas = canvas as HTMLCanvasElement;
-        this.model = model as HTMLSelectElement;
+        this.scene = scene as HTMLSelectElement;
 
         this.elementRefs.set("loadFile", loadFile as HTMLElement);
         this.elementRefs.set("saveFile", saveFile as HTMLElement);
@@ -78,8 +87,14 @@ export class Container {
         this.elementRefs.set("orthographic", orthographic as HTMLElement);
         this.elementRefs.set("perspective", perspective as HTMLElement);
         this.elementRefs.set("oblique", oblique as HTMLElement);
+        this.elementRefs.set("colorPicker", colorPicker as HTMLElement);
+        this.elementRefs.set("rValue", rValue as HTMLElement);
+        this.elementRefs.set("gValue", gValue as HTMLElement);
+        this.elementRefs.set("bValue", bValue as HTMLElement);
+        this.elementRefs.set("hexValue", hexValue as HTMLElement);
+
         this.elementRefs.set("canvas", canvas as HTMLElement);
-        this.elementRefs.set("model", model as HTMLElement);
+        this.elementRefs.set("scene", scene as HTMLElement);
         this.elementRefs.set("activeComponent", activeComponent as HTMLElement);
         this.elementRefs.set("rotateX", rotateX as HTMLElement);
         this.elementRefs.set("rotateY", rotateY as HTMLElement);
