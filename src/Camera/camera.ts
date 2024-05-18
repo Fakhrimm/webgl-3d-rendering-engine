@@ -12,7 +12,7 @@ export class Camera extends Node {
 
     get viewProjectionMatrix() {
         this._invWorldMatrix = this.worldMatrix.clone().invert();
-        return this._projectionMatrix.clone().premultiply(this._invWorldMatrix);
+        return this._projectionMatrix.clone().multiply(this._invWorldMatrix);
     }
 
     computeProjectionMatrix() {
