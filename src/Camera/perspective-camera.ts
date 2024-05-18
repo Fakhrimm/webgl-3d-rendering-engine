@@ -31,7 +31,7 @@ export class PerspectiveCamera extends Camera {
 
 	override setZoom(newZoom: number) {
 		super.setZoom(newZoom);
-		this.setRotationZ(this.zoom * 50);
+		this.setRotationZ(this.zoom * 50 + 400);
 		this.updateWorldMatrix()
 	}
 
