@@ -10,26 +10,9 @@ export class Camera extends Node {
         super();
     }
 
-    // static fromJSON(json: any): Camera {
-    //     return new Camera();
-    // }
-
-    toJSON() {
-        console.log("Camera toJSON");
-    }
-
-    computeWorldMatrix() {
-        // super.computeWorldMatrix();
-        this._invWorldMatrix = this.worldMatrix.clone().invert();
-    }
-
     get viewProjectionMatrix() {
-        this.computeWorldMatrix();
+        this._invWorldMatrix = this.worldMatrix.clone().invert();
         return this._projectionMatrix.clone().premultiply(this._invWorldMatrix);
-    }
-
-    get projectionMatrix() {
-        return this._projectionMatrix;
     }
 
     computeProjectionMatrix() {
@@ -41,4 +24,13 @@ export class Camera extends Node {
     getCameraType(): CameraType {
         return CameraType.BASE;
     }
+
+
+    // static fromJSON(json: any): Camera {
+    //     return new Camera();
+    // }
+
+    // toJSON() {
+    //     console.log("Camera toJSON");
+    // }
 }

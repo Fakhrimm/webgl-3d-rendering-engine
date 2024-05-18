@@ -58,17 +58,17 @@ export class RingGeometry extends BufferGeometry {
         this.setIndices(new BufferAttribute(new Uint16Array(indices), 1));
     }
 
-    static fromJSON(json: any): RingGeometry {
-        return new RingGeometry(json.width, json.height);
-    }
-
-    public toJSON(): object {
-        return {
-            ...super.toJSON(),
-            innerRadius: this.innerRadius,
-            outerRadius: this.outerRadius,
-            thetaSegments: this.thetaSegments,
-            phiSegments: this.phiSegments,
-        };
-    }
+    // static fromJSON(json: any): RingGeometry {
+    //     return new RingGeometry(json.width, json.height);
+    // }
+    //
+    // public toJSON(): object {
+    //     return {
+    //         ...super.toJSON(),
+    //         innerRadius: this.innerRadius,
+    //         outerRadius: this.outerRadius,
+    //         thetaSegments: this.thetaSegments,
+    //         phiSegments: this.phiSegments,
+    //     };
+    // }
 }

@@ -62,16 +62,16 @@ export class SphereGeometry extends BufferGeometry {
         this.setIndices(new BufferAttribute(new Uint16Array(indices), 1));
     }
 
-    static fromJSON(json: any): SphereGeometry {
-        return new SphereGeometry(json.radius, json.widthSegments, json.heightSegments);
-    }
-
-    public toJSON(): object {
-        return {
-            ...super.toJSON(),
-            radius: this.radius,
-            widthSegments: this.widthSegments,
-            heightSegments: this.heightSegments
-        };
-    }
+    // static fromJSON(json: any): SphereGeometry {
+    //     return new SphereGeometry(json.radius, json.widthSegments, json.heightSegments);
+    // }
+    //
+    // public toJSON(): object {
+    //     return {
+    //         ...super.toJSON(),
+    //         radius: this.radius,
+    //         widthSegments: this.widthSegments,
+    //         heightSegments: this.heightSegments
+    //     };
+    // }
 }

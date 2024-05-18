@@ -33,18 +33,18 @@ export class PlaneGeometry extends BufferGeometry {
         this.setIndices(new BufferAttribute(indices, 3));
         this.setAttribute('a_texcoord', new BufferAttribute(texcoord, 2));
 
-        this.calculateNormals();
+        // this.calculateNormals();
     }
 
-    static fromJSON(json: any): PlaneGeometry {
-        return new PlaneGeometry(json.width, json.height);
-    }
-
-    public toJSON(): object {
-        return {
-            ...super.toJSON(),
-            width: this.width,
-            height: this.height,
-        };
-    }
+    // static fromJSON(json: any): PlaneGeometry {
+    //     return new PlaneGeometry(json.width, json.height);
+    // }
+    //
+    // public toJSON(): object {
+    //     return {
+    //         ...super.toJSON(),
+    //         width: this.width,
+    //         height: this.height,
+    //     };
+    // }
 }

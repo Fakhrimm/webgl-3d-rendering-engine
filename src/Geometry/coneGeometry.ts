@@ -93,18 +93,18 @@ export class ConeGeometry extends BufferGeometry {
         this.setIndices(new BufferAttribute(new Uint16Array(indices), 1));
     }
 
-    static fromJSON(json: any): ConeGeometry {
-        return new ConeGeometry(json.radius, json.height, json.radialSegments, json.heightSegments, json.openEnded);
-    }
-
-    public toJSON(): object {
-        return {
-            ...super.toJSON(),  
-            radius: this.radius,
-            height: this.height,
-            radialSegments: this.radialSegments,
-            heightSegments: this.heightSegments,
-            openEnded: this.openEnded
-        };
-    }
+    // static fromJSON(json: any): ConeGeometry {
+    //     return new ConeGeometry(json.radius, json.height, json.radialSegments, json.heightSegments, json.openEnded);
+    // }
+    //
+    // public toJSON(): object {
+    //     return {
+    //         ...super.toJSON(),
+    //         radius: this.radius,
+    //         height: this.height,
+    //         radialSegments: this.radialSegments,
+    //         heightSegments: this.heightSegments,
+    //         openEnded: this.openEnded
+    //     };
+    // }
 }

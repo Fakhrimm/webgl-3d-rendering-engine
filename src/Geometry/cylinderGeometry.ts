@@ -119,19 +119,19 @@ export class CylinderGeometry extends BufferGeometry {
         this.setIndices(new BufferAttribute(new Uint16Array(indices), 1));
     }
 
-    static fromJSON(json: any): CylinderGeometry {
-        return new CylinderGeometry(json.radiusTop, json.radiusBottom, json.height, json.radialSegments, json.heightSegments, json.openEnded);
-    }
-
-    public toJSON(): object {
-        return {
-            ...super.toJSON(),
-            radiusTop: this.radiusTop,
-            radiusBottom: this.radiusBottom,
-            height: this.height,
-            radialSegments: this.radialSegments,
-            heightSegments: this.heightSegments,
-            openEnded: this.openEnded
-        };
-    }
+    // static fromJSON(json: any): CylinderGeometry {
+    //     return new CylinderGeometry(json.radiusTop, json.radiusBottom, json.height, json.radialSegments, json.heightSegments, json.openEnded);
+    // }
+    //
+    // public toJSON(): object {
+    //     return {
+    //         ...super.toJSON(),
+    //         radiusTop: this.radiusTop,
+    //         radiusBottom: this.radiusBottom,
+    //         height: this.height,
+    //         radialSegments: this.radialSegments,
+    //         heightSegments: this.heightSegments,
+    //         openEnded: this.openEnded
+    //     };
+    // }
 }
