@@ -1,5 +1,4 @@
 import {Camera} from "../Camera/camera";
-import {OrthographicCamera} from "../Camera/orthographicCamera";
 import {Scene} from "../Object/scene";
 import {ProgramInfo} from "./program-info";
 import {Mesh} from "../Object/mesh.ts";
@@ -24,9 +23,9 @@ export class WebGLRenderer {
     render(scene: Scene) {
         this.initialSetup();
 
-        const camera = this.getCamera(scene, OrthographicCamera);
+        const camera = scene.getActiveCamera();
         if (!camera) {
-            throw new Error("No camera found in the scene");
+            throw new Error("No active camera found in the scene");
         }
 
         scene.updateWorldMatrix();
@@ -124,21 +123,5 @@ export class WebGLRenderer {
             this.canvas.height = displayHeight;
         }
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    getCamera(
-        scene: Scene,
-        cameraType: new (...args: any[]) => Camera
-    ): Camera | null {
-        let foundCamera: Camera | null = null;
-        scene.traverseWithTotalBreak((node) => {
-            if (node instanceof cameraType) {
-                foundCamera = node as Camera;
-                return false; // Found the camera, stop traversal
-            }
-            return true; // Continue traversal otherwise
-        });
-
-        return foundCamera;
     }
 }
