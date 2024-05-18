@@ -56,13 +56,13 @@ export class WebGLRenderer {
         this.programInfos[MaterialTypes.BASIC].setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
             u_ambientColor: [0.2, 0.2, 0.2],
-            u_reverseLightDirection: [-10, 0, -10],
+            u_reverseLightDirection: [-5, 0, 10],
         });
 
         this.programInfos[MaterialTypes.PHONG].setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
             u_ambientColor: [0.2, 0.2, 0.2],
-            u_reverseLightDirection: [-10, 0, -10],
+            u_reverseLightDirection: [-5, 0, 10],
         });
     }
 
