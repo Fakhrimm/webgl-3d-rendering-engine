@@ -1,4 +1,5 @@
 import { Matrix4 } from "./matrix-4";
+import {clamp} from "./math-util.ts";
 
 class Vector3 {
     x: number;
@@ -88,9 +89,7 @@ class Vector3 {
 	}
 
 	clone() {
-
 		return new Vector3( this.x, this.y, this.z );
-
 	}
 
 	copy( v: Vector3) {
@@ -147,6 +146,68 @@ class Vector3 {
 		return this;
 
 	}
+
+	sub( v: Vector3 ) {
+		this.x -= v.x;
+		this.y -= v.y;
+		this.z -= v.z;
+		return this;
+	}
+
+	cross( v: Vector3 ) {
+		return this.crossVectors( this, v );
+	}
+
+	crossVectors( a: Vector3, b:Vector3 ) {
+		const ax = a.x, ay = a.y, az = a.z;
+		const bx = b.x, by = b.y, bz = b.z;
+
+		this.x = ay * bz - az * by;
+		this.y = az * bx - ax * bz;
+		this.z = ax * by - ay * bx;
+
+		return this;
+	}
+
+	normalize() {
+		return this.divideScalar( this.length() || 1 );
+	}
+
+	length() {
+		return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z );
+	}
+
+	divideScalar( scalar: number ) {
+		return this.multiplyScalar( 1 / scalar );
+	}
+
+	multiplyScalar( scalar:number ) {
+		this.x *= scalar;
+		this.y *= scalar;
+		this.z *= scalar;
+		return this;
+	}
+	angleTo( v: Vector3) {
+		const denominator = Math.sqrt( this.lengthSq() * v.lengthSq() );
+		if ( denominator === 0 ) return Math.PI / 2;
+
+		const theta = this.dot( v ) / denominator;
+
+		// clamp, to handle numerical problems
+		return Math.acos(clamp( theta, - 1, 1 ) );
+	}
+
+	lengthSq() {
+		return this.x * this.x + this.y * this.y + this.z * this.z;
+	}
+
+	dot( v: Vector3) {
+		return this.x * v.x + this.y * v.y + this.z * v.z;
+	}
+
+
+
+
 }
 
 // const _vector = new Vector3();
