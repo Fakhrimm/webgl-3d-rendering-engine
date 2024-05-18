@@ -30,11 +30,28 @@ export class Container {
         const perspective = document.querySelector("#perspective");
         const oblique = document.querySelector("#oblique");
 
-        const colorPicker = document.getElementById("colorPicker");
-        const rValue = document.getElementById("rValue");
-        const gValue = document.getElementById("gValue");
-        const bValue = document.getElementById("bValue");
-        const hexValue = document.getElementById("hexValue");
+        const colorPickerDiffuse =
+            document.getElementById("colorPickerDiffuse");
+        const rValueDiffuse = document.getElementById("rValueDiffuse");
+        const gValueDiffuse = document.getElementById("gValueDiffuse");
+        const bValueDiffuse = document.getElementById("bValueDiffuse");
+        const colorPickerSpecular = document.getElementById(
+            "colorPickerSpecular"
+        );
+        const rValueSpecular = document.getElementById("rValueSpecular");
+        const gValueSpecular = document.getElementById("gValueSpecular");
+        const bValueSpecular = document.getElementById("bValueSpecular");
+        const shininess = document.getElementById("shininess");
+
+        const errorPopup = document.getElementById(
+            "errorPopup"
+        ) as HTMLDivElement;
+        const errorMessage = document.getElementById(
+            "errorMessage"
+        ) as HTMLParagraphElement;
+        const closeErrorPopup = document.getElementById(
+            "closeErrorPopup"
+        ) as HTMLButtonElement;
 
         // CENTER
         const canvas = document.querySelector("#canvas");
@@ -87,11 +104,24 @@ export class Container {
         this.elementRefs.set("orthographic", orthographic as HTMLElement);
         this.elementRefs.set("perspective", perspective as HTMLElement);
         this.elementRefs.set("oblique", oblique as HTMLElement);
-        this.elementRefs.set("colorPicker", colorPicker as HTMLElement);
-        this.elementRefs.set("rValue", rValue as HTMLElement);
-        this.elementRefs.set("gValue", gValue as HTMLElement);
-        this.elementRefs.set("bValue", bValue as HTMLElement);
-        this.elementRefs.set("hexValue", hexValue as HTMLElement);
+        this.elementRefs.set(
+            "colorPickerDiffuse",
+            colorPickerDiffuse as HTMLElement
+        );
+        this.elementRefs.set("rValueDiffuse", rValueDiffuse as HTMLElement);
+        this.elementRefs.set("gValueDiffuse", gValueDiffuse as HTMLElement);
+        this.elementRefs.set("bValueDiffuse", bValueDiffuse as HTMLElement);
+        this.elementRefs.set(
+            "colorPickerSpecular",
+            colorPickerSpecular as HTMLElement
+        );
+        this.elementRefs.set("rValueSpecular", rValueSpecular as HTMLElement);
+        this.elementRefs.set("gValueSpecular", gValueSpecular as HTMLElement);
+        this.elementRefs.set("bValueSpecular", bValueSpecular as HTMLElement);
+        this.elementRefs.set("shininess", shininess as HTMLElement);
+        this.elementRefs.set("errorPopup", errorPopup as HTMLElement);
+        this.elementRefs.set("errorMessage", errorMessage as HTMLElement);
+        this.elementRefs.set("closeErrorPopup", closeErrorPopup as HTMLElement);
 
         this.elementRefs.set("canvas", canvas as HTMLElement);
         this.elementRefs.set("scene", scene as HTMLElement);

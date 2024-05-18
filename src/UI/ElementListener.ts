@@ -1,7 +1,7 @@
-import {BasicMaterial} from "../Material/basic-material";
-import {Variables} from "./Variables";
-import {Mesh} from "../Object/mesh.ts";
-import {PhongMaterial} from "../Material/phong-material.ts";
+import { BasicMaterial } from "../Material/basic-material";
+import { Variables } from "./Variables";
+import { Mesh } from "../Object/mesh.ts";
+import { PhongMaterial } from "../Material/phong-material.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -24,36 +24,110 @@ export function elementListner(variables: Variables) {
     saveFile.addEventListener("click", () => {});
 
     // LEFT
-    const colorPicker = container.getElement("colorPicker") as HTMLInputElement;
-    const rValue = container.getElement("rValue") as HTMLInputElement;
-    const gValue = container.getElement("gValue") as HTMLInputElement;
-    const bValue = container.getElement("bValue") as HTMLInputElement;
-    const hexValue = container.getElement("hexValue") as HTMLInputElement;
+    const colorPickerDiffuse = container.getElement(
+        "colorPickerDiffuse"
+    ) as HTMLInputElement;
+    const rValueDiffuse = container.getElement(
+        "rValueDiffuse"
+    ) as HTMLInputElement;
+    const gValueDiffuse = container.getElement(
+        "gValueDiffuse"
+    ) as HTMLInputElement;
+    const bValueDiffuse = container.getElement(
+        "bValueDiffuse"
+    ) as HTMLInputElement;
+    const colorPickerSpecular = container.getElement(
+        "colorPickerSpecular"
+    ) as HTMLInputElement;
+    const rValueSpecular = container.getElement(
+        "rValueSpecular"
+    ) as HTMLInputElement;
+    const gValueSpecular = container.getElement(
+        "gValueSpecular"
+    ) as HTMLInputElement;
+    const bValueSpecular = container.getElement(
+        "bValueSpecular"
+    ) as HTMLInputElement;
+    const shininess = container.getElement("shininess") as HTMLInputElement;
+    const errorPopup = container.getElement("errorPopup") as HTMLInputElement;
+    const errorMessage = container.getElement(
+        "errorMessage"
+    ) as HTMLInputElement;
+    const closeErrorPopup = container.getElement(
+        "closeErrorPopup"
+    ) as HTMLInputElement;
 
-    colorPicker.addEventListener("input", (event) => {
+    closeErrorPopup.addEventListener("click", () => {
+        errorPopup.classList.add("hidden");
+    });
+
+    function showError(message: string) {
+        errorMessage.textContent = message;
+        errorPopup.classList.remove("hidden");
+    }
+
+    colorPickerDiffuse.addEventListener("input", (event) => {
         const color = (event.target as HTMLInputElement).value;
         const r = parseInt(color.substr(1, 2), 16);
         const g = parseInt(color.substr(3, 2), 16);
         const b = parseInt(color.substr(5, 2), 16);
-        const hex = color.toUpperCase();
-        rValue.value = r.toString();
-        gValue.value = g.toString();
-        bValue.value = b.toString();
-        hexValue.value = hex;
+        rValueDiffuse.value = r.toString();
+        gValueDiffuse.value = g.toString();
+        bValueDiffuse.value = b.toString();
 
         const selectedNode = variables.getTree().reference;
 
         if (selectedNode instanceof Mesh) {
             const material = selectedNode.material;
-            if (material instanceof BasicMaterial) {
+            if (
+                material instanceof BasicMaterial ||
+                material instanceof PhongMaterial
+            ) {
                 material.setDiffuseColorFromRGB(r, g, b);
-            } else if (material instanceof PhongMaterial) {
+            }
+        }
+    });
 
+    colorPickerSpecular.addEventListener("input", (event) => {
+        const color = (event.target as HTMLInputElement).value;
+        const r = parseInt(color.substr(1, 2), 16);
+        const g = parseInt(color.substr(3, 2), 16);
+        const b = parseInt(color.substr(5, 2), 16);
+        rValueSpecular.value = r.toString();
+        gValueSpecular.value = g.toString();
+        bValueSpecular.value = b.toString();
+
+        const selectedNode = variables.getTree().reference;
+
+        if (selectedNode instanceof Mesh) {
+            const material = selectedNode.material;
+            if (material instanceof PhongMaterial) {
+                console.log("PHONG");
+                material.setSpecularColorFromRGB(r, g, b);
+            } else {
+                showError(
+                    "Error: Only PhongMaterial can access this function."
+                );
             }
         }
 
         console.log(selectedNode);
         console.log(color);
+    });
+
+    shininess.addEventListener("input", (event) => {
+        const value = Number((event.target as HTMLInputElement).value);
+        const selectedNode = variables.getTree().reference;
+        if (selectedNode instanceof Mesh) {
+            const material = selectedNode.material;
+            if (material instanceof PhongMaterial) {
+                material.setShininess(value);
+            } else {
+                showError(
+                    "Error: Only PhongMaterial can access this function."
+                );
+            }
+        }
     });
 
     // RIGHT
