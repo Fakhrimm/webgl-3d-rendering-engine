@@ -48,6 +48,8 @@ export class WebGLRenderer {
                     u_worldInverseTranspose: node.getWorldInverseTransposeMatrix().elements,
                 });
                 this.draw(geometry);
+            } else if (!(node instanceof Camera)) {
+                node.updateWorldMatrix();
             }
         });
     }
