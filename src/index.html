@@ -289,14 +289,22 @@
                     <!-- Error Popup -->
                     <div
                         id="errorPopup"
-                        class="hidden fixed inset-0 items-center justify-center bg-black bg-opacity-50"
+                        class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
                     >
-                        <div class="bg-red-500 text-white p-4 rounded-lg">
-                            <h2 class="text-lg font-bold">Error</h2>
-                            <p id="errorMessage">An error occurred.</p>
+                        <div
+                            class="bg-red-600 text-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 ease-in-out scale-95"
+                        >
+                            <h2
+                                class="text-2xl font-bold flex items-center gap-2"
+                            >
+                                <i data-lucide="alert-triangle"></i>Error
+                            </h2>
+                            <p id="errorMessage" class="mt-2 text-base">
+                                An error occurred.
+                            </p>
                             <button
                                 id="closeErrorPopup"
-                                class="mt-2 px-4 py-2 bg-red-700 rounded-lg"
+                                class="mt-4 px-6 py-2 bg-red-700 hover:bg-red-800 rounded-lg transition-colors duration-200"
                             >
                                 Close
                             </button>

@@ -9,6 +9,17 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
+
+    // Utility Function
+    function showError(message: string) {
+        errorMessage.textContent = message;
+        errorPopup.classList.remove("hidden");
+    }
+
+    function getSelectedNode() {
+        return variables.getTree().reference;
+    }
+
     // TOP
     const help = container.getElement("help");
     const modalContainer = container.getElement("modalContainer");
@@ -30,59 +41,54 @@ export function elementListner(variables: Variables) {
     });
 
     loadFile.addEventListener("click", () => {
-        // To Do Set Scene from loaded scene
         SaveLoader.loadModel();
     });
 
     // LEFT
-    const camera = container.getElement("camera");
-    camera.addEventListener("input", (event) => {
-        const value = Number((event.target as HTMLInputElement).value);
-        console.log("Camera angle:", value);
-        const selectedNode = variables.getTree().reference;
-        selectedNode.setActiveCameraZoom(value);
+
+    let radius = getSelectedNode().getActiveCamera()?.getZoom() ?? 0;
+    const zoomIn = container.getElement("zoomIn");
+    zoomIn.addEventListener("click", () => {
+        radius += 0.5;
+        console.log("Current radius:", radius);
+        getSelectedNode().setActiveCameraZoom(radius);
+    });
+    const zoomOut = container.getElement("zoomOut");
+    zoomOut.addEventListener("click", () => {
+        radius -= 0.5;
+        console.log("Current radius:", radius);
+        getSelectedNode().setActiveCameraZoom(radius);
     });
 
     const shader = container.getElement("shader") as HTMLInputElement;
-
     shader.addEventListener("change", (event) => {
-        // Your code to handle the checkbox state change goes here
         const isChecked = (event.target as HTMLInputElement).checked;
-        console.log("Checkbox is checked:", isChecked);
-
         const selectedNode = variables.getTree().reference;
         if (selectedNode instanceof Mesh) {
             if (isChecked) {
-                console.log("SMOOTH");
                 selectedNode.geometry.setToSmoothShading();
             } else {
-                console.log("FLAT");
                 selectedNode.geometry.setToFlatShading();
             }
         }
     });
 
-    const orthographic = container.getElement("orthographic");
-    const perspective = container.getElement("perspective");
-    const oblique = container.getElement("oblique");
+    const cameraButtons = [
+        { id: "orthographic", camera: OrthographicCamera },
+        { id: "perspective", camera: PerspectiveCamera },
+        { id: "oblique", camera: ObliqueCamera },
+    ];
 
-    orthographic.addEventListener("click", () => {
-        const selectedNode = variables.getTree().reference;
-        selectedNode.setActiveCamera(OrthographicCamera);
-    });
-    perspective.addEventListener("click", () => {
-        const selectedNode = variables.getTree().reference;
-        selectedNode.setActiveCamera(PerspectiveCamera);
-    });
-    oblique.addEventListener("click", () => {
-        const selectedNode = variables.getTree().reference;
-        selectedNode.setActiveCamera(ObliqueCamera);
+    cameraButtons.forEach((button) => {
+        const element = container.getElement(button.id);
+        element.addEventListener("click", () => {
+            getSelectedNode().setActiveCamera(button.camera);
+        });
     });
 
     const reset = container.getElement("reset");
     reset.addEventListener("click", () => {
-        const selectedNode = variables.getTree().reference;
-        selectedNode.setActiveCameraToDefault();
+        getSelectedNode().setActiveCameraToDefault();
     });
 
     const colorPickerDiffuse = container.getElement(
@@ -122,10 +128,10 @@ export function elementListner(variables: Variables) {
         errorPopup.classList.add("hidden");
     });
 
-    function showError(message: string) {
-        errorMessage.textContent = message;
-        errorPopup.classList.remove("hidden");
-    }
+    let previousDiffuseColor = colorPickerDiffuse.value;
+    let previousRValueDiffuse = rValueDiffuse.value;
+    let previousGValueDiffuse = gValueDiffuse.value;
+    let previousBValueDiffuse = bValueDiffuse.value;
 
     colorPickerDiffuse.addEventListener("input", (event) => {
         const color = (event.target as HTMLInputElement).value;
@@ -138,16 +144,36 @@ export function elementListner(variables: Variables) {
 
         const selectedNode = variables.getTree().reference;
 
-        if (selectedNode instanceof Mesh) {
-            const material = selectedNode.material;
-            if (
-                material instanceof BasicMaterial ||
-                material instanceof PhongMaterial
-            ) {
-                material.setDiffuseColorFromRGB(r, g, b);
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (
+                    material instanceof BasicMaterial ||
+                    material instanceof PhongMaterial
+                ) {
+                    material.setDiffuseColorFromRGB(r, g, b);
+                    previousDiffuseColor = color;
+                } else {
+                    throw new Error(
+                        "Only Mesh with BasicMaterial or PhongMaterial can access this function."
+                    );
+                }
+            } else {
+                throw new Error("Only Mesh can access this function.");
             }
+        } catch (error) {
+            showError(String(error));
+            colorPickerDiffuse.value = previousDiffuseColor;
+            rValueDiffuse.value = previousRValueDiffuse;
+            gValueDiffuse.value = previousGValueDiffuse;
+            bValueDiffuse.value = previousBValueDiffuse;
         }
     });
+
+    let previousSpecularColor = colorPickerSpecular.value;
+    let previousRValueSpecular = rValueSpecular.value;
+    let previousGValueSpecular = gValueSpecular.value;
+    let previousBValueSpecular = bValueSpecular.value;
 
     colorPickerSpecular.addEventListener("input", (event) => {
         const color = (event.target as HTMLInputElement).value;
@@ -160,34 +186,50 @@ export function elementListner(variables: Variables) {
 
         const selectedNode = variables.getTree().reference;
 
-        if (selectedNode instanceof Mesh) {
-            const material = selectedNode.material;
-            if (material instanceof PhongMaterial) {
-                console.log("PHONG");
-                material.setSpecularColorFromRGB(r, g, b);
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (material instanceof PhongMaterial) {
+                    material.setSpecularColorFromRGB(r, g, b);
+                    previousSpecularColor = color;
+                } else {
+                    throw new Error(
+                        "Only Mesh with PhongMaterial can access this function."
+                    );
+                }
             } else {
-                showError(
-                    "Error: Only PhongMaterial can access this function."
-                );
+                throw new Error("Only Mesh can access this function.");
             }
+        } catch (error) {
+            showError(String(error));
+            colorPickerSpecular.value = previousSpecularColor;
+            rValueSpecular.value = previousRValueSpecular;
+            gValueSpecular.value = previousGValueSpecular;
+            bValueSpecular.value = previousBValueSpecular;
         }
-
-        console.log(selectedNode);
-        console.log(color);
     });
 
+    let previousShininess = shininess.value;
     shininess.addEventListener("input", (event) => {
         const value = Number((event.target as HTMLInputElement).value);
         const selectedNode = variables.getTree().reference;
-        if (selectedNode instanceof Mesh) {
-            const material = selectedNode.material;
-            if (material instanceof PhongMaterial) {
-                material.setShininess(value);
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (material instanceof PhongMaterial) {
+                    material.setShininess(value);
+                    previousShininess = value.toString();
+                } else {
+                    throw new Error(
+                        "Only Mesh with PhongMaterial can access this function."
+                    );
+                }
             } else {
-                showError(
-                    "Error: Only PhongMaterial can access this function."
-                );
+                throw new Error("Only Mesh can access this function.");
             }
+        } catch (error) {
+            showError(String(error));
+            shininess.value = previousShininess;
         }
     });
 
