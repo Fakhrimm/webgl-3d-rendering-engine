@@ -35,6 +35,14 @@ export function elementListner(variables: Variables) {
     });
 
     // LEFT
+    const camera = container.getElement("camera");
+    camera.addEventListener("input", (event) => {
+        const value = Number((event.target as HTMLInputElement).value);
+        console.log("Camera angle:", value);
+        const selectedNode = variables.getTree().reference;
+        selectedNode.setActiveCameraZoom(value);
+    });
+
     const shader = container.getElement("shader") as HTMLInputElement;
 
     shader.addEventListener("change", (event) => {
@@ -69,6 +77,12 @@ export function elementListner(variables: Variables) {
     oblique.addEventListener("click", () => {
         const selectedNode = variables.getTree().reference;
         selectedNode.setActiveCamera(ObliqueCamera);
+    });
+
+    const reset = container.getElement("reset");
+    reset.addEventListener("click", () => {
+        const selectedNode = variables.getTree().reference;
+        selectedNode.setActiveCameraToDefault();
     });
 
     const colorPickerDiffuse = container.getElement(
