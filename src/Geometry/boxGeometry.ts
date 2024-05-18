@@ -1,4 +1,5 @@
 import {BufferGeometry} from "./bufferGeometry";
+import {BufferAttribute} from "./bufferAttribute.ts";
 
 export class BoxGeometry extends BufferGeometry {
     width: number;
@@ -45,5 +46,30 @@ export class BoxGeometry extends BufferGeometry {
             6, 2, 1,
         ]);
         this.calculateAndSetAttributes(vertices, indices);
+        this.rewriteTexcoord()
+    }
+
+    rewriteTexcoord() {
+        const texcoord = new Float32Array([
+            // front
+            1, 1,  1,0,  0, 0,
+            0, 0,  0, 1,  1, 1,
+            // back
+            1, 1,  1,0,  0, 0,
+            0, 0,  0, 1,  1, 1,
+            // top
+            1, 1,  1,0,  0, 0,
+            0, 0,  0, 1,  1, 1,
+            // bottom
+            1, 1,  1,0,  0, 0,
+            0, 0,  0, 1,  1, 1,
+            // right
+            1, 1,  1,0,  0, 0,
+            0, 0,  0, 1,  1, 1,
+            // left
+            1, 1,  1,0,  0, 0,
+            0, 0,  0, 1,  1, 1,
+        ]);
+        this.setAttribute('a_texcoord', new BufferAttribute(texcoord, 2));
     }
 }
