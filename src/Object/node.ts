@@ -46,6 +46,10 @@ export class Node {
         child.parent = this;
     }
 
+    protected setLocalMatrix(matrix: Matrix4) {
+        this.localMatrix = matrix;
+    }
+
     public updateLocalMatrix() {
         this.localMatrix.compose(this.position, this.quaternion, this.scale);
     }

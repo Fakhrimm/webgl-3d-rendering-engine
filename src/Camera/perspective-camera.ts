@@ -1,5 +1,4 @@
-import { CameraType } from "../Types/camera-types";
-import { Camera } from "./camera";
+import {Camera} from "./camera";
 
 export class PerspectiveCamera extends Camera {
     fov: number;
@@ -28,10 +27,14 @@ export class PerspectiveCamera extends Camera {
 		let left = - 0.5 * width;
 
 		this._projectionMatrix.perspective(left, left + width, top, top - height, near, this.far);
-      }
+	}
 
-    override getCameraType() {
-        return CameraType.PERSPECTIVE;
-    }
+	override setZoom(newZoom: number) {
+		super.setZoom(newZoom);
+		this.setRotationZ(this.zoom * 50);
+		this.updateWorldMatrix()
+	}
+
+
 }
 

@@ -1,5 +1,4 @@
-import { CameraType } from "../Types/camera-types";
-import { Camera } from "./camera";
+import {Camera} from "./camera";
 
 export class ObliqueCamera extends Camera {
     top: number;
@@ -12,34 +11,35 @@ export class ObliqueCamera extends Camera {
     beta: number;
 
     constructor(left = - 1, right = 1, top = 1, bottom = - 1, near = 0.1, far = 2000) {
-      super();
-      this.left = left;
-      this.right = right;
-      this.top = top;
-      this.bottom = bottom;
-      this.near = near;
-      this.far = far;
-      this.alpha = 0.001;
-      this.beta = Math.PI/4;
+        super();
+        this.left = left;
+        this.right = right;
+        this.top = top;
+        this.bottom = bottom;
+        this.near = near;
+        this.far = far;
+        this.alpha = 0.001;
+        this.beta = Math.PI/4;
 
-      this.computeProjectionMatrix();
+        this.computeProjectionMatrix();
     }
 
     computeProjectionMatrix() {
-      const dx = ( this.right - this.left ) / ( 2 * this.zoom );
-      const dy = ( this.top - this.bottom ) / ( 2 * this.zoom );
-      const cx = ( this.right + this.left ) / 2;
-      const cy = ( this.top + this.bottom ) / 2;
-  
-      let left = cx - dx;
-      let right = cx + dx;
-      let top = cy + dy;
-      let bottom = cy - dy;
-  
-      this._projectionMatrix.oblique(left, right, top, bottom, this.near, this.far, this.alpha, this.beta);
-      }
+        const dx = ( this.right - this.left ) / ( 2 * this.zoom );
+        const dy = ( this.top - this.bottom ) / ( 2 * this.zoom );
+        const cx = ( this.right + this.left ) / 2;
+        const cy = ( this.top + this.bottom ) / 2;
 
-    override getCameraType() {
-        return CameraType.OBLIQUE;
+        let left = cx - dx;
+        let right = cx + dx;
+        let top = cy + dy;
+        let bottom = cy - dy;
+
+        this._projectionMatrix.oblique(left, right, top, bottom, this.near, this.far, this.alpha, this.beta);
+    }
+
+    override setZoom(newZoom: number) {
+        super.setZoom(newZoom);
+        this.computeProjectionMatrix();
     }
 }
