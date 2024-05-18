@@ -21,13 +21,15 @@ export class Scene extends Node {
         const scene = new Scene();
         scene.name = "SceneDummy";
 
+        const cameraNode = new Node();
+        cameraNode.name = "CameraNode";
         const orthographicCamera = new OrthographicCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            -500,
-            500
+            1000,
+            -1000
         );
         orthographicCamera.name = "OrthoCamera";
 
@@ -38,12 +40,16 @@ export class Scene extends Node {
         // let mesh = new Mesh(new BoxGeometry(50, 50, 50, 5, 50), material2);
         mesh.name = "Mesh";
 
-        let mesh2 = new Mesh(new BoxGeometry(100, 100, 100), material2);
+        let mesh2 = new Mesh(new BoxGeometry(100, 100, 100, true), material2);
         mesh2.name = "Mesh2";
 
-        mesh2.setPosition(0, 0, 100);
+        orthographicCamera.setPosition(0, 0, 0);
+        mesh2.setPosition(0, 0, 0);
 
-        orthographicCamera.setParent(scene);
+
+
+        orthographicCamera.setParent(cameraNode);
+        cameraNode.setParent(scene);
         // mesh.setParent(scene);
         mesh2.setParent(scene);
 
