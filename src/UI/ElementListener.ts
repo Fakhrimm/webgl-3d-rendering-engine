@@ -24,6 +24,25 @@ export function elementListner(variables: Variables) {
     saveFile.addEventListener("click", () => {});
 
     // LEFT
+    const shader = container.getElement("shader") as HTMLInputElement;
+
+    shader.addEventListener("change", (event) => {
+        // Your code to handle the checkbox state change goes here
+        const isChecked = (event.target as HTMLInputElement).checked;
+        console.log("Checkbox is checked:", isChecked);
+
+        const selectedNode = variables.getTree().reference;
+        if (selectedNode instanceof Mesh) {
+            if (isChecked) {
+                console.log("SMOOTH");
+                selectedNode.geometry.setToSmoothShading();
+            } else {
+                console.log("FLAT");
+                selectedNode.geometry.setToFlatShading();
+            }
+        }
+    });
+
     const colorPickerDiffuse = container.getElement(
         "colorPickerDiffuse"
     ) as HTMLInputElement;

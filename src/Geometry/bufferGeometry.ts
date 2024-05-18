@@ -1,8 +1,8 @@
-import { BufferAttribute } from './bufferAttribute'
-import {Vector3} from "../Math/vector-3.ts";
+import { BufferAttribute } from "./bufferAttribute";
+import { Vector3 } from "../Math/vector-3.ts";
 
 export class BufferGeometry {
-    private _attributes: {[name: string]: BufferAttribute};
+    private _attributes: { [name: string]: BufferAttribute };
     private inputPosition?: Float32Array;
     private inputIndices?: Uint16Array;
     private _indices?: BufferAttribute;
@@ -16,7 +16,6 @@ export class BufferGeometry {
     get attributes() {
         return this._attributes;
     }
-
 
     get indices() {
         return this._indices;
@@ -41,7 +40,10 @@ export class BufferGeometry {
         this.calculateAndSetAttributes(this.inputPosition!, this.inputIndices!);
     }
 
-    calculateAndSetAttributes(inputPosition: Float32Array, inputIndices: Uint16Array) {
+    calculateAndSetAttributes(
+        inputPosition: Float32Array,
+        inputIndices: Uint16Array
+    ) {
         this.inputPosition = inputPosition;
         this.inputIndices = inputIndices;
 
@@ -79,9 +81,21 @@ export class BufferGeometry {
                 const i2 = inputIndices[i + 1] * 4;
                 const i3 = inputIndices[i + 2] * 4;
 
-                const v1 = new Vector3(inputPosition[i1], inputPosition[i1 + 1], inputPosition[i1 + 2]);
-                const v2 = new Vector3(inputPosition[i2], inputPosition[i2 + 1], inputPosition[i2 + 2]);
-                const v3 = new Vector3(inputPosition[i3], inputPosition[i3 + 1], inputPosition[i3 + 2]);
+                const v1 = new Vector3(
+                    inputPosition[i1],
+                    inputPosition[i1 + 1],
+                    inputPosition[i1 + 2]
+                );
+                const v2 = new Vector3(
+                    inputPosition[i2],
+                    inputPosition[i2 + 1],
+                    inputPosition[i2 + 2]
+                );
+                const v3 = new Vector3(
+                    inputPosition[i3],
+                    inputPosition[i3 + 1],
+                    inputPosition[i3 + 2]
+                );
 
                 const n = v2.clone().sub(v1).cross(v3.clone().sub(v1));
 
@@ -96,21 +110,36 @@ export class BufferGeometry {
         } else {
             // https://stackoverflow.com/questions/45477806/general-method-for-calculating-smooth-vertex-normals-with-100-smoothness
             // Calculate vertex normals
-            const vertexNormals: Vector3[] = new Array(inputPosition.length / 4)
+            const vertexNormals: Vector3[] = new Array(
+                inputPosition.length / 4
+            );
             for (let i = 0; i < vertexNormals.length; i++) {
                 vertexNormals[i] = new Vector3(0, 0, 0);
             }
-            const vertexFaces: number[] = new Array(inputPosition.length / 4).fill(0);
+            const vertexFaces: number[] = new Array(
+                inputPosition.length / 4
+            ).fill(0);
 
             for (let i = 0; i < inputIndices.length; i += 3) {
-
                 const i1 = inputIndices[i];
                 const i2 = inputIndices[i + 1];
                 const i3 = inputIndices[i + 2];
 
-                const v1 = new Vector3(inputPosition[i1 * 4], inputPosition[i1 * 4 + 1], inputPosition[i1 * 4 + 2]);
-                const v2 = new Vector3(inputPosition[i2 * 4], inputPosition[i2 * 4 + 1], inputPosition[i2 * 4 + 2]);
-                const v3 = new Vector3(inputPosition[i3 * 4], inputPosition[i3 * 4 + 1], inputPosition[i3 * 4 + 2]);
+                const v1 = new Vector3(
+                    inputPosition[i1 * 4],
+                    inputPosition[i1 * 4 + 1],
+                    inputPosition[i1 * 4 + 2]
+                );
+                const v2 = new Vector3(
+                    inputPosition[i2 * 4],
+                    inputPosition[i2 * 4 + 1],
+                    inputPosition[i2 * 4 + 2]
+                );
+                const v3 = new Vector3(
+                    inputPosition[i3 * 4],
+                    inputPosition[i3 * 4 + 1],
+                    inputPosition[i3 * 4 + 2]
+                );
 
                 const n = v2.clone().sub(v1).cross(v3.clone().sub(v1));
 
@@ -121,11 +150,11 @@ export class BufferGeometry {
                 const angle2 = v3.clone().sub(v2).angleTo(v1.clone().sub(v2));
                 const angle3 = v1.clone().sub(v3).angleTo(v2.clone().sub(v3));
 
-                const res1 = n.clone().multiplyScalar(angle1)
-                const res2 = n.clone().multiplyScalar(angle2)
-                const res3 = n.clone().multiplyScalar(angle3)
+                const res1 = n.clone().multiplyScalar(angle1);
+                const res2 = n.clone().multiplyScalar(angle2);
+                const res3 = n.clone().multiplyScalar(angle3);
 
-                vertexNormals[i1].add(res1)
+                vertexNormals[i1].add(res1);
                 vertexNormals[i2].add(res2);
                 vertexNormals[i3].add(res3);
 
@@ -150,9 +179,9 @@ export class BufferGeometry {
             }
         }
 
-        this.setAttribute('a_position', new BufferAttribute(position, 4))
-        this.setAttribute('a_normal', new BufferAttribute(normal, 3));
-        this.setAttribute('a_texcoord', new BufferAttribute(texcoord, 2));
+        this.setAttribute("a_position", new BufferAttribute(position, 4));
+        this.setAttribute("a_normal", new BufferAttribute(normal, 3));
+        this.setAttribute("a_texcoord", new BufferAttribute(texcoord, 2));
     }
 
     toJSON() {
@@ -160,6 +189,6 @@ export class BufferGeometry {
             isSmoothShading: this.isSmoothShading,
             inputPosition: this.inputPosition!,
             inputIndices: this.inputIndices!,
-        }
+        };
     }
 }
