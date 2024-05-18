@@ -63,21 +63,15 @@ export function elementListner(variables: Variables) {
 
     rotateX.addEventListener("input", () => {
         const val = rotateX.valueAsNumber;
-        console.log("X", val);
-        // console.log(variables.getTree());
-        variables.getTree().reference.setRotationX(val);
+        variables.getTree().reference.setRotationX(val * Math.PI * 1.5);
     });
     rotateY.addEventListener("input", () => {
         const val = rotateY.valueAsNumber;
-        console.log("Y", val);
-        // console.log(variables.getTree());
-        variables.getTree().reference.setRotationY(val);
+        variables.getTree().reference.setRotationY(val * Math.PI * 1.5);
     });
     rotateZ.addEventListener("input", () => {
         const val = rotateZ.valueAsNumber;
-        console.log("Z", val);
-        // console.log(variables.getTree());
-        variables.getTree().reference.setRotationZ(val);
+        variables.getTree().reference.setRotationZ(val * Math.PI * 1.5);
     });
 
     const scaleX = container.getElement("scaleX") as HTMLInputElement;
@@ -86,20 +80,14 @@ export function elementListner(variables: Variables) {
 
     scaleX.addEventListener("input", () => {
         const val = scaleX.valueAsNumber;
-        console.log("X", val);
-        console.log(variables.getTree());
         variables.getTree().reference.setScaleX(val);
     });
     scaleY.addEventListener("input", () => {
         const val = scaleY.valueAsNumber;
-        console.log("Y", val);
-        // console.log(variables.getTree());
         variables.getTree().reference.setScaleY(val);
     });
     scaleZ.addEventListener("input", () => {
         const val = scaleZ.valueAsNumber;
-        console.log("Z", val);
-        // console.log(variables.getTree());
         variables.getTree().reference.setScaleZ(val);
     });
 
@@ -127,7 +115,7 @@ export function elementListner(variables: Variables) {
     });
     translateZ.addEventListener("input", () => {
         const val = translateZ.valueAsNumber;
-        variables.getTree().reference.setPositionZ(val * 100);
+        variables.getTree().reference.setPositionZ(val * 5);
     });
 
     const play = container.getElement("play") as HTMLInputElement;
