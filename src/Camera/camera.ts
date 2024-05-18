@@ -5,9 +5,11 @@ import {CameraType} from "../Types/camera-types";
 export class Camera extends Node {
     protected _projectionMatrix = new Matrix4().identity();
     private _invWorldMatrix = new Matrix4().identity();
+    protected zoom: number;
 
     constructor() {
         super();
+        this.zoom = 1;
     }
 
     get viewProjectionMatrix() {
@@ -25,7 +27,13 @@ export class Camera extends Node {
         return CameraType.BASE;
     }
 
+    getZoom(): number {
+        return this.zoom;
+    }
 
+    setZoom(newZoom: number) {
+        this.zoom = newZoom;
+    }
     // static fromJSON(json: any): Camera {
     //     return new Camera();
     // }

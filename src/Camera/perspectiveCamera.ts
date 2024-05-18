@@ -3,7 +3,6 @@ import { Camera } from "./camera";
 
 export class PerspectiveCamera extends Camera {
     fov: number;
-    zoom: number;
     near: number;
     far: number;
     focus: number;
@@ -16,7 +15,6 @@ export class PerspectiveCamera extends Camera {
 		this.far = far;
 		this.focus = 10;
 		this.aspect = aspect;
-        this.zoom = 0.0005;
 
 		this.computeProjectionMatrix();
 

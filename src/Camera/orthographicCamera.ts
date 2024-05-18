@@ -8,7 +8,6 @@ export class OrthographicCamera extends Camera {
 	  right: number;
 	  near: number;
 	  far: number;
-	  zoom: number;
 
 		constructor(left = - 1, right = 1, top = 1, bottom = - 1, near = 0.1, far = 2000) {
 
@@ -19,7 +18,6 @@ export class OrthographicCamera extends Camera {
 			this.bottom = bottom;
 			this.near = near;
 			this.far = far;
-			this.zoom = 1;
 
 			this.computeProjectionMatrix();
 		}

@@ -10,7 +10,6 @@ export class ObliqueCamera extends Camera {
     far: number;
     alpha: number;
     beta: number;
-    zoom: number;
 
     constructor(left = - 1, right = 1, top = 1, bottom = - 1, near = 0.1, far = 2000) {
       super();
@@ -22,7 +21,6 @@ export class ObliqueCamera extends Camera {
       this.far = far;
       this.alpha = 0.001;
       this.beta = Math.PI/4;
-      this.zoom = 1;
 
       this.computeProjectionMatrix();
     }

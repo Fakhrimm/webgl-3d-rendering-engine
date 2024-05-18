@@ -1,7 +1,8 @@
-import { BasicMaterial } from "../Material/basic-material";
-import { Variables } from "./Variables";
-import { Mesh } from "../Object/mesh.ts";
-import { PhongMaterial } from "../Material/phong-material.ts";
+import {BasicMaterial} from "../Material/basic-material";
+import {Variables} from "./Variables";
+import {Mesh} from "../Object/mesh.ts";
+import {PhongMaterial} from "../Material/phong-material.ts";
+import { SaveLoader } from "../Utils/save-loader.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -21,7 +22,14 @@ export function elementListner(variables: Variables) {
     const saveFile = container.getElement("saveFile");
     const loadFile = container.getElement("loadFile");
 
-    saveFile.addEventListener("click", () => {});
+    saveFile.addEventListener("click", () => {
+        SaveLoader.saveModel(variables.getScene(), "pixar.json");
+    });
+
+    loadFile.addEventListener("click", () => {
+        // To Do Set Scene from loaded scene
+        SaveLoader.loadModel();
+    });
 
     // LEFT
     const shader = container.getElement("shader") as HTMLInputElement;
