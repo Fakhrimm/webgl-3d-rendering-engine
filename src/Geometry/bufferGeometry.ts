@@ -113,7 +113,9 @@ export class BufferGeometry {
                 const v3 = new Vector3(inputPosition[i3 * 4], inputPosition[i3 * 4 + 1], inputPosition[i3 * 4 + 2]);
 
                 const n = v2.clone().sub(v1).cross(v3.clone().sub(v1));
-                n.normalize();
+
+                // Uncomment the following line if you want unweighted area normals
+                // n.normalize();
 
                 const angle1 = v2.clone().sub(v1).angleTo(v3.clone().sub(v1));
                 const angle2 = v3.clone().sub(v2).angleTo(v1.clone().sub(v2));
