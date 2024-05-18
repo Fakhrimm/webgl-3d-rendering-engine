@@ -1,8 +1,11 @@
-import {BasicMaterial} from "../Material/basic-material";
-import {Variables} from "./Variables";
-import {Mesh} from "../Object/mesh.ts";
-import {PhongMaterial} from "../Material/phong-material.ts";
+import { BasicMaterial } from "../Material/basic-material";
+import { Variables } from "./Variables";
+import { Mesh } from "../Object/mesh.ts";
+import { PhongMaterial } from "../Material/phong-material.ts";
 import { SaveLoader } from "../Utils/save-loader.ts";
+import { OrthographicCamera } from "../Camera/orthographic-camera.ts";
+import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
+import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -49,6 +52,23 @@ export function elementListner(variables: Variables) {
                 selectedNode.geometry.setToFlatShading();
             }
         }
+    });
+
+    const orthographic = container.getElement("orthographic");
+    const perspective = container.getElement("perspective");
+    const oblique = container.getElement("oblique");
+
+    orthographic.addEventListener("click", () => {
+        const selectedNode = variables.getTree().reference;
+        selectedNode.setActiveCamera(OrthographicCamera);
+    });
+    perspective.addEventListener("click", () => {
+        const selectedNode = variables.getTree().reference;
+        selectedNode.setActiveCamera(PerspectiveCamera);
+    });
+    oblique.addEventListener("click", () => {
+        const selectedNode = variables.getTree().reference;
+        selectedNode.setActiveCamera(ObliqueCamera);
     });
 
     const colorPickerDiffuse = container.getElement(
