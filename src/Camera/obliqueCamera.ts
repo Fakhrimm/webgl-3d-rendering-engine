@@ -38,7 +38,7 @@ export class ObliqueCamera extends Camera {
       let top = cy + dy;
       let bottom = cy - dy;
   
-      this.projectionMatrix.oblique(left, right, top, bottom, this.near, this.far, this.alpha, this.beta);
+      this._projectionMatrix.oblique(left, right, top, bottom, this.near, this.far, this.alpha, this.beta);
       }
 
     override getCameraType() {

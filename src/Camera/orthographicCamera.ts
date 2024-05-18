@@ -35,7 +35,7 @@ export class OrthographicCamera extends Camera {
 			let top = cy + dy;
 			let bottom = cy - dy;
 
-			this.projectionMatrix.orthographic(left, right, top, bottom, this.near, this.far);
+			this._projectionMatrix.orthographic(left, right, top, bottom, this.near, this.far);
   }
 
   override getCameraType() {
