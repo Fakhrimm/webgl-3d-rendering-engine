@@ -2,6 +2,7 @@ import { Matrix4 } from "../Math/matrix-4";
 import { Vector3 } from "../Math/vector-3";
 import { Euler } from "../Math/euler.ts";
 import { Quaternion } from "../Math/quaternion.ts";
+import { INode } from "../Utils/model-interface.ts";
 
 export class Node {
     public name: string = "";
@@ -168,5 +169,29 @@ export class Node {
 
     public getChildren(): Node[] {
         return [...this.children];
+    }
+
+    public toRaw(): INode {
+        return {
+            name: this.name,
+            position: {
+                x: this.position.x,
+                y: this.position.y,
+                z: this.position.z,
+            },
+            scale: {
+                x: this.scale.x,
+                y: this.scale.y,
+                z: this.scale.z,
+            },
+            rotation: {
+                x: this.rotation.x,
+                y: this.rotation.y,
+                z: this.rotation.z,
+            },
+            localMatrix: this.localMatrix.toArray(),
+            worldMatrix: this.worldMatrix.toArray(),
+            children: [],
+        };
     }
 }
