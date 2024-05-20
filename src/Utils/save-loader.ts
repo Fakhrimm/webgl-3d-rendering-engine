@@ -6,15 +6,16 @@ import { INode, INodes } from "./model-interface";
 
 export class SaveLoader {
   static async saveModel(model: Scene, fileName: string) {
-    const json = JSON.stringify(this.modelToJSON(model));
+    const json = JSON.stringify(this.modelToRaw(model), null, 2);
     await FileManager.writeFile(fileName, json);
   }
 
-  static async loadModel(
-  ) {
+  static async loadModel() {
+    // const json = await FileManager.readFile();
+    // return this.jsonToModel(json);
   }
 
-  static modelToJSON(model: Scene): INodes {
+  static modelToRaw(model: Scene): INodes {
     let [rawNodes, _] = this.nodeToRaw(model, 0);
     var json: INodes = {nodes: rawNodes};
 
