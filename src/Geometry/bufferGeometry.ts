@@ -1,5 +1,6 @@
 import { BufferAttribute } from "./bufferAttribute";
 import { Vector3 } from "../Math/vector-3.ts";
+import {Vector2} from "../Math/vector-2.ts";
 
 export class BufferGeometry {
     private _attributes: { [name: string]: BufferAttribute };
@@ -24,6 +25,9 @@ export class BufferGeometry {
     setIndices(indices: BufferAttribute) {
         this._indices = indices;
         return this;
+    }
+    getAttribute(name: string): BufferAttribute | null {
+        return this._attributes[name];
     }
 
     setAttribute(name: string, attribute: BufferAttribute) {
@@ -185,6 +189,64 @@ export class BufferGeometry {
             texcoord[i3 + 1] = 1;
         }
         this.setAttribute("a_texcoord", new BufferAttribute(texcoord, 2));
+    }
+    calculateAndSetTangents() {
+        // https://learnopengl.com/Advanced-Lighting/Normal-Mapping
+        const positionAttr = this.getAttribute("a_position");
+        const normalAttr = this.getAttribute("a_normal");
+        const texcoordAttr = this.getAttribute("a_texcoord");
+        if (!positionAttr || !normalAttr || !texcoordAttr) {
+            throw new Error("Missing attributes");
+        }
+        const position = positionAttr.data as Float32Array;
+        const texcoord = texcoordAttr.data as Float32Array;
+
+        const tangent = new Float32Array(3 * position.length / 4);
+        for (let i = 0; i < position.length / 4; i+=3) {
+            const p1 = new Vector3(
+                position[i * 4],
+                position[i * 4 + 1],
+                position[i * 4 + 2]
+            );
+            const p2 = new Vector3(
+                position[(i + 1) * 4],
+                position[(i + 1) * 4 + 1],
+                position[(i + 1) * 4 + 2]
+            );
+            const p3 = new Vector3(
+                position[(i + 2) * 4],
+                position[(i + 2) * 4 + 1],
+                position[(i + 2) * 4 + 2]
+            );
+
+            const e1 = p2.clone().sub(p1);
+            const e2 = p3.clone().sub(p1);
+
+            const uv1 = new Vector2(
+                texcoord[i * 2],
+                texcoord[i * 2 + 1]
+            );
+            const uv2 = new Vector2(
+                texcoord[(i + 1) * 2],
+                texcoord[(i + 1) * 2 + 1]
+            );
+            const uv3 = new Vector2(
+                texcoord[(i + 2) * 2],
+                texcoord[(i + 2) * 2 + 1]
+            );
+
+            const deltaUV1 = uv2.clone().sub(uv1);
+            const deltaUV2 = uv3.clone().sub(uv1);
+
+            const f = 1.0 / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+            for (let j = 0; j < 3; j++) {
+                tangent[(i + j) * 3] = f * (deltaUV2.y * e1.x - deltaUV1.y * e2.x);
+                tangent[(i + j) * 3 + 1] = f * (deltaUV2.y * e1.y - deltaUV1.y * e2.y);
+                tangent[(i + j) * 3 + 2] = f * (deltaUV2.y * e1.z - deltaUV1.y * e2.z);
+            }
+        }
+        this.setAttribute("a_tangent", new BufferAttribute(tangent, 3));
     }
 
     toJSON() {

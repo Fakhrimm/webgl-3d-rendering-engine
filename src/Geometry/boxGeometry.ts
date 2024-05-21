@@ -47,6 +47,7 @@ export class BoxGeometry extends BufferGeometry {
         ]);
         this.calculateAndSetAttributes(vertices, indices);
         this.rewriteTexcoord()
+        this.calculateAndSetTangents()
     }
 
     rewriteTexcoord() {
