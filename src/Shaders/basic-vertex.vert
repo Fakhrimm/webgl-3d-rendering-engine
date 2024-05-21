@@ -1,4 +1,3 @@
-// uniform mat4 u_worldViewProjection;
 uniform mat4 u_viewProjection;
 uniform mat4 u_world;
 uniform mat4 u_worldInverseTranspose;

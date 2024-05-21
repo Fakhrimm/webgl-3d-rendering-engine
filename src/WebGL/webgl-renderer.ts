@@ -55,13 +55,13 @@ export class WebGLRenderer {
         this.programInfos[MaterialTypes.BASIC].setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
             u_ambientColor: [0.2, 0.2, 0.2],
-            u_reverseLightDirection: [-5, 0, 10],
+            u_reverseLightDirection: [0, 0, 100],
         });
 
         this.programInfos[MaterialTypes.PHONG].setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
             u_ambientColor: [0.2, 0.2, 0.2],
-            u_reverseLightDirection: [-5, 0, 10],
+            u_reverseLightDirection: [0, 0, 100],
         });
     }
 
@@ -80,6 +80,9 @@ export class WebGLRenderer {
                 geometry.attributes.a_position.data.length / 4
             );
         }
+
+        // Unbind the texture so the next texture show error and not use the previous texture
+        this.gl.bindTexture(this.gl.TEXTURE_2D, null)
     }
 
     private initialSetup() {

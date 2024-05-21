@@ -2,6 +2,7 @@ import {Material} from "./material.ts";
 import {Color} from "../Math/color.ts";
 import {MaterialTypes} from "../Types/material-types.ts";
 import {ProgramInfo} from "../WebGL/program-info.ts";
+import {TextureTypes} from "../Types/texture-types.ts";
 
 export class PhongMaterial extends Material {
     private u_diffuseColor: Color;
@@ -10,14 +11,21 @@ export class PhongMaterial extends Material {
     private u_ka: number;
     private u_kd: number;
     private u_ks: number;
+    private diffuseTextureType: TextureTypes;
+    private specularTextureType: TextureTypes;
+    private displacementTextureType: TextureTypes;
+    private normalTextureType: TextureTypes;
 
     constructor(
-        u_diffuseColor: Color = Color.GREEN,
+        u_diffuseColor: Color = Color.WHITE,
         u_specularColor: Color = Color.WHITE,
-        u_shininess: number = 32,
+        u_shininess: number = 50,
         u_ka: number = 0.2,
         u_kd: number = 0.8,
-        u_ks: number = 0.5
+        u_ks: number = 0.5,
+        diffTextureType: TextureTypes = TextureTypes.DIFFUSE_2,
+        specTextureType: TextureTypes = TextureTypes.SPECULAR_2,
+
     ) {
         super();
         this._materialType = MaterialTypes.PHONG;
@@ -27,6 +35,8 @@ export class PhongMaterial extends Material {
         this.u_ka = u_ka;
         this.u_kd = u_kd;
         this.u_ks = u_ks;
+        this.diffuseTextureType = diffTextureType;
+        this.specularTextureType = specTextureType;
     }
 
     override setUniforms(programInfo: ProgramInfo, textures: WebGLTexture[]): void {
@@ -37,6 +47,8 @@ export class PhongMaterial extends Material {
             u_ka: this.u_ka,
             u_kd: this.u_kd,
             u_ks: this.u_ks,
+            u_diffuseTexture: textures[this.diffuseTextureType],
+            u_specularTexture: textures[this.specularTextureType],
         });
     }
 

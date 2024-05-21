@@ -8,7 +8,7 @@ export class BasicMaterial extends Material {
     protected u_diffuseColor: Color;
     protected diffuseTextureType: TextureTypes;
 
-    constructor(u_diffuseColor: Color = Color.GREEN, textureType: TextureTypes = TextureTypes.DIFFUSE_3) {
+    constructor(u_diffuseColor: Color = Color.GREEN, textureType: TextureTypes = TextureTypes.DIFFUSE_2) {
         super()
         this._materialType = MaterialTypes.BASIC
         this.u_diffuseColor = u_diffuseColor
