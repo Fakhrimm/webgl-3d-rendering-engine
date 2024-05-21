@@ -42,14 +42,14 @@ export class BufferGeometry {
 
     calculateAndSetAttributes(
         inputPosition: Float32Array,
-        inputIndices: Uint16Array
+        inputIndices: Uint16Array,
     ) {
         this.inputPosition = inputPosition;
         this.inputIndices = inputIndices;
 
         const position = new Float32Array(4 * inputIndices.length);
         const normal = new Float32Array(3 * inputIndices.length);
-        const texcoord = new Float32Array(2 * inputIndices.length);
+
 
         // Copy input to position
         for (let i = 0; i < inputIndices.length; i++) {
@@ -58,20 +58,6 @@ export class BufferGeometry {
             position[i * 4 + 1] = inputPosition[index * 4 + 1];
             position[i * 4 + 2] = inputPosition[index * 4 + 2];
             position[i * 4 + 3] = inputPosition[index * 4 + 3];
-        }
-
-        // Copy input to texcoord
-        for (let i = 0; i < inputIndices.length; i += 3) {
-            const i1 = inputIndices[i] * 2;
-            const i2 = inputIndices[i + 1] * 2;
-            const i3 = inputIndices[i + 2] * 2;
-
-            texcoord[i1] = 0;
-            texcoord[i1 + 1] = 0;
-            texcoord[i2] = 1;
-            texcoord[i2 + 1] = 0;
-            texcoord[i3] = 1;
-            texcoord[i3 + 1] = 1;
         }
 
         if (!this.isSmoothShading) {
@@ -181,6 +167,23 @@ export class BufferGeometry {
 
         this.setAttribute("a_position", new BufferAttribute(position, 4));
         this.setAttribute("a_normal", new BufferAttribute(normal, 3));
+    }
+
+    calculateAndSetTexCoords(inputIndices: Uint16Array) {
+        const texcoord = new Float32Array(2 * inputIndices.length);
+        // Copy input to texcoord
+        for (let i = 0; i < inputIndices.length; i += 3) {
+            const i1 = inputIndices[i] * 2;
+            const i2 = inputIndices[i + 1] * 2;
+            const i3 = inputIndices[i + 2] * 2;
+
+            texcoord[i1] = 0;
+            texcoord[i1 + 1] = 0;
+            texcoord[i2] = 1;
+            texcoord[i2 + 1] = 0;
+            texcoord[i3] = 1;
+            texcoord[i3 + 1] = 1;
+        }
         this.setAttribute("a_texcoord", new BufferAttribute(texcoord, 2));
     }
 
