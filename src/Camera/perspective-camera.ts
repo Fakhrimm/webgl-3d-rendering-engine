@@ -4,16 +4,15 @@ export class PerspectiveCamera extends Camera {
     fov: number;
     near: number;
     far: number;
-    focus: number;
     aspect: number;
 
-	constructor(fov = 60, aspect = 1, near = 0.1, far = 2000) {
+	constructor(fov = 60, aspect = 1, near = 0.1, far = 2000, zoom: number = 1) {
 		super();
 		this.fov = fov;
 		this.near = near;
 		this.far = far;
-		this.focus = 10;
 		this.aspect = aspect;
+		this.zoom = zoom;
 
 		this.computeProjectionMatrix();
 
@@ -31,8 +30,12 @@ export class PerspectiveCamera extends Camera {
 
 	override setZoom(newZoom: number) {
 		super.setZoom(newZoom);
-		this.setRotationZ(this.zoom * 50 + 400);
-		this.updateWorldMatrix()
+		this.computeProjectionMatrix()
+	}
+
+	setFov(fov: number) {
+		this.fov = fov;
+		this.computeProjectionMatrix();
 	}
 
 
