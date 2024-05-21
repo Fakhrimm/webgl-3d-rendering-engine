@@ -62,4 +62,18 @@ export class PhongMaterial extends Material {
     public setShininess(shininess: number) {
         this.u_shininess = shininess;
     }
+
+    public setDiffuseTextureType(index: number) {
+        if (index < 0 || index > 3) {
+            throw new Error("Invalid texture type");
+        }
+        this.diffuseTextureType = index as TextureTypes;
+    }
+
+    public setSpecularTextureType(index: number) {
+        if (index < 0 || index > 3) {
+            throw new Error("Invalid texture type");
+        }
+        this.specularTextureType = index + 4 as TextureTypes;
+    }
 }
