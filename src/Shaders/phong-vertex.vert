@@ -8,10 +8,12 @@
     attribute vec4 a_position;
     attribute vec3 a_normal;
     attribute vec2 a_texcoord;
+    attribute vec3 a_tangent;
      
     varying vec4 v_position;
     varying vec2 v_texCoord;
     varying vec3 v_normal;
+    varying mat3 v_tbn;
      
     void main() {
         // Memberi koordinat texture ke fragment shader
@@ -23,7 +25,20 @@
         // Dikalikan world inverse transpose untuk mendapatkan normal yang benar
         // Ketika dilakukan scaling
         // webglfundamentals.org/webgl/lessons/webgl-3d-lighting-directional.html
-        v_normal = (u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
+        vec3 normal = (u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
+
+        // Dikalikan world inverse transpose untuk mendapatkan tangent yang benar
+        vec3 tangent = (u_worldInverseTranspose * vec4(a_tangent, 0)).xyz;
+
+        //Gram-Schmidt process
+        tangent = normalize(tangent - dot(tangent, normal) * normal);
+
+        vec3 bitangent = cross(normal, tangent);
+
+        v_tbn = mat3(tangent, bitangent, normal);
+
+        v_normal = normal;
+
 
         gl_Position = v_position;
     }

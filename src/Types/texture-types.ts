@@ -7,4 +7,8 @@ export enum TextureTypes {
     SPECULAR_1 = 5,
     SPECULAR_2= 6,
     SPECULAR_3= 7,
+    NORMAL_DEFAULT = 8,
+    NORMAL_1 = 9,
+    NORMAL_2 = 10,
+    NORMAL_3 = 11,
 }

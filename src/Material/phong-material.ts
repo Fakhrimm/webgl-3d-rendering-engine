@@ -23,9 +23,9 @@ export class PhongMaterial extends Material {
         u_ka: number = 0.2,
         u_kd: number = 0.8,
         u_ks: number = 0.5,
-        diffTextureType: TextureTypes = TextureTypes.DIFFUSE_2,
-        specTextureType: TextureTypes = TextureTypes.SPECULAR_2,
-
+        diffTextureType: TextureTypes = TextureTypes.DIFFUSE_DEFAULT,
+        specTextureType: TextureTypes = TextureTypes.SPECULAR_DEFAULT,
+        normalTextureType: TextureTypes = TextureTypes.NORMAL_1,
     ) {
         super();
         this._materialType = MaterialTypes.PHONG;
@@ -37,6 +37,7 @@ export class PhongMaterial extends Material {
         this.u_ks = u_ks;
         this.diffuseTextureType = diffTextureType;
         this.specularTextureType = specTextureType;
+        this.normalTextureType = normalTextureType;
     }
 
     override setUniforms(programInfo: ProgramInfo, textures: WebGLTexture[]): void {
@@ -49,6 +50,7 @@ export class PhongMaterial extends Material {
             u_ks: this.u_ks,
             u_diffuseTexture: textures[this.diffuseTextureType],
             u_specularTexture: textures[this.specularTextureType],
+            u_normalTexture: textures[this.normalTextureType],
         });
     }
 
@@ -75,5 +77,12 @@ export class PhongMaterial extends Material {
             throw new Error("Invalid texture type");
         }
         this.specularTextureType = index + 4 as TextureTypes;
+    }
+
+    public setNormalTextureType(index: number) {
+        if (index < 0 || index > 3) {
+            throw new Error("Invalid texture type");
+        }
+        this.normalTextureType = index + 8 as TextureTypes;
     }
 }
