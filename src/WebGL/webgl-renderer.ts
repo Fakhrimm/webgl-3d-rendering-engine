@@ -10,13 +10,11 @@ export class WebGLRenderer {
     canvas: HTMLCanvasElement;
     gl: WebGLRenderingContext;
     programInfos: ProgramInfo[] = [];
-    constructor(canvas: HTMLCanvasElement) {
+    textures: WebGLTexture[];
+    constructor(canvas: HTMLCanvasElement, gl: WebGLRenderingContext, textures: WebGLTexture[]) {
         this.canvas = canvas;
-        const gl = this.canvas.getContext("webgl");
-        if (!gl) {
-            throw new Error("No webgl support");
-        }
         this.gl = gl;
+        this.textures = textures;
         this.loadProgramInfos();
     }
 
@@ -38,7 +36,7 @@ export class WebGLRenderer {
 
                 const material = node.material;
                 const programInfo = this.programInfos[material.materialType()];
-                material.setUniforms(programInfo);
+                material.setUniforms(programInfo, this.textures);
 
                 const geometry = node.geometry;
                 programInfo.setAttributesAndIndices(geometry);

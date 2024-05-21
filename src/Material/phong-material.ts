@@ -29,7 +29,7 @@ export class PhongMaterial extends Material {
         this.u_ks = u_ks;
     }
 
-    override setUniforms(programInfo: ProgramInfo): void {
+    override setUniforms(programInfo: ProgramInfo, textures: WebGLTexture[]): void {
         programInfo.setUniforms({
             u_diffuseColor: this.u_diffuseColor.get(),
             u_specularColor: this.u_specularColor.get(),

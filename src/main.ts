@@ -6,6 +6,7 @@ import {Variables} from "./UI/Variables.ts";
 import {Render} from "./UI/Render.ts";
 import {elementListner} from "./UI/ElementListener.ts";
 import {Tree} from "./UI/Tree.ts";
+import {TextureLoader} from "./Texture/texture-loader.ts";
 
 const main = async () => {
     // Get Canvas and WebGL context
@@ -24,8 +25,11 @@ const main = async () => {
         return;
     }
 
+    const textureLoader = new TextureLoader();
+    const textures = await textureLoader.loadTexture(gl);
+
     // Load shaders
-    const webGLRenderer = new WebGLRenderer(canvas);
+    const webGLRenderer = new WebGLRenderer(canvas, gl, textures);
 
     // Setup and render
     const renderer = new Render(webGLRenderer);
