@@ -34,13 +34,13 @@ export function elementListner(variables: Variables) {
     });
 
     const saveFile = container.getElement("saveFile");
-    const loadFile = container.getElement("loadFile");
+    const loadFile = container.getElement("loadFile") as HTMLInputElement;
 
     saveFile.addEventListener("click", () => {
         SaveLoader.saveModel(variables.getScene(), "pixar.json");
     });
 
-    loadFile.addEventListener("click", () => {
+    loadFile.addEventListener("change", () => {
         SaveLoader.loadModel();
     });
 

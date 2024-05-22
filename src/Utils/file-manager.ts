@@ -14,18 +14,4 @@ export class FileManager {
     a.href = url;
     a.click();
   }
-
-  public static loadImage(
-    path: string,
-    callback: (img: HTMLImageElement) => void
-  ) {
-    const img = new Image();
-    img.src = path;
-    img.crossOrigin = "";
-    img.onload = () => {
-      callback(img);
-    };
-
-    return img;
-  }
 }

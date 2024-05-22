@@ -1,6 +1,7 @@
 import { BufferAttribute } from "./bufferAttribute";
 import { Vector3 } from "../Math/vector-3.ts";
 import {Vector2} from "../Math/vector-2.ts";
+import { IBufferGeometry } from "../Utils/model-interface.ts";
 
 export class BufferGeometry {
     private _attributes: { [name: string]: BufferAttribute };
@@ -249,7 +250,7 @@ export class BufferGeometry {
         this.setAttribute("a_tangent", new BufferAttribute(tangent, 3));
     }
 
-    toJSON() {
+    public toRaw(): IBufferGeometry {
         return {
             isSmoothShading: this.isSmoothShading,
             inputPosition: this.inputPosition!,
