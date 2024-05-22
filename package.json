@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/node": "^20.12.12",
     "esm": "^3.2.25",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",

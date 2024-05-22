@@ -6,6 +6,7 @@ import { SaveLoader } from "../Utils/save-loader.ts";
 import { OrthographicCamera } from "../Camera/orthographic-camera.ts";
 import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
 import { ObliqueCamera } from "../Camera/oblique-camera.ts";
+import { AnimationRunner } from "../Animation/animationRunner.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -295,6 +296,10 @@ export function elementListner(variables: Variables) {
         variables.getTree().reference.setPositionZ(val * 5);
     });
 
+    // ANIMATION
+    let lastFrameTime: number | undefined;
+    const animationRunner = new AnimationRunner("../Animation/Animations/boxspin.json", variables.getTree().reference, variables);
+
     const play = container.getElement("play") as HTMLInputElement;
     const pause = container.getElement("pause") as HTMLInputElement;
     const reverse = container.getElement("reverse") as HTMLInputElement;
@@ -303,4 +308,31 @@ export function elementListner(variables: Variables) {
     const prev = container.getElement("prev") as HTMLInputElement;
     const first = container.getElement("first") as HTMLInputElement;
     const last = container.getElement("last") as HTMLInputElement;
+
+    play.addEventListener("click", () => {
+        animationRunner.play();
+    
+        function runAnim(currentTime: number) {
+            if (lastFrameTime === undefined) lastFrameTime = currentTime;
+            const deltaSecond = (currentTime - lastFrameTime) / 1000;
+            try {
+                animationRunner.update(deltaSecond);
+            } catch (error) {
+                showError(String(error));
+                animationRunner.pause();
+                colorPickerDiffuse.value = previousDiffuseColor;
+                rValueDiffuse.value = previousRValueDiffuse;
+                gValueDiffuse.value = previousGValueDiffuse;
+                bValueDiffuse.value = previousBValueDiffuse;
+            }
+            lastFrameTime = currentTime;
+            requestAnimationFrame(runAnim);
+        }
+        requestAnimationFrame(runAnim);
+    });
+
+    pause.addEventListener("click", () => {
+        animationRunner.pause();
+    });
 }
+
