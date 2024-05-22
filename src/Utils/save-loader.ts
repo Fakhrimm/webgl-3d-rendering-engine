@@ -1,12 +1,14 @@
+import { Mesh } from "../Object/mesh";
 import { Node } from "../Object/node";
 import { Scene } from "../Object/scene";
 import { FileManager } from "./file-manager";
-import { INode, INodes } from "./model-interface";
+import { IMesh, IModel, INode } from "./model-interface";
 
 
 export class SaveLoader {
   static async saveModel(model: Scene, fileName: string) {
-    const json = JSON.stringify(this.modelToRaw(model), null, 2);
+    const raw = this.modelToRaw(model);
+    const json = JSON.stringify(raw, null, 2);
     await FileManager.writeFile(fileName, json);
   }
 
@@ -15,32 +17,42 @@ export class SaveLoader {
     // return this.jsonToModel(json);
   }
 
-  static modelToRaw(model: Scene): INodes {
-    let [rawNodes, _] = this.nodeToRaw(model, 0);
-    var json: INodes = {nodes: rawNodes};
+  static modelToRaw(model: Scene): IModel {
+    let [rawNodes, _, rawMeshes] = this.nodeToRaw(model, 0);
+    var raw: IModel = {nodes: rawNodes, meshes: rawMeshes};
 
-    return json;
+    return raw;
   }
 
-  static nodeToRaw(node: Node, currIndex: number): [INode[], number] {
+  static meshToRaw(mesh: Mesh): IMesh {
+    let rawMesh: IMesh = {
+      geometry: mesh.geometry.toRaw(),
+      material: mesh.material.materialType()
+    };
+
+    return rawMesh;
+  }
+
+  static nodeToRaw(node: Node, currIndex: number): [INode[], number, IMesh[]] {
     let rawNodes: INode[] = [];
+    let rawMeshes: IMesh[] = [];
     let rawNode = node.toRaw();
-    console.log(`Raw node: `);
-    console.log(rawNode);
     rawNodes.push(rawNode);
+
+    if (node.name.match(/^Mesh/i)) {
+      rawMeshes.push(this.meshToRaw(node as Mesh));
+    }
 
     node.getChildren().forEach((child) => {
       currIndex++;
       rawNode.children.push(currIndex);
       let rawChildNodes: INode[];
-      [rawChildNodes, currIndex] = this.nodeToRaw(child, currIndex);
-      console.log(`Raw child nodes: `);
-      console.log(rawChildNodes);
+      let rawChildMeshes: IMesh[];
+      [rawChildNodes, currIndex, rawChildMeshes] = this.nodeToRaw(child, currIndex);
       rawNodes = rawNodes.concat(rawChildNodes);
-      console.log(`Raw nodes after: `);
-      console.log(rawNodes); 
+      rawMeshes = rawMeshes.concat(rawChildMeshes);
     });
 
-    return [rawNodes, currIndex];
+    return [rawNodes, currIndex, rawMeshes];
   }
 }

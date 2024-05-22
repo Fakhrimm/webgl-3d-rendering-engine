@@ -189,8 +189,6 @@ export class Node {
                 y: this.rotation.y,
                 z: this.rotation.z,
             },
-            localMatrix: this.localMatrix.toArray(),
-            worldMatrix: this.worldMatrix.toArray(),
             children: [],
         };
     }
