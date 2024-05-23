@@ -25,11 +25,11 @@ export class PhongMaterial extends Material {
         u_ka: number = 0.2,
         u_kd: number = 0.8,
         u_ks: number = 0.5,
-        diffTextureType: TextureTypes = TextureTypes.DIFFUSE_DEFAULT,
-        specTextureType: TextureTypes = TextureTypes.SPECULAR_DEFAULT,
+        diffTextureType: TextureTypes = TextureTypes.DIFFUSE_0,
+        specTextureType: TextureTypes = TextureTypes.SPECULAR_0,
         normalTextureType: TextureTypes = TextureTypes.NORMAL_1,
-        displacementTextureType: TextureTypes = TextureTypes.DISPLACEMENT_DEFAULT,
-        displacementScale: number = 1,
+        displacementTextureType: TextureTypes = TextureTypes.DISPLACEMENT_0,
+        displacementScale: number = 100,
         displacementBias: number = 0.0,
     ) {
         super();
