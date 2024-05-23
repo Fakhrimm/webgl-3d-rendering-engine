@@ -11,10 +11,12 @@ export class TextureLoader {
         [TextureTypes.SPECULAR_1]: "../Assets/specular-1.png",
         [TextureTypes.SPECULAR_2]: "../Assets/specular-2.jpeg",
         [TextureTypes.SPECULAR_3]: "../Assets/specular-3.jpeg",
-        [TextureTypes.NORMAL_DEFAULT]: "../Assets/normal-default.jpg",
+        [TextureTypes.NORMAL_DEFAULT]: "../Assets/normal-default.png",
         [TextureTypes.NORMAL_1]: "../Assets/normal-1.png",
         [TextureTypes.NORMAL_2]: "../Assets/normal-2.jpeg",
         [TextureTypes.NORMAL_3]: "../Assets/normal-3.jpeg",
+        [TextureTypes.DISPLACEMENT_DEFAULT]: "../Assets/displacement-default.png",
+        [TextureTypes.DISPLACEMENT_1]: "../Assets/displacement-1.png",
     };
 
     async loadTexture(gl: WebGLRenderingContext) {

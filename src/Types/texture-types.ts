@@ -11,4 +11,6 @@ export enum TextureTypes {
     NORMAL_1 = 9,
     NORMAL_2 = 10,
     NORMAL_3 = 11,
+    DISPLACEMENT_DEFAULT = 12,
+    DISPLACEMENT_1 = 13,
 }

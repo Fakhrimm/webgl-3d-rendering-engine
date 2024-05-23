@@ -13,8 +13,10 @@ export class PhongMaterial extends Material {
     private u_ks: number;
     private diffuseTextureType: TextureTypes;
     private specularTextureType: TextureTypes;
-    private displacementTextureType: TextureTypes;
     private normalTextureType: TextureTypes;
+    private displacementTextureType: TextureTypes;
+    private displacementScale: number;
+    private displacementBias: number;
 
     constructor(
         u_diffuseColor: Color = Color.WHITE,
@@ -26,6 +28,9 @@ export class PhongMaterial extends Material {
         diffTextureType: TextureTypes = TextureTypes.DIFFUSE_DEFAULT,
         specTextureType: TextureTypes = TextureTypes.SPECULAR_DEFAULT,
         normalTextureType: TextureTypes = TextureTypes.NORMAL_1,
+        displacementTextureType: TextureTypes = TextureTypes.DISPLACEMENT_DEFAULT,
+        displacementScale: number = 1,
+        displacementBias: number = 0.0,
     ) {
         super();
         this._materialType = MaterialTypes.PHONG;
@@ -38,6 +43,9 @@ export class PhongMaterial extends Material {
         this.diffuseTextureType = diffTextureType;
         this.specularTextureType = specTextureType;
         this.normalTextureType = normalTextureType;
+        this.displacementTextureType = displacementTextureType;
+        this.displacementScale = displacementScale;
+        this.displacementBias = displacementBias;
     }
 
     override setUniforms(programInfo: ProgramInfo, textures: WebGLTexture[]): void {
@@ -51,6 +59,9 @@ export class PhongMaterial extends Material {
             u_diffuseTexture: textures[this.diffuseTextureType],
             u_specularTexture: textures[this.specularTextureType],
             u_normalTexture: textures[this.normalTextureType],
+            u_displacementTexture: textures[this.displacementTextureType],
+            u_displacementScale: this.displacementScale,
+            u_displacementBias: this.displacementBias,
         });
     }
 
