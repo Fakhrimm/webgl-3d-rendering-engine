@@ -12,7 +12,7 @@ export class PlaneGeometry extends BufferGeometry {
     ) {
         super();
         const vertices = PlaneGeometry.getVertices(width, height, depth, widthSegments, heightSegments, direction);
-        const texcoord = PlaneGeometry.getTexcoord(widthSegments, heightSegments, direction);
+        const texcoord = PlaneGeometry.getTexcoord(widthSegments, heightSegments);
         this.setAllInputs(new Float32Array(vertices), new Uint16Array(), new Float32Array(texcoord));
     }
 
@@ -33,18 +33,18 @@ export class PlaneGeometry extends BufferGeometry {
 
                 // First Triangle
                 widthVertices.push(x);
-                heightVertices.push(y);
+                widthVertices.push(x + deltaWidth);
                 widthVertices.push(x + deltaWidth);
                 heightVertices.push(y);
-                widthVertices.push(x + deltaWidth);
+                heightVertices.push(y);
                 heightVertices.push(y + deltaHeight);
 
                 // Second Triangle
                 widthVertices.push(x + deltaWidth);
-                heightVertices.push(y + deltaHeight);
+                widthVertices.push(x);
                 widthVertices.push(x);
                 heightVertices.push(y + deltaHeight);
-                widthVertices.push(x);
+                heightVertices.push(y + deltaHeight);
                 heightVertices.push(y);
             }
         }
@@ -102,37 +102,40 @@ export class PlaneGeometry extends BufferGeometry {
         return vertices;
     }
 
-    static getTexcoord(widthSegments: number, heightSegments: number, direction: string): number[] {
+    static getTexcoord(widthSegments: number, heightSegments: number): number[] {
+        const xTexcoord: number[] = [];
+        const yTexcoord: number[] = [];
         const texcoord: number[] = [];
-        const deltaWidth = -1 / widthSegments;
-        const deltaHeight = -1 / heightSegments;
+        const deltaWidth = 1 / widthSegments;
+        const deltaHeight = 1 / heightSegments;
+
         for (let i = 0; i < widthSegments; i++) {
             for (let j = 0; j < heightSegments; j++) {
-                const x = 1 - i * deltaWidth;
-                const y = 1 - j * deltaHeight;
+                const x = i * deltaWidth;
+                const y = j * deltaHeight;
 
                 // First Triangle
-                texcoord.push(x);
-                texcoord.push(y);
-                texcoord.push(x + deltaWidth);
-                texcoord.push(y);
-                texcoord.push(x + deltaWidth);
-                texcoord.push(y + deltaHeight);
+                xTexcoord.push(x);
+                xTexcoord.push(x + deltaWidth);
+                xTexcoord.push(x + deltaWidth);
+                yTexcoord.push(y);
+                yTexcoord.push(y);
+                yTexcoord.push(y + deltaHeight);
 
                 // Second Triangle
-                texcoord.push(x + deltaWidth);
-                texcoord.push(y + deltaHeight);
-                texcoord.push(x);
-                texcoord.push(y + deltaHeight);
-                texcoord.push(x);
-                texcoord.push(y);
+                xTexcoord.push(x + deltaWidth);
+                xTexcoord.push(x);
+                xTexcoord.push(x);
+                yTexcoord.push(y + deltaHeight);
+                yTexcoord.push(y + deltaHeight);
+                yTexcoord.push(y);
             }
         }
 
-        // if (direction === 'z-') {
-        //     console.log('reverse');
-        //     texcoord.reverse();
-        // }
+        for (let i = 0; i < xTexcoord.length; i++) {
+            texcoord.push(yTexcoord[i]);
+            texcoord.push(xTexcoord[i]);
+        }
 
         return texcoord;
     }
