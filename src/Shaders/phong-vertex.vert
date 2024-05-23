@@ -22,16 +22,18 @@ void main() {
     // Memberi koordinat texture ke fragment shader
     v_texCoord = a_texcoord;
 
-    // Mendapat koordinat dengan mengalikan matrix world dan view projection
-    v_position = (u_viewProjection * u_world * a_position);
-
-    // Mendapatkan posisi vertex dengan displacement mapping
-    v_position = v_position + vec4(a_normal * (texture2D(u_displacementTexture, a_texcoord).r * u_displacementScale + u_displacementBias), 0);
+    v_position = u_world * a_position;
 
     // Dikalikan world inverse transpose untuk mendapatkan normal yang benar
     // Ketika dilakukan scaling
     // webglfundamentals.org/webgl/lessons/webgl-3d-lighting-directional.html
-    vec3 normal = (u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
+    vec3 normal = normalize(u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
+
+    // Mendapatkan posisi vertex dengan displacement mapping
+    v_position = v_position + vec4(normal * (texture2D(u_displacementTexture, a_texcoord).r * u_displacementScale + u_displacementBias), 0);
+
+    // Mendapat koordinat dengan mengalikan matrix world dan view projection
+    v_position = (u_viewProjection * v_position);
 
     // Dikalikan world inverse transpose untuk mendapatkan tangent yang benar
     vec3 tangent = (u_worldInverseTranspose * vec4(a_tangent, 0)).xyz;
