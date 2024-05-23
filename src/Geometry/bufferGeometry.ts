@@ -5,9 +5,9 @@ import { IBufferGeometry } from "../Utils/model-interface.ts";
 
 export class BufferGeometry {
     private readonly _attributes: { [name: string]: BufferAttribute };
-    private inputPosition: Float32Array;
-    private inputIndices: Uint16Array;
-    private inputTexcoord: Float32Array;
+    private inputPosition!: Float32Array;
+    private inputIndices!: Uint16Array;
+    private inputTexcoord!: Float32Array;
     private _indices?: BufferAttribute;
     private isSmoothShading: boolean;
 
@@ -19,23 +19,41 @@ export class BufferGeometry {
     ) {
         this._attributes = {};
         this.isSmoothShading = isSmoothShading;
+
+        if (inputPosition.length > 0) {
+            this.setAllInputs(inputPosition, inputIndices, inputTexcoord);
+        }
+    }
+
+    protected setAllInputs(
+        inputPosition: Float32Array,
+        inputIndices: Uint16Array = new Uint16Array(),
+        inputTexcoord: Float32Array = new Float32Array()
+    ){
         this.inputPosition = inputPosition;
         this.inputIndices = inputIndices;
         this.inputTexcoord = inputTexcoord;
 
-        if (inputIndices.length > 0) {
-            if (inputPosition.length > 0) {
-                this.calculateAndSetAttributes(inputPosition, inputIndices);
-            }
-
-            if (inputTexcoord.length == 0) {
-                this.calculateAndSetTexCoords(inputIndices);
-            } else {
-                this.setInputTexcoord(inputTexcoord)
-            }
-
-            this.calculateAndSetTangents()
+        // If inputIndices is empty, we need to calculate inputIndices and adjust inputPosition
+        if (inputIndices.length === 0) {
+            this.calculateNewIndicesAndNewPosition()
         }
+
+        // console.log("inputPosition", this.inputPosition)
+        // console.log("inputIndices", this.inputIndices)
+        this.calculateAndSetAttributes();
+
+        if (inputTexcoord.length == 0) {
+            this.calculateTexCoords();
+        }
+
+        this.setAttribute("a_texcoord", new BufferAttribute(this.inputTexcoord, 2));
+        this.calculateAndSetTangents()
+
+        console.log("position", this.getAttribute("a_position"))
+        console.log("normal", this.getAttribute("a_normal"))
+        console.log("texcoord", this.getAttribute("a_texcoord"))
+        console.log("tangent", this.getAttribute("a_tangent"))
     }
 
     get attributes() {
@@ -66,55 +84,48 @@ export class BufferGeometry {
     }
     setToSmoothShading() {
         this.isSmoothShading = true;
-        this.calculateAndSetAttributes(this.inputPosition, this.inputIndices);
+        this.calculateAndSetAttributes();
     }
 
     setToFlatShading() {
         this.isSmoothShading = false;
-        this.calculateAndSetAttributes(this.inputPosition, this.inputIndices);
+        this.calculateAndSetAttributes();
     }
 
-    calculateAndSetAttributes(
-        inputPosition: Float32Array,
-        inputIndices: Uint16Array,
-    ) {
-        this.inputPosition = inputPosition;
-        this.inputIndices = inputIndices;
-
-        const position = new Float32Array(4 * inputIndices.length);
-        const normal = new Float32Array(3 * inputIndices.length);
-
+    calculateAndSetAttributes() {
+        const position = new Float32Array(4 * this.inputIndices.length);
+        const normal = new Float32Array(3 * this.inputIndices.length);
 
         // Copy input to position
-        for (let i = 0; i < inputIndices.length; i++) {
-            const index = inputIndices[i];
-            position[i * 4] = inputPosition[index * 4];
-            position[i * 4 + 1] = inputPosition[index * 4 + 1];
-            position[i * 4 + 2] = inputPosition[index * 4 + 2];
-            position[i * 4 + 3] = inputPosition[index * 4 + 3];
+        for (let i = 0; i < this.inputIndices.length; i++) {
+            const index = this.inputIndices[i];
+            position[i * 4] = this.inputPosition[index * 4];
+            position[i * 4 + 1] = this.inputPosition[index * 4 + 1];
+            position[i * 4 + 2] = this.inputPosition[index * 4 + 2];
+            position[i * 4 + 3] = this.inputPosition[index * 4 + 3];
         }
 
         if (!this.isSmoothShading) {
             // Calculate face normals
-            for (let i = 0; i < inputIndices.length; i += 3) {
-                const i1 = inputIndices[i] * 4;
-                const i2 = inputIndices[i + 1] * 4;
-                const i3 = inputIndices[i + 2] * 4;
+            for (let i = 0; i < this.inputIndices.length; i += 3) {
+                const i1 = this.inputIndices[i] * 4;
+                const i2 = this.inputIndices[i + 1] * 4;
+                const i3 = this.inputIndices[i + 2] * 4;
 
                 const v1 = new Vector3(
-                    inputPosition[i1],
-                    inputPosition[i1 + 1],
-                    inputPosition[i1 + 2]
+                    this.inputPosition[i1],
+                    this.inputPosition[i1 + 1],
+                    this.inputPosition[i1 + 2]
                 );
                 const v2 = new Vector3(
-                    inputPosition[i2],
-                    inputPosition[i2 + 1],
-                    inputPosition[i2 + 2]
+                    this.inputPosition[i2],
+                    this.inputPosition[i2 + 1],
+                    this.inputPosition[i2 + 2]
                 );
                 const v3 = new Vector3(
-                    inputPosition[i3],
-                    inputPosition[i3 + 1],
-                    inputPosition[i3 + 2]
+                    this.inputPosition[i3],
+                    this.inputPosition[i3 + 1],
+                    this.inputPosition[i3 + 2]
                 );
 
                 const n = v2.clone().sub(v1).cross(v3.clone().sub(v1));
@@ -131,34 +142,34 @@ export class BufferGeometry {
             // https://stackoverflow.com/questions/45477806/general-method-for-calculating-smooth-vertex-normals-with-100-smoothness
             // Calculate vertex normals
             const vertexNormals: Vector3[] = new Array(
-                inputPosition.length / 4
+                this.inputPosition.length / 4
             );
             for (let i = 0; i < vertexNormals.length; i++) {
                 vertexNormals[i] = new Vector3(0, 0, 0);
             }
             const vertexFaces: number[] = new Array(
-                inputPosition.length / 4
+                this.inputPosition.length / 4
             ).fill(0);
 
-            for (let i = 0; i < inputIndices.length; i += 3) {
-                const i1 = inputIndices[i];
-                const i2 = inputIndices[i + 1];
-                const i3 = inputIndices[i + 2];
+            for (let i = 0; i < this.inputIndices.length; i += 3) {
+                const i1 = this.inputIndices[i];
+                const i2 = this.inputIndices[i + 1];
+                const i3 = this.inputIndices[i + 2];
 
                 const v1 = new Vector3(
-                    inputPosition[i1 * 4],
-                    inputPosition[i1 * 4 + 1],
-                    inputPosition[i1 * 4 + 2]
+                    this.inputPosition[i1 * 4],
+                    this.inputPosition[i1 * 4 + 1],
+                    this.inputPosition[i1 * 4 + 2]
                 );
                 const v2 = new Vector3(
-                    inputPosition[i2 * 4],
-                    inputPosition[i2 * 4 + 1],
-                    inputPosition[i2 * 4 + 2]
+                    this.inputPosition[i2 * 4],
+                    this.inputPosition[i2 * 4 + 1],
+                    this.inputPosition[i2 * 4 + 2]
                 );
                 const v3 = new Vector3(
-                    inputPosition[i3 * 4],
-                    inputPosition[i3 * 4 + 1],
-                    inputPosition[i3 * 4 + 2]
+                    this.inputPosition[i3 * 4],
+                    this.inputPosition[i3 * 4 + 1],
+                    this.inputPosition[i3 * 4 + 2]
                 );
 
                 const n = v2.clone().sub(v1).cross(v3.clone().sub(v1));
@@ -191,40 +202,40 @@ export class BufferGeometry {
                 vertexNormals[i].normalize();
             }
 
-            for (let i = 0; i < inputIndices.length; i++) {
-                const index = inputIndices[i];
+            for (let i = 0; i < this.inputIndices.length; i++) {
+                const index = this.inputIndices[i];
                 normal[i * 3] = vertexNormals[index].x;
                 normal[i * 3 + 1] = vertexNormals[index].y;
                 normal[i * 3 + 2] = vertexNormals[index].z;
             }
         }
-
         this.setAttribute("a_position", new BufferAttribute(position, 4));
         this.setAttribute("a_normal", new BufferAttribute(normal, 3));
     }
 
-    calculateAndSetTexCoords(inputIndices: Uint16Array) {
-        const texcoord = new Float32Array(2 * inputIndices.length);
+    calculateTexCoords() {
+
+        const texcoord = new Float32Array(2 * this.inputIndices.length);
         // Copy input to texcoord
-        for (let i = 0; i < inputIndices.length; i += 3) {
-            const i1 = inputIndices[i] * 2;
-            const i2 = inputIndices[i + 1] * 2;
-            const i3 = inputIndices[i + 2] * 2;
+        for (let i = 0; i < this.inputIndices.length; i += 3) {
+            const i1 = i * 2;
 
             texcoord[i1] = 0;
             texcoord[i1 + 1] = 0;
-            texcoord[i2] = 1;
-            texcoord[i2 + 1] = 0;
-            texcoord[i3] = 1;
-            texcoord[i3 + 1] = 1;
+            texcoord[i1 + 2] = 1;
+            texcoord[i1 + 3] = 0;
+            texcoord[i1 + 4] = 1;
+            texcoord[i1 + 5] = 1;
         }
-        this.setAttribute("a_texcoord", new BufferAttribute(texcoord, 2));
+        this.inputTexcoord = texcoord;
     }
     calculateAndSetTangents() {
         // https://learnopengl.com/Advanced-Lighting/Normal-Mapping
         const positionAttr = this.getAttribute("a_position");
         const normalAttr = this.getAttribute("a_normal");
         const texcoordAttr = this.getAttribute("a_texcoord");
+
+        // console.log(positionAttr, normalAttr, texcoordAttr)
         if (!positionAttr || !normalAttr || !texcoordAttr) {
             throw new Error("Missing attributes");
         }
@@ -277,6 +288,34 @@ export class BufferGeometry {
             }
         }
         this.setAttribute("a_tangent", new BufferAttribute(tangent, 3));
+    }
+
+    private calculateNewIndicesAndNewPosition() {
+        const newPosition = []
+        const newIndices = []
+        let currentIndex = 0
+        const indexMap = new Map<string, number>()
+
+        for (let i = 0; i < this.inputPosition.length; i += 4) {
+            const positionString = `${this.inputPosition[i]},${this.inputPosition[i + 1]},${this.inputPosition[i + 2]},${this.inputPosition[i + 3]}`;
+            const result = indexMap.get(positionString)
+
+            if (result === undefined) {
+                indexMap.set(positionString, currentIndex)
+                newPosition.push(this.inputPosition[i])
+                newPosition.push(this.inputPosition[i + 1])
+                newPosition.push(this.inputPosition[i + 2])
+                newPosition.push(this.inputPosition[i + 3])
+                newIndices.push(currentIndex)
+                currentIndex++
+            } else {
+                newIndices.push(result)
+            }
+        }
+        this.inputPosition = new Float32Array(newPosition)
+        this.inputIndices = new Uint16Array(newIndices)
+
+
     }
 
     public toRaw(): IBufferGeometry {

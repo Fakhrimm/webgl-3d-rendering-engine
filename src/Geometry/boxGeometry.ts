@@ -44,12 +44,7 @@ export class BoxGeometry extends BufferGeometry {
             1, 5, 6,
             6, 2, 1,
         ]);
-        this.calculateAndSetAttributes(vertices, indices);
-        this.rewriteTexcoord()
-        this.calculateAndSetTangents()
-    }
 
-    rewriteTexcoord() {
         const texcoord = new Float32Array([
             // front
             1, 1,  1,0,  0, 0,
@@ -70,6 +65,6 @@ export class BoxGeometry extends BufferGeometry {
             1, 1,  1,0,  0, 0,
             0, 0,  0, 1,  1, 1,
         ]);
-        this.setInputTexcoord(texcoord);
+        this.setAllInputs(vertices, indices, texcoord);
     }
 }
