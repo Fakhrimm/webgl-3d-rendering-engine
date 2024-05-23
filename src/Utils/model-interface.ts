@@ -13,6 +13,10 @@ export interface INode {
     children: number[];
 }
 
+export interface IMeshNode extends INode {
+    mesh: number;
+}
+
 interface IVector3 {
     x: number;
     y: number;
@@ -28,6 +32,7 @@ interface IEuler {
 export interface IMesh {
     geometry: IBufferGeometry;
     material: MaterialTypes;
+    animation: IAnimation;
 }
 
 export interface IBufferGeometry {
@@ -35,4 +40,17 @@ export interface IBufferGeometry {
     inputPosition: Float32Array,
     inputIndices: Uint16Array,
     inputTexcoord: Float32Array,
+}
+
+export interface IAnimation {
+    name: string,
+    frames: IFrame[];
+}
+
+export interface IFrame {
+    keyframe: IKeyframe;
+}
+
+interface IKeyframe {
+    rotation: number[]
 }
