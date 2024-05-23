@@ -1,4 +1,5 @@
 import { MaterialTypes } from "../Types/material-types";
+import { TextureTypes } from "../Types/texture-types";
 
 export interface IModel {
     nodes: INode[];
@@ -31,7 +32,7 @@ interface IEuler {
 
 export interface IMesh {
     geometry: IBufferGeometry;
-    material: MaterialTypes;
+    material: IMaterial;
     animation: IAnimation;
 }
 
@@ -40,6 +41,32 @@ export interface IBufferGeometry {
     inputPosition: Float32Array,
     inputIndices: Uint16Array,
     inputTexcoord: Float32Array,
+}
+
+export interface IMaterial {
+    type: MaterialTypes;
+}
+
+export interface IBasicMaterial extends IMaterial {
+    type: MaterialTypes.BASIC;
+    u_diffuseColor: number[];
+    diffuseTextureType: TextureTypes;
+}
+
+export interface IPhongMaterial extends IMaterial {
+    type: MaterialTypes.PHONG;
+    u_diffuseColor: number[];
+    u_specularColor: number[];
+    u_shininess: number;
+    u_ka: number;
+    u_kd: number;
+    u_ks: number;
+    diffTextureType: TextureTypes,
+    specTextureType: TextureTypes,
+    normalTextureType: TextureTypes,
+    displacementTextureType: TextureTypes,
+    displacementScale: number,
+    displacementBias: number
 }
 
 export interface IAnimation {

@@ -27,7 +27,7 @@ export class SaveLoader {
   static meshToRaw(mesh: Mesh): IMesh {
     let rawMesh: IMesh = {
       geometry: mesh.geometry.toRaw(),
-      material: mesh.material.materialType(),
+      material: mesh.material.toRaw(),
       animation: {name: "", frames: []}
     };
 

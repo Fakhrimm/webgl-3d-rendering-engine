@@ -3,6 +3,7 @@ import {Color} from "../Math/color.ts";
 import {MaterialTypes} from "../Types/material-types.ts";
 import {ProgramInfo} from "../WebGL/program-info.ts";
 import {TextureTypes} from "../Types/texture-types.ts";
+import { IBasicMaterial } from "../Utils/model-interface.ts";
 
 export class BasicMaterial extends Material {
     protected u_diffuseColor: Color;
@@ -31,5 +32,13 @@ export class BasicMaterial extends Material {
             throw new Error("Invalid texture type")
         }
         this.diffuseTextureType = textureType
+    }
+
+    public toRaw(): IBasicMaterial {
+        return {
+            type: MaterialTypes.BASIC,
+            u_diffuseColor: this.u_diffuseColor.get(),
+            diffuseTextureType: this.diffuseTextureType
+        }
     }
 }

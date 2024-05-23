@@ -60,6 +60,10 @@ export class Scene extends Node {
         const scene = new Scene();
         scene.name = "SceneDummy";
 
+        const originNode = new Node();
+        originNode.name = "OriginNode";
+        originNode.setParent(scene);
+
         let material1 = new BasicMaterial();
         let material2 = new PhongMaterial();
 
@@ -118,11 +122,11 @@ export class Scene extends Node {
 
 
 
-        orthographicCamera.setParent(scene);
-        obliqueCamera.setParent(scene);
-        perspectiveCamera.setParent(scene);
+        orthographicCamera.setParent(originNode);
+        obliqueCamera.setParent(originNode);
+        perspectiveCamera.setParent(originNode);
         // mesh.setParent(scene);
-        // mesh2.setParent(scene);
+        mesh2.setParent(scene);
 
         const node = new Node();
         node.name = "Node";

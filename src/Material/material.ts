@@ -1,4 +1,5 @@
 import {MaterialTypes} from "../Types/material-types.ts";
+import { IMaterial } from "../Utils/model-interface.ts";
 import {ProgramInfo} from "../WebGL/program-info.ts";
 
 export abstract class Material {
@@ -9,8 +10,10 @@ export abstract class Material {
     public materialType() {
         return this._materialType;
     }
-    //
-    // toJSON() {
-    //     console.log('Material toJSON')
-    // }
+
+    public toRaw(): IMaterial {
+        return {
+            type: this._materialType
+        }
+    }
 }

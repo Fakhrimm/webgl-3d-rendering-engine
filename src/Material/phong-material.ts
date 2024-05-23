@@ -3,6 +3,7 @@ import {Color} from "../Math/color.ts";
 import {MaterialTypes} from "../Types/material-types.ts";
 import {ProgramInfo} from "../WebGL/program-info.ts";
 import {TextureTypes} from "../Types/texture-types.ts";
+import { IMaterial, IPhongMaterial } from "../Utils/model-interface.ts";
 
 export class PhongMaterial extends Material {
     private u_diffuseColor: Color;
@@ -95,5 +96,23 @@ export class PhongMaterial extends Material {
             throw new Error("Invalid texture type");
         }
         this.normalTextureType = index + 8 as TextureTypes;
+    }
+
+    public toRaw(): IPhongMaterial {
+        return {
+            type: MaterialTypes.PHONG,
+            u_diffuseColor: this.u_diffuseColor.get(),
+            u_specularColor: this.u_specularColor.get(),
+            u_shininess: this.u_shininess,
+            u_ka: this.u_ka,
+            u_kd: this.u_kd,
+            u_ks: this.u_ks,
+            diffTextureType: this.diffuseTextureType,
+            specTextureType: this.specularTextureType,
+            normalTextureType: this.normalTextureType,
+            displacementTextureType: this.displacementTextureType,
+            displacementScale: this.displacementScale,
+            displacementBias: this.displacementBias
+        }
     }
 }
