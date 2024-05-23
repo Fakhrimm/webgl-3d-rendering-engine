@@ -64,11 +64,6 @@ export class BufferGeometry {
         return this._indices;
     }
 
-    protected setInputTexcoord(texcoord: Float32Array) {
-        this.inputTexcoord = texcoord;
-        this.setAttribute("a_texcoord", new BufferAttribute(texcoord, 2));
-    }
-
     setIndices(indices: BufferAttribute) {
         this._indices = indices;
         return this;
@@ -219,7 +214,6 @@ export class BufferGeometry {
         // Copy input to texcoord
         for (let i = 0; i < this.inputIndices.length; i += 3) {
             const i1 = i * 2;
-
             texcoord[i1] = 0;
             texcoord[i1 + 1] = 0;
             texcoord[i1 + 2] = 1;
