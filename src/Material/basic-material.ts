@@ -27,7 +27,7 @@ export class BasicMaterial extends Material {
     }
 
     public setDiffuseTextureType(textureType: TextureTypes) {
-        if (textureType < TextureTypes.DIFFUSE_DEFAULT || textureType > TextureTypes.DIFFUSE_3) {
+        if (textureType < TextureTypes.DIFFUSE_0 || textureType > TextureTypes.DIFFUSE_3) {
             throw new Error("Invalid texture type")
         }
         this.diffuseTextureType = textureType

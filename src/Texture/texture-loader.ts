@@ -3,19 +3,19 @@ import {TextureTypes} from "../Types/texture-types.ts";
 export class TextureLoader {
     private textures: WebGLTexture[] = [];
     private readonly texturePath : {[key in TextureTypes]: string} = {
-        [TextureTypes.DIFFUSE_DEFAULT]: "../Assets/diffuse-default.png",
+        [TextureTypes.DIFFUSE_0]: "../Assets/diffuse-default.png",
         [TextureTypes.DIFFUSE_1]: "../Assets/diffuse-1.png",
         [TextureTypes.DIFFUSE_2]: "../Assets/diffuse-2.jpeg",
         [TextureTypes.DIFFUSE_3]: "../Assets/diffuse-3.jpeg",
-        [TextureTypes.SPECULAR_DEFAULT]: "../Assets/specular-default.png",
+        [TextureTypes.SPECULAR_0]: "../Assets/specular-default.png",
         [TextureTypes.SPECULAR_1]: "../Assets/specular-1.png",
         [TextureTypes.SPECULAR_2]: "../Assets/specular-2.jpeg",
         [TextureTypes.SPECULAR_3]: "../Assets/specular-3.jpeg",
-        [TextureTypes.NORMAL_DEFAULT]: "../Assets/normal-default.png",
+        [TextureTypes.NORMAL_0]: "../Assets/normal-default.png",
         [TextureTypes.NORMAL_1]: "../Assets/normal-1.png",
         [TextureTypes.NORMAL_2]: "../Assets/normal-2.jpeg",
         [TextureTypes.NORMAL_3]: "../Assets/normal-3.jpeg",
-        [TextureTypes.DISPLACEMENT_DEFAULT]: "../Assets/displacement-default.png",
+        [TextureTypes.DISPLACEMENT_0]: "../Assets/displacement-default.png",
         [TextureTypes.DISPLACEMENT_1]: "../Assets/displacement-1.png",
     };
 
