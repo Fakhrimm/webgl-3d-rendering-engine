@@ -4,15 +4,38 @@ import {Vector2} from "../Math/vector-2.ts";
 import { IBufferGeometry } from "../Utils/model-interface.ts";
 
 export class BufferGeometry {
-    private _attributes: { [name: string]: BufferAttribute };
-    private inputPosition?: Float32Array;
-    private inputIndices?: Uint16Array;
+    private readonly _attributes: { [name: string]: BufferAttribute };
+    private inputPosition: Float32Array;
+    private inputIndices: Uint16Array;
+    private inputTexcoord: Float32Array;
     private _indices?: BufferAttribute;
     private isSmoothShading: boolean;
 
-    constructor(isSmoothShading = false) {
+    constructor(
+        isSmoothShading = false,
+        inputPosition = new Float32Array(),
+        inputIndices = new Uint16Array(),
+        inputTexcoord = new Float32Array(),
+    ) {
         this._attributes = {};
         this.isSmoothShading = isSmoothShading;
+        this.inputPosition = inputPosition;
+        this.inputIndices = inputIndices;
+        this.inputTexcoord = inputTexcoord;
+
+        if (inputIndices.length > 0) {
+            if (inputPosition.length > 0) {
+                this.calculateAndSetAttributes(inputPosition, inputIndices);
+            }
+
+            if (inputTexcoord.length == 0) {
+                this.calculateAndSetTexCoords(inputIndices);
+            } else {
+                this.setInputTexcoord(inputTexcoord)
+            }
+
+            this.calculateAndSetTangents()
+        }
     }
 
     get attributes() {
@@ -23,10 +46,16 @@ export class BufferGeometry {
         return this._indices;
     }
 
+    protected setInputTexcoord(texcoord: Float32Array) {
+        this.inputTexcoord = texcoord;
+        this.setAttribute("a_texcoord", new BufferAttribute(texcoord, 2));
+    }
+
     setIndices(indices: BufferAttribute) {
         this._indices = indices;
         return this;
     }
+
     getAttribute(name: string): BufferAttribute | null {
         return this._attributes[name];
     }
@@ -37,12 +66,12 @@ export class BufferGeometry {
     }
     setToSmoothShading() {
         this.isSmoothShading = true;
-        this.calculateAndSetAttributes(this.inputPosition!, this.inputIndices!);
+        this.calculateAndSetAttributes(this.inputPosition, this.inputIndices);
     }
 
     setToFlatShading() {
         this.isSmoothShading = false;
-        this.calculateAndSetAttributes(this.inputPosition!, this.inputIndices!);
+        this.calculateAndSetAttributes(this.inputPosition, this.inputIndices);
     }
 
     calculateAndSetAttributes(
@@ -253,8 +282,9 @@ export class BufferGeometry {
     public toRaw(): IBufferGeometry {
         return {
             isSmoothShading: this.isSmoothShading,
-            inputPosition: this.inputPosition!,
-            inputIndices: this.inputIndices!,
+            inputPosition: this.inputPosition,
+            inputIndices: this.inputIndices,
+            inputTexcoord: this.inputTexcoord,
         };
     }
 }

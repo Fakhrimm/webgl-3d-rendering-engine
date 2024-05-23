@@ -34,4 +34,5 @@ export interface IBufferGeometry {
     isSmoothShading: boolean,
     inputPosition: Float32Array,
     inputIndices: Uint16Array,
+    inputTexcoord: Float32Array,
 }
