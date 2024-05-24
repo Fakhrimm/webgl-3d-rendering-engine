@@ -9,6 +9,7 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { AnimationRunner } from "../Animation/animationRunner.ts";
 import { Tree } from "./Tree.ts";
 import { renderScene } from "../main.ts";
+import { Camera } from "../Camera/camera.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -67,6 +68,17 @@ export function elementListner(variables: Variables) {
     });
 
     // LEFT
+    const camera = container.getElement("camera") as HTMLInputElement;
+    camera.addEventListener("input", () => {
+        const val = camera.valueAsNumber;
+        const cameraNode = variables.getTree().reference.getActiveCamera();
+        if (cameraNode instanceof Camera) {
+            cameraNode.setRotationY((val * Math.PI * 50) / 180);
+            requestAnimationFrame(() =>
+                renderScene(variables.getWebGL(), variables, false)
+            );
+        }
+    });
 
     let radius = getSelectedNode().getActiveCamera()?.getZoom() ?? 0;
     const zoomIn = container.getElement("zoomIn");

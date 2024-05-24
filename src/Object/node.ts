@@ -116,7 +116,7 @@ export class Node {
     }
 
     public getRotation() {
-        return this.quaternion;
+        return this.rotation;
     }
 
     public setRotationFromEuler(euler: Euler) {

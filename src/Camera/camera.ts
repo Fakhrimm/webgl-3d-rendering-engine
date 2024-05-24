@@ -1,5 +1,6 @@
-import {Matrix4} from "../Math/matrix-4";
-import {Node} from "../Object/node";
+import { Matrix4 } from "../Math/matrix-4";
+import { Node } from "../Object/node";
+import { Euler } from "../Math/euler";
 
 export class Camera extends Node {
     protected _projectionMatrix = new Matrix4().identity();
@@ -18,7 +19,7 @@ export class Camera extends Node {
 
     computeProjectionMatrix() {
         throw new Error(
-        "Camera.computeProjectionMatrix() must be implemented in derived classes."
+            "Camera.computeProjectionMatrix() must be implemented in derived classes."
         );
     }
 
@@ -33,13 +34,13 @@ export class Camera extends Node {
     toDefault() {
         this.setLocalMatrix(new Matrix4().identity());
         this.updateWorldMatrix();
-        this.setZoom(1)
+        this.setZoom(1);
     }
-    // static fromJSON(json: any): Camera {
-    //     return new Camera();
-    // }
 
-    // toJSON() {
-    //     console.log("Camera toJSON");
-    // }
+    setRotationY(y: number) {
+        const currentRotation = this.getRotation();
+        this.setRotationFromEuler(
+            new Euler(currentRotation.x, y, currentRotation.z)
+        );
+    }
 }
