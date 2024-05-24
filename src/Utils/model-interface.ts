@@ -12,6 +12,7 @@ export interface INode {
     scale: IVector3;
     rotation: IEuler;
     children: number[];
+    mesh?: number;
 }
 
 export interface IMeshNode extends INode {

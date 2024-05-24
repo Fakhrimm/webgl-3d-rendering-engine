@@ -1,6 +1,6 @@
 import { BufferAttribute } from "./bufferAttribute";
 import { Vector3 } from "../Math/vector-3.ts";
-import {Vector2} from "../Math/vector-2.ts";
+import { Vector2 } from "../Math/vector-2.ts";
 import { IBufferGeometry } from "../Utils/model-interface.ts";
 
 export class BufferGeometry {
@@ -15,7 +15,7 @@ export class BufferGeometry {
         isSmoothShading = false,
         inputPosition = new Float32Array(),
         inputIndices = new Uint16Array(),
-        inputTexcoord = new Float32Array(),
+        inputTexcoord = new Float32Array()
     ) {
         this._attributes = {};
         this.isSmoothShading = isSmoothShading;
@@ -29,14 +29,14 @@ export class BufferGeometry {
         inputPosition: Float32Array,
         inputIndices: Uint16Array = new Uint16Array(),
         inputTexcoord: Float32Array = new Float32Array()
-    ){
+    ) {
         this.inputPosition = inputPosition;
         this.inputIndices = inputIndices;
         this.inputTexcoord = inputTexcoord;
 
         // If inputIndices is empty, we need to calculate inputIndices and adjust inputPosition
         if (inputIndices.length === 0) {
-            this.calculateNewIndicesAndNewPosition()
+            this.calculateNewIndicesAndNewPosition();
         }
 
         // console.log("inputPosition", this.inputPosition)
@@ -47,13 +47,16 @@ export class BufferGeometry {
             this.calculateTexCoords();
         }
 
-        this.setAttribute("a_texcoord", new BufferAttribute(this.inputTexcoord, 2));
-        this.calculateAndSetTangents()
+        this.setAttribute(
+            "a_texcoord",
+            new BufferAttribute(this.inputTexcoord, 2)
+        );
+        this.calculateAndSetTangents();
 
-        console.log("position", this.getAttribute("a_position"))
-        console.log("normal", this.getAttribute("a_normal"))
-        console.log("texcoord", this.getAttribute("a_texcoord"))
-        console.log("tangent", this.getAttribute("a_tangent"))
+        console.log("position", this.getAttribute("a_position"));
+        console.log("normal", this.getAttribute("a_normal"));
+        console.log("texcoord", this.getAttribute("a_texcoord"));
+        console.log("tangent", this.getAttribute("a_tangent"));
     }
 
     get attributes() {
@@ -209,7 +212,6 @@ export class BufferGeometry {
     }
 
     calculateTexCoords() {
-
         const texcoord = new Float32Array(2 * this.inputIndices.length);
         // Copy input to texcoord
         for (let i = 0; i < this.inputIndices.length; i += 3) {
@@ -236,8 +238,8 @@ export class BufferGeometry {
         const position = positionAttr.data as Float32Array;
         const texcoord = texcoordAttr.data as Float32Array;
 
-        const tangent = new Float32Array(3 * position.length / 4);
-        for (let i = 0; i < position.length / 4; i+=3) {
+        const tangent = new Float32Array((3 * position.length) / 4);
+        for (let i = 0; i < position.length / 4; i += 3) {
             const p1 = new Vector3(
                 position[i * 4],
                 position[i * 4 + 1],
@@ -257,10 +259,7 @@ export class BufferGeometry {
             const e1 = p2.clone().sub(p1);
             const e2 = p3.clone().sub(p1);
 
-            const uv1 = new Vector2(
-                texcoord[i * 2],
-                texcoord[i * 2 + 1]
-            );
+            const uv1 = new Vector2(texcoord[i * 2], texcoord[i * 2 + 1]);
             const uv2 = new Vector2(
                 texcoord[(i + 1) * 2],
                 texcoord[(i + 1) * 2 + 1]
@@ -276,40 +275,43 @@ export class BufferGeometry {
             const f = 1.0 / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
 
             for (let j = 0; j < 3; j++) {
-                tangent[(i + j) * 3] = f * (deltaUV2.y * e1.x - deltaUV1.y * e2.x);
-                tangent[(i + j) * 3 + 1] = f * (deltaUV2.y * e1.y - deltaUV1.y * e2.y);
-                tangent[(i + j) * 3 + 2] = f * (deltaUV2.y * e1.z - deltaUV1.y * e2.z);
+                tangent[(i + j) * 3] =
+                    f * (deltaUV2.y * e1.x - deltaUV1.y * e2.x);
+                tangent[(i + j) * 3 + 1] =
+                    f * (deltaUV2.y * e1.y - deltaUV1.y * e2.y);
+                tangent[(i + j) * 3 + 2] =
+                    f * (deltaUV2.y * e1.z - deltaUV1.y * e2.z);
             }
         }
         this.setAttribute("a_tangent", new BufferAttribute(tangent, 3));
     }
 
     private calculateNewIndicesAndNewPosition() {
-        const newPosition = []
-        const newIndices = []
-        let currentIndex = 0
-        const indexMap = new Map<string, number>()
+        const newPosition = [];
+        const newIndices = [];
+        let currentIndex = 0;
+        const indexMap = new Map<string, number>();
 
         for (let i = 0; i < this.inputPosition.length; i += 4) {
-            const positionString = `${this.inputPosition[i]},${this.inputPosition[i + 1]},${this.inputPosition[i + 2]},${this.inputPosition[i + 3]}`;
-            const result = indexMap.get(positionString)
+            const positionString = `${this.inputPosition[i]},${
+                this.inputPosition[i + 1]
+            },${this.inputPosition[i + 2]},${this.inputPosition[i + 3]}`;
+            const result = indexMap.get(positionString);
 
             if (result === undefined) {
-                indexMap.set(positionString, currentIndex)
-                newPosition.push(this.inputPosition[i])
-                newPosition.push(this.inputPosition[i + 1])
-                newPosition.push(this.inputPosition[i + 2])
-                newPosition.push(this.inputPosition[i + 3])
-                newIndices.push(currentIndex)
-                currentIndex++
+                indexMap.set(positionString, currentIndex);
+                newPosition.push(this.inputPosition[i]);
+                newPosition.push(this.inputPosition[i + 1]);
+                newPosition.push(this.inputPosition[i + 2]);
+                newPosition.push(this.inputPosition[i + 3]);
+                newIndices.push(currentIndex);
+                currentIndex++;
             } else {
-                newIndices.push(result)
+                newIndices.push(result);
             }
         }
-        this.inputPosition = new Float32Array(newPosition)
-        this.inputIndices = new Uint16Array(newIndices)
-
-
+        this.inputPosition = new Float32Array(newPosition);
+        this.inputIndices = new Uint16Array(newIndices);
     }
 
     public toRaw(): IBufferGeometry {
@@ -319,5 +321,15 @@ export class BufferGeometry {
             inputIndices: this.inputIndices,
             inputTexcoord: this.inputTexcoord,
         };
+    }
+
+    public static fromRaw(raw: IBufferGeometry): BufferGeometry {
+        const geometry = new BufferGeometry(
+            raw.isSmoothShading,
+            new Float32Array(Object.values(raw.inputPosition)),
+            new Uint16Array(Object.values(raw.inputIndices)),
+            new Float32Array(Object.values(raw.inputTexcoord))
+        );
+        return geometry;
     }
 }

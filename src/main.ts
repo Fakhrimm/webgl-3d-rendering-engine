@@ -1,12 +1,12 @@
 import "./style.css";
-import {WebGLRenderer} from "./WebGL/webgl-renderer";
-import {Scene} from "./Object/scene.ts";
-import {Container} from "./UI/Container.ts";
-import {Variables} from "./UI/Variables.ts";
-import {Render} from "./UI/Render.ts";
-import {elementListner} from "./UI/ElementListener.ts";
-import {Tree} from "./UI/Tree.ts";
-import {TextureLoader} from "./Texture/texture-loader.ts";
+import { WebGLRenderer } from "./WebGL/webgl-renderer";
+import { Scene } from "./Object/scene.ts";
+import { Container } from "./UI/Container.ts";
+import { Variables } from "./UI/Variables.ts";
+import { Render } from "./UI/Render.ts";
+import { elementListner } from "./UI/ElementListener.ts";
+import { Tree } from "./UI/Tree.ts";
+import { TextureLoader } from "./Texture/texture-loader.ts";
 
 const main = async () => {
     // Get Canvas and WebGL context
@@ -54,27 +54,36 @@ const main = async () => {
     Tree.resetTree(container);
     Tree.mapTreeToComponentTree(container, treeRoot, variables);
 
-    requestAnimationFrame(renderScene);
+    requestAnimationFrame(() => renderScene(webGLRenderer, variables, false));
+};
 
-    let isRendering = false;
-    function renderScene() {
-        if (isRendering) {
-            // Still rendering the last frame, return immediately
-            return;
-        }
-
-        isRendering = true;
-
-        try {
-            webGLRenderer.render(sceneDummy);
-        } catch (error) {
-            console.error('Failed to render scene:', error);
-        } finally {
-            isRendering = false;
-        }
-        requestAnimationFrame(renderScene);
+export function renderScene(
+    webGLRenderer: WebGLRenderer,
+    variables: Variables,
+    isRendering: boolean
+) {
+    if (isRendering) {
+        // Still rendering the last frame, return immediately
+        return;
     }
 
-};
+    isRendering = true;
+
+    try {
+        webGLRenderer.render(variables.getScene());
+    } catch (error) {
+        console.error("Failed to render scene:", error);
+    } finally {
+        isRendering = false;
+    }
+    // console.log("\n-----PREPARE-----");
+    // console.log(webGLRenderer);
+    // console.log(variables);
+    // console.log(isRendering);
+    // console.log("-----PREPARE-----\n");
+    requestAnimationFrame(() =>
+        renderScene(webGLRenderer, variables, isRendering)
+    );
+}
 
 main();

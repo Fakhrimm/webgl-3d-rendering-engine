@@ -1,10 +1,7 @@
-import { BasicMaterial } from "../Material/basic-material";
-
 export class Container {
     private elementRefs: Map<string, HTMLElement> = new Map();
     private canvas: HTMLCanvasElement | null = null;
     private scene: HTMLSelectElement | null = null;
-    private material: BasicMaterial | null = null;
 
     constructor() {
         // TOP

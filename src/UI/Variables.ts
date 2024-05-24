@@ -33,6 +33,10 @@ export class Variables {
     return this._scene;
   }
 
+  public setScene(scene: Scene) {
+    this._scene = scene;
+  }
+
   public getContainer() {
     return this._container;
   }

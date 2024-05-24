@@ -7,6 +7,8 @@ import { OrthographicCamera } from "../Camera/orthographic-camera.ts";
 import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
 import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { AnimationRunner } from "../Animation/animationRunner.ts";
+import { Tree } from "./Tree.ts";
+import { renderScene } from "../main.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -42,7 +44,26 @@ export function elementListner(variables: Variables) {
     });
 
     loadFile.addEventListener("change", () => {
-        SaveLoader.loadModel();
+        const file = loadFile.files?.[0];
+        if (!file) {
+            return;
+        }
+        console.log(file);
+        SaveLoader.loadModel(file, (model) => {
+            try {
+                Tree.resetTree(container);
+                variables.setScene(model);
+                const tree = Tree.mapSceneToTree(variables.getScene());
+                console.log("TREE", tree);
+                Tree.mapTreeToComponentTree(container, tree, variables);
+                container.getElement("activeComponent").innerHTML = tree.name;
+                requestAnimationFrame(() =>
+                    renderScene(variables.getWebGL(), variables, false)
+                );
+            } catch (error) {
+                throw new Error(`Failed to load model: ${error}`);
+            }
+        });
     });
 
     // LEFT
@@ -298,7 +319,11 @@ export function elementListner(variables: Variables) {
 
     // ANIMATION
     let lastFrameTime: number | undefined;
-    const animationRunner = new AnimationRunner("../Animation/Animations/boxspin.json", variables.getTree().reference, variables);
+    const animationRunner = new AnimationRunner(
+        "../Animation/Animations/boxspin.json",
+        variables.getTree().reference,
+        variables
+    );
 
     const play = container.getElement("play") as HTMLInputElement;
     const pause = container.getElement("pause") as HTMLInputElement;
@@ -311,7 +336,7 @@ export function elementListner(variables: Variables) {
 
     play.addEventListener("click", () => {
         animationRunner.play();
-    
+
         function runAnim(currentTime: number) {
             if (lastFrameTime === undefined) lastFrameTime = currentTime;
             const deltaSecond = (currentTime - lastFrameTime) / 1000;
@@ -339,4 +364,3 @@ export function elementListner(variables: Variables) {
         animationRunner.reverse();
     });
 }
-
