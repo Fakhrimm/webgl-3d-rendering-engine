@@ -334,5 +334,9 @@ export function elementListner(variables: Variables) {
     pause.addEventListener("click", () => {
         animationRunner.pause();
     });
+
+    reverse.addEventListener("click", () => {
+        animationRunner.reverse();
+    });
 }
 

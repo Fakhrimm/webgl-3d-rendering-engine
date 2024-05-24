@@ -4,6 +4,7 @@ import { AnimationClip, AnimationPath } from './animation';
 
 export class AnimationRunner {
     isPlaying: boolean;
+    isReverse: boolean;
     fps: number = 30;
     private root: Object;
     private currentFrame: number = 0;
@@ -16,6 +17,7 @@ export class AnimationRunner {
             this.currentAnimation = animationClip;
         });
         this.isPlaying = false;
+        this.isReverse = false;
         this.variables = variables;
         this.fps = fps;
         this.root = root;
@@ -24,9 +26,13 @@ export class AnimationRunner {
     public play() {
         this.isPlaying = true;
     }
-
+    
     public pause() {
         this.isPlaying = false;
+    }
+
+    public reverse() {
+        this.isReverse = !this.isReverse;
     }
    
     get CurrentFrame() {
@@ -45,8 +51,11 @@ export class AnimationRunner {
         if (this.isPlaying) {
             this.deltaFrame += deltaSecond * this.fps;
             if (this.deltaFrame >= 1) { // 1 frame
-                this.currentFrame = (this.currentFrame + Math.floor(this.deltaFrame)) % this.length;
-                this.deltaFrame %= 1;
+                if (this.isReverse) {
+                    this.currentFrame = (this.currentFrame - Math.floor(this.deltaFrame) + this.length) % this.length;
+                } else {
+                    this.currentFrame = (this.currentFrame + Math.floor(this.deltaFrame)) % this.length;
+                }                this.deltaFrame %= 1;
                 this.updateSceneGraph();
             }
         }
