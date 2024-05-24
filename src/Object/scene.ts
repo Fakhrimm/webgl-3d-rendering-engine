@@ -67,16 +67,16 @@ export class Scene extends Node {
         let material1 = new BasicMaterial();
         let material2 = new PhongMaterial();
 
-        // let mesh = new Mesh(new BoxGeometry(50, 50, 50, true), material1);
-        // mesh.name = "Mesh";
+        let mesh = new Mesh(new BoxGeometry(50, 50, 50, true), material1);
+        mesh.name = "Mesh";
 
         let mesh2 = new Mesh(new BoxGeometry(200, 200, 200, false), material2);
         mesh2.name = "Mesh2";
 
         // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z+'), material2);
         // mesh3.name = "Mesh3";
-        let mesh4 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z-'), material2);
-        mesh4.name = "Mesh4";
+        // let mesh4 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z-'), material2);
+        // mesh4.name = "Mesh4";
         // let mesh5 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'x+'), material2);
         // mesh5.name = "Mesh5";
         // let mesh6 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'x-'), material2);
@@ -117,6 +117,7 @@ export class Scene extends Node {
         perspectiveCamera.name = "PerspectiveCamera";
         perspectiveCamera.setPosition(0, 0, 300);
 
+        mesh.setPosition(0, 0, 300);
         // mesh2.setPosition(0, 0, -300);
         // mesh3.setPosition(0, 0, -300);
 
@@ -125,15 +126,15 @@ export class Scene extends Node {
         orthographicCamera.setParent(originNode);
         obliqueCamera.setParent(originNode);
         perspectiveCamera.setParent(originNode);
-        // mesh.setParent(scene);
         mesh2.setParent(scene);
+        mesh.setParent(mesh2);
 
-        const node = new Node();
-        node.name = "Node";
-        node.setParent(scene);
+        // const node = new Node();
+        // node.name = "Node";
+        // node.setParent(scene);
 
         // mesh3.setParent(node);
-        mesh4.setParent(node);
+        // mesh4.setParent(node);
         // mesh5.setParent(node);
         // mesh6.setParent(node);
         // mesh7.setParent(node);
