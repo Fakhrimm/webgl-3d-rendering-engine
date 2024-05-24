@@ -16,6 +16,7 @@ export class Container {
         const scene = document.getElementById("scene");
 
         const camera = document.querySelector("#camera");
+        const rotateAxis = document.querySelector("#rotateAxis");
 
         const zoomIn = document.querySelector("#zoomIn");
         const zoomOut = document.querySelector("#zoomOut");
@@ -94,6 +95,7 @@ export class Container {
         this.elementRefs.set("modalContainer", modalContainer as HTMLElement);
         this.elementRefs.set("modalBackdrop", modalBackdrop as HTMLElement);
         this.elementRefs.set("camera", camera as HTMLElement);
+        this.elementRefs.set("rotateAxis", rotateAxis as HTMLElement);
         this.elementRefs.set("zoomIn", zoomIn as HTMLElement);
         this.elementRefs.set("zoomOut", zoomOut as HTMLElement);
         this.elementRefs.set("shader", shader as HTMLElement);

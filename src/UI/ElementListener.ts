@@ -68,12 +68,42 @@ export function elementListner(variables: Variables) {
     });
 
     // LEFT
-    const camera = container.getElement("camera") as HTMLInputElement;
-    camera.addEventListener("input", () => {
-        const val = camera.valueAsNumber;
+    let rotateAxis = "x";
+    let previousValue = 0;
+
+    const rotateAxisDropdown = container.getElement(
+        "rotateAxis"
+    ) as HTMLInputElement;
+    const cameraSlider = container.getElement(
+        "camera"
+    ) as HTMLInputElement | null;
+    if (!rotateAxisDropdown || !cameraSlider) {
+        console.error("One or more elements not found in the DOM");
+        return;
+    }
+
+    rotateAxisDropdown.addEventListener("change", () => {
+        rotateAxis = rotateAxisDropdown.value;
+        previousValue = 0;
+        console.log(`Axis changed to: ${rotateAxis}`);
+    });
+
+    cameraSlider.addEventListener("input", () => {
+        const val = cameraSlider.valueAsNumber;
+        const delta = val - previousValue;
         const cameraNode = variables.getTree().reference.getActiveCamera();
         if (cameraNode instanceof Camera) {
-            cameraNode.setRotationY((val * Math.PI * 50) / 180);
+            const rotationFactor = 50;
+            if (rotateAxis === "x") {
+                cameraNode.setRotationCameraY(
+                    (delta * Math.PI * rotationFactor) / 180
+                );
+            } else if (rotateAxis === "y") {
+                cameraNode.setRotationCameraX(
+                    (delta * Math.PI * rotationFactor) / 180
+                );
+            }
+            previousValue = val;
             requestAnimationFrame(() =>
                 renderScene(variables.getWebGL(), variables, false)
             );
