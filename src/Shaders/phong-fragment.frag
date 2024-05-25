@@ -1,6 +1,6 @@
     precision mediump float;
      
-    varying vec4 v_position;
+    varying vec4 v_viewSpacePosition;
     varying vec2 v_texCoord;
     varying mat3 v_tbn;
 
@@ -28,7 +28,7 @@
         vec3 light_direction = normalize(u_reverseLightDirection);
         float lambertian = max(dot(normal, light_direction), 0.0);
         vec3 reflect_direction = reflect(-light_direction, normal);
-        vec3 view_direction = normalize(-v_position.xyz);
+        vec3 view_direction = normalize(-v_viewSpacePosition.xyz);
         float specularAngle = max(dot(reflect_direction, view_direction), 0.0);
         float specular = pow(specularAngle, u_shininess);
 

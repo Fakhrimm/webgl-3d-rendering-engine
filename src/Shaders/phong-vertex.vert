@@ -3,12 +3,13 @@ attribute vec3 a_normal;
 attribute vec2 a_texcoord;
 attribute vec3 a_tangent;
 
-varying vec4 v_position;
+varying vec4 v_viewSpacePosition;
 varying vec2 v_texCoord;
 varying vec3 v_normal;
 varying mat3 v_tbn;
 
-uniform mat4 u_viewProjection;
+uniform mat4 u_projection;
+uniform mat4 u_view;
 uniform vec3 u_lightWorldPos;
 uniform mat4 u_world;
 uniform mat4 u_viewInverse;
@@ -22,7 +23,7 @@ void main() {
     // Memberi koordinat texture ke fragment shader
     v_texCoord = a_texcoord;
 
-    v_position = u_world * a_position;
+    vec4 fragPosition = u_world * a_position;
 
     // Dikalikan world inverse transpose untuk mendapatkan normal yang benar
     // Ketika dilakukan scaling
@@ -30,10 +31,10 @@ void main() {
     vec3 normal = normalize(u_worldInverseTranspose * vec4(a_normal, 0)).xyz;
 
     // Mendapatkan posisi vertex dengan displacement mapping
-    v_position = v_position + vec4(normal * (texture2D(u_displacementTexture, a_texcoord).r * u_displacementScale + u_displacementBias), 0);
+    fragPosition = fragPosition + vec4(normal * (texture2D(u_displacementTexture, a_texcoord).r * u_displacementScale + u_displacementBias), 0);
 
     // Mendapat koordinat dengan mengalikan matrix world dan view projection
-    v_position = (u_viewProjection * v_position);
+    v_viewSpacePosition = (u_view * fragPosition);
 
     // Dikalikan world inverse transpose untuk mendapatkan tangent yang benar
     vec3 tangent = (u_worldInverseTranspose * vec4(a_tangent, 0)).xyz;
@@ -47,5 +48,5 @@ void main() {
 
     v_normal = normal;
 
-    gl_Position = v_position;
+    gl_Position = u_projection * v_viewSpacePosition;
 }
