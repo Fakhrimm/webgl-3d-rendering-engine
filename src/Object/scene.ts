@@ -70,7 +70,7 @@ export class Scene extends Node {
         let mesh = new Mesh(new BoxGeometry(50, 50, 50, true), material1);
         mesh.name = "Mesh";
 
-        let mesh2 = new Mesh(new RingGeometry(), material2);
+        let mesh2 = new Mesh(new BoxGeometry(200, 200, 200, false), material2);
         mesh2.name = "Mesh2";
 
         // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z+'), material2);

@@ -401,4 +401,24 @@ export function elementListner(variables: Variables) {
     reverse.addEventListener("click", () => {
         animationRunner.reverse();
     });
+
+    autoPlay.addEventListener("click", () => {
+        animationRunner.auto();
+    });
+
+    next.addEventListener("click", () => {
+        animationRunner.nextFrame();
+    });
+
+    prev.addEventListener("click", () => {
+        animationRunner.prevFrame();
+    });
+
+    first.addEventListener("click", () => {
+        animationRunner.first();
+    });
+
+    last.addEventListener("click", () => {
+        animationRunner.last();
+    });
 }

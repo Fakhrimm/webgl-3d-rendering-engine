@@ -5,6 +5,7 @@ import { AnimationClip, AnimationPath } from './animation';
 export class AnimationRunner {
     isPlaying: boolean;
     isReverse: boolean;
+    isAuto: boolean;
     fps: number = 30;
     private root: Object;
     private currentFrame: number = 0;
@@ -18,6 +19,7 @@ export class AnimationRunner {
         });
         this.isPlaying = false;
         this.isReverse = false;
+        this.isAuto = true;
         this.variables = variables;
         this.fps = fps;
         this.root = root;
@@ -34,13 +36,62 @@ export class AnimationRunner {
     public reverse() {
         this.isReverse = !this.isReverse;
     }
+
+    public auto() {
+        this.isAuto = !this.isAuto;
+    }
+
+    public nextFrame() {
+        if (!this.isPlaying) {
+            if (this.isReverse) {
+                if (this.currentFrame == 0) {
+                    this.currentFrame = this.length - 1;
+                } else {
+                    this.currentFrame--;
+                }
+            } else {
+                this.currentFrame = (this.currentFrame + 1) % this.length;
+            }
+            this.updateSceneGraph();
+        }
+    }
    
+    public prevFrame() {
+        if (!this.isPlaying) {
+            if (this.isReverse) {
+                this.currentFrame = (this.currentFrame + 1) % this.length;
+            } else {
+                if (this.currentFrame == 0) {
+                    this.currentFrame = this.length - 1;
+                } else {
+                    this.currentFrame--;
+                }
+            }
+            console.log(this.currentFrame);
+            this.updateSceneGraph();
+        }
+    }
+
+    public first() {
+        if (!this.isPlaying) {
+            this.currentFrame = 0;
+            this.updateSceneGraph();
+        }
+    }
+
+    public last() {
+        if (!this.isPlaying) {
+            this.currentFrame = this.length-1;
+            this.updateSceneGraph();
+        }
+    }
+
     get CurrentFrame() {
         return this.currentFrame;
     }
    
     get length() {
-        return this.currentAnimation!.frames.length;
+        return this.currentAnimation!.totalFrames;
     }
 
     private get frame() {
@@ -51,39 +102,56 @@ export class AnimationRunner {
         if (this.isPlaying) {
             this.deltaFrame += deltaSecond * this.fps;
             if (this.deltaFrame >= 1) { // 1 frame
-                if (this.isReverse) {
-                    this.currentFrame = (this.currentFrame - Math.floor(this.deltaFrame) + this.length) % this.length;
+                if (this.isReverse) { 
+                    let temp = (this.currentFrame - Math.floor(this.deltaFrame) + 2*this.length) % this.length;
+                    if (this.currentFrame > temp && !this.isAuto) {
+                        this.pause();
+                    }
+
+                    this.currentFrame = temp;
                 } else {
-                    this.currentFrame = (this.currentFrame + Math.floor(this.deltaFrame)) % this.length;
-                }                this.deltaFrame %= 1;
+                    let temp = (this.currentFrame + Math.floor(this.deltaFrame)) % this.length;
+                    if (this.currentFrame < temp && !this.isAuto) {
+                        this.pause();
+                    }
+
+                    this.currentFrame = temp;
+                }                
+                this.deltaFrame %= 1;
                 this.updateSceneGraph();
             }
         }
     }
 
     private updateSceneGraph() {
-        const frame: AnimationPath | undefined = this.currentAnimation?.frames[this.currentFrame];
+        const frame: AnimationPath | undefined = this.currentAnimation?.frames[0];
 
         let rootExists = false;
 
         if (this.currentAnimation?.name == this.variables.getTree().name) {
             if (frame?.keyframe) {
-                if (frame.keyframe.translation) {
-                    this.variables.getTree().reference.setPositionX(frame.keyframe.translation[0]);
-                    this.variables.getTree().reference.setPositionY(frame.keyframe.translation[1]);
-                    this.variables.getTree().reference.setPositionZ(frame.keyframe.translation[2]);
-                }
-
-                if (frame.keyframe.rotation) {
-                    this.variables.getTree().reference.setRotationX(frame.keyframe.rotation[0] * Math.PI * 1.5);
-                    this.variables.getTree().reference.setRotationY(frame.keyframe.rotation[1] * Math.PI * 1.5);
-                    this.variables.getTree().reference.setRotationZ(frame.keyframe.rotation[2] * Math.PI * 1.5);
-                }
-
-                if (frame.keyframe.scale) {
-                    this.variables.getTree().reference.setScaleX(frame.keyframe.scale[0]);
-                    this.variables.getTree().reference.setScaleY(frame.keyframe.scale[1]);
-                    this.variables.getTree().reference.setScaleZ(frame.keyframe.scale[2]);
+                for (let index in frame.keyframe) {
+                    if (index == this.currentFrame.toString()) {
+                        let element = frame.keyframe[index];
+    
+                        if (element.translation) {
+                            this.variables.getTree().reference.setPositionX(element.translation[0]);
+                            this.variables.getTree().reference.setPositionY(element.translation[1]);
+                            this.variables.getTree().reference.setPositionZ(element.translation[2]);
+                        }
+        
+                        if (element.rotation) {
+                            this.variables.getTree().reference.setRotationX(element.rotation[0] * Math.PI * 1.5);
+                            this.variables.getTree().reference.setRotationY(element.rotation[1] * Math.PI * 1.5);
+                            this.variables.getTree().reference.setRotationZ(element.rotation[2] * Math.PI * 1.5);
+                        }
+        
+                        if (element.scale) {
+                            this.variables.getTree().reference.setScaleX(element.scale[0]);
+                            this.variables.getTree().reference.setScaleY(element.scale[1]);
+                            this.variables.getTree().reference.setScaleZ(element.scale[2]);
+                        }
+                    }
                 }
             }
 
@@ -106,22 +174,28 @@ export class AnimationRunner {
             for (let children of sceneChildren.children) {
                 if (children.name == animationChildrenName) {
                     if (child.keyframe) {
-                        if (child.keyframe.translation) {
-                            children.reference.setPositionX(child.keyframe.translation[0]);
-                            children.reference.setPositionY(child.keyframe.translation[1]);
-                            children.reference.setPositionZ(child.keyframe.translation[2]);
-                        }
-            
-                        if (child.keyframe.rotation) {
-                            children.reference.setRotationX(child.keyframe.rotation[0] * Math.PI * 1.5);
-                            children.reference.setRotationY(child.keyframe.rotation[1] * Math.PI * 1.5);
-                            children.reference.setRotationZ(child.keyframe.rotation[2] * Math.PI * 1.5);
-                        }
-            
-                        if (child.keyframe.scale) {
-                            children.reference.setScaleX(child.keyframe.scale[0]);
-                            children.reference.setScaleY(child.keyframe.scale[1]);
-                            children.reference.setScaleZ(child.keyframe.scale[2]);
+                        for (let index in child.keyframe) {
+                            if (index == this.currentFrame.toString()) {
+                                let element = child.keyframe[index];
+                    
+                                if (element.translation) {
+                                    children.reference.setPositionX(element.translation[0]);
+                                    children.reference.setPositionY(element.translation[1]);
+                                    children.reference.setPositionZ(element.translation[2]);
+                                }
+                    
+                                if (element.rotation) {
+                                    children.reference.setRotationX(element.rotation[0] * Math.PI * 1.5);
+                                    children.reference.setRotationY(element.rotation[1] * Math.PI * 1.5);
+                                    children.reference.setRotationZ(element.rotation[2] * Math.PI * 1.5);
+                                }
+                    
+                                if (element.scale) {
+                                    children.reference.setScaleX(element.scale[0]);
+                                    children.reference.setScaleY(element.scale[1]);
+                                    children.reference.setScaleZ(element.scale[2]);
+                                }
+                            }
                         }
                     }
 

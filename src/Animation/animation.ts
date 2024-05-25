@@ -4,9 +4,10 @@ export type AnimationTRS = {
     scale?: [number, number, number];
 }
 
-
 export type AnimationPath = {
-    keyframe?: AnimationTRS;
+    keyframe?: {
+        [index: string]: AnimationTRS;
+    },
     children?: {
         [childName: string]: AnimationPath;
     }
@@ -15,6 +16,7 @@ export type AnimationPath = {
 
 export type AnimationClip = {
     name: string,
+    totalFrames: number,
     frames: AnimationPath[];
 }
 

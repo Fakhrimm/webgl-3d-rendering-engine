@@ -1,336 +1,141 @@
 {
     "name": "SceneDummy",
+    "totalFrames": "21",
     "frames": [
         {
             "children": {
                 "Mesh2": {
                     "keyframe": {
-                        "rotation": [0.1, 0, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 1, 0]
-                            }
+                        "0" : {
+                            "rotation": [0.1, 0, 0]
+                        }, 
+                        "1" : {
+                            "rotation": [0.1, 0.05, 0]
+                        },
+                        "2" : {
+                            "rotation": [0.1, 0.1, 0]
+                        },
+                        "3" : {
+                            "rotation": [0.1, 0.15, 0]
+                        },
+                        "4" : {
+                            "rotation": [0.1, 0.2, 0]
+                        },
+                        "5" : {
+                            "rotation": [0.1, 0.25, 0]
+                        },
+                        "6" : {
+                            "rotation": [0.1, 0.3, 0]
+                        },
+                        "7" : {
+                            "rotation": [0.1, 0.35, 0]
+                        },
+                        "8" : {
+                            "rotation": [0.1, 0.4, 0]
+                        },
+                        "9" : {
+                            "rotation": [0.1, 0.45, 0]
+                        },
+                        "10" : {
+                            "rotation": [0.1, 0.5, 0]
+                        },
+                        "11" : {
+                            "rotation": [0.1, 0.55, 0]
+                        },
+                        "12" : {
+                            "rotation": [0.1, 0.6, 0]
+                        },
+                        "13" : {
+                            "rotation": [0.1, 0.65, 0]
+                        },
+                        "14" : {
+                            "rotation": [0.1, 0.7, 0]
+                        },
+                        "15" : {
+                            "rotation": [0.1, 0.75, 0]
+                        },
+                        "16" : {
+                            "rotation": [0.1, 0.8, 0]
+                        },
+                        "17" : {
+                            "rotation": [0.1, 0.85, 0]
+                        },
+                        "18" : {
+                            "rotation": [0.1, 0.9, 0]
+                        },
+                        "19" : {
+                            "rotation": [0.1, 0.95, 0]
+                        },
+                        "20" : {
+                            "rotation": [0.1, 1, 0]
                         }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.05, 0]
                     },
                     "children": {
                         "Mesh": {
                             "keyframe": {
-                                "rotation": [0.1, 0.95, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.1, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.9, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.15, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.85, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.2, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.8, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.25, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.75, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.3, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.7, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.35, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.65, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.4, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.6, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.45, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.55, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.5, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.5, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.55, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.45, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.6, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.4, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.65, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.35, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.7, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.3, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.75, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.25, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.8, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.2, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.85, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.15, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.9, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.1, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 0.95, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0.05, 0]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "children": {
-                "Mesh2": {
-                    "keyframe": {
-                        "rotation": [0.1, 1, 0]
-                    },
-                    "children": {
-                        "Mesh": {
-                            "keyframe": {
-                                "rotation": [0.1, 0, 0]
+                                "0" : {
+                                    "rotation": [0.1, 1, 0]
+                                },
+                                "1" : {
+                                    "rotation": [0.1, 0.95, 0]
+                                },
+                                "2" : {
+                                    "rotation": [0.1, 0.9, 0]
+                                },
+                                "3" : {
+                                    "rotation": [0.1, 0.85, 0]
+                                },
+                                "4" : {
+                                    "rotation": [0.1, 0.8, 0]
+                                },
+                                "5" : {
+                                    "rotation": [0.1, 0.75, 0]
+                                },
+                                "6" : {
+                                    "rotation": [0.1, 0.7, 0]
+                                },
+                                "7" : {
+                                    "rotation": [0.1, 0.65, 0]
+                                },
+                                "8" : {
+                                    "rotation": [0.1, 0.6, 0]
+                                },
+                                "9" : {
+                                    "rotation": [0.1, 0.55, 0]
+                                },
+                                "10" : {
+                                    "rotation": [0.1, 0.5, 0]
+                                },
+                                "11" : {
+                                    "rotation": [0.1, 0.45, 0]
+                                },
+                                "12" : {
+                                    "rotation": [0.1, 0.4, 0]
+                                },
+                                "13" : {
+                                    "rotation": [0.1, 0.35, 0]
+                                },
+                                "14" : {
+                                    "rotation": [0.1, 0.3, 0]
+                                },
+                                "15" : {
+                                    "rotation": [0.1, 0.25, 0]
+                                },
+                                "16" : {
+                                    "rotation": [0.1, 0.2, 0]
+                                },
+                                "17" : {
+                                    "rotation": [0.1, 0.15, 0]
+                                },
+                                "18" : {
+                                    "rotation": [0.1, 0.1, 0]
+                                },
+                                "19" : {
+                                    "rotation": [0.1, 0.05, 0]
+                                },
+                                "20" : {
+                                    "rotation": [0.1, 0, 0]
+                                }
                             }
                         }
                     }
