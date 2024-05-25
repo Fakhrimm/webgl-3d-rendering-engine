@@ -80,29 +80,33 @@ export function elementListner(variables: Variables) {
     saveFile.addEventListener("click", () => {
         SaveLoader.saveModel(variables.getScene(), "pixar.json");
     });
-    // loadFile.addEventListener("change", () => {
-    //     const file = loadFile.files?.[0];
-    //     if (!file) {
-    //         return;
-    //     }
-    //     console.log(file);
-    //     SaveLoader.loadModel(file, variables.getWebGL().canvas, (model) => {
-    //         try {
-    //             console.log("YESS");
-    //             Tree.resetTree(container);
-    //             variables.setScene(model);
-    //             const tree = Tree.mapSceneToTree(variables.getScene());
-    //             console.log("TREE", tree);
-    //             Tree.mapTreeToComponentTree(container, tree, variables);
-    //             container.getElement("activeComponent").innerHTML = tree.name;
-    //             requestAnimationFrame(() =>
-    //                 renderScene(variables.getWebGL(), variables, false)
-    //             );
-    //         } catch (error) {
-    //             throw new Error(`Failed to load model: ${error}`);
-    //         }
-    //     });
-    // });
+    loadFile.addEventListener("change", () => {
+        const file = loadFile.files?.[0];
+        if (!file) {
+            return;
+        }
+        console.log(file);
+        SaveLoader.loadModel(file, variables.getWebGL().canvas, (model) => {
+            try {
+                console.log("YESS");
+                Tree.resetTree(container);
+                variables.setScene(model);
+                const tree = Tree.mapSceneToTree(variables.getScene());
+                console.log("TREE", tree);
+                Tree.mapTreeToComponentTree(container, tree, variables);
+                console.log("LANJUT");
+                container.getElement("activeComponent").innerHTML = tree.name;
+                console.log("FINAL");
+                requestAnimationFrame(() =>
+                    renderScene(variables.getWebGL(), variables, false)
+                );
+                console.log("BERHASIL");
+            } catch (error) {
+                throw new Error(`Failed to load model: ${error}`);
+            }
+        });
+    });
+
 
     // LEFT
     let rotateAxis = "x";

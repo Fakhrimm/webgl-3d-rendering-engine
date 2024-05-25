@@ -20,13 +20,13 @@ export abstract class Material {
         };
     }
 
-    public static fromRaw(raw: IMaterial): Material {
+    public static async fromRaw(raw: IMaterial): Promise<Material> {
         switch (raw.type) {
             case MaterialTypes.BASIC:
-                const { BasicMaterial } = require("./basic-material");
+                const { BasicMaterial } = await import("./basic-material");
                 return new BasicMaterial();
             case MaterialTypes.PHONG:
-                const { PhongMaterial } = require("./phong-material");
+                const { PhongMaterial } = await import("./phong-material");
                 return new PhongMaterial();
             default:
                 throw new Error(`Unknown material type: ${raw.type}`);

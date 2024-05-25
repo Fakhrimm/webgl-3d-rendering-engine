@@ -18,84 +18,137 @@ export class SaveLoader {
         await FileManager.writeFile(fileName, json);
     }
 
-    static async loadModel(file: File, callback: (model: Scene) => void) {
+    static async loadModel(
+        file: File,
+        canvas: HTMLCanvasElement,
+        callback: (model: Scene) => void
+    ) {
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = async function (e) {
             console.log("PASS1");
             const data = JSON.parse(e.target?.result as string);
-            console.log("PASS2");
-            const model = SaveLoader.modelFromRaw(data);
-            console.log("PASS3");
-            console.log("data", data);
-            console.log("model", model);
+            console.log("PASS2", data);
+            const model = await SaveLoader.modelFromRaw(data, canvas);
+            console.log("PASS3", model);
             callback(model);
         };
         reader.readAsText(file);
     }
 
-    static modelFromRaw(raw: IModel): Scene {
-        const scene = new Scene();
+    static async modelFromRaw(
+        raw: IModel,
+        canvas: HTMLCanvasElement
+    ): Promise<Scene> {
         const nodeMap: { [key: number]: Node } = {};
         const meshMap: { [key: number]: Mesh } = {};
+
+        const scene = new Scene();
         scene.name = raw.nodes[0].name;
 
-        if (raw.meshes) {
-            raw.meshes.forEach((rawMesh, index) => {
-                const geometry = BufferGeometry.fromRaw(rawMesh.geometry);
-                const material = Material.fromRaw(rawMesh.material);
+        console.log("YES1");
+        console.log(meshMap);
+        console.log(raw);
+        console.log(raw.meshes);
+
+        if (raw.meshes !== undefined) {
+            console.log("MASUK");
+            const meshPromises = raw.meshes.map(async (rawMesh, index) => {
+                const geometry = await BufferGeometry.fromRaw(rawMesh.geometry);
+                console.log("GEO", geometry);
+                const material = await Material.fromRaw(rawMesh.material);
+                console.log("material", material);
                 const mesh = new Mesh(geometry, material, index);
+                console.log("NEW MESH", mesh);
                 meshMap[index] = mesh;
             });
+            await Promise.all(meshPromises);
         }
+        console.log(meshMap);
+        console.log("YES2");
 
         if (raw.nodes) {
             raw.nodes.forEach((rawNode, index) => {
                 let node: Node;
+                console.log(rawNode.name);
 
                 switch (rawNode.name) {
+                    case "OriginNode":
+                        node = new Node();
+                        node.name = rawNode.name;
+                        // node.setParent(scene);
+                        break;
                     case "OrthoCamera":
                         node = new OrthographicCamera(
-                            -rawNode.position.x,
-                            rawNode.position.x,
-                            rawNode.position.y,
-                            -rawNode.position.y,
-                            100,
-                            -1000
+                            -canvas.width / 2,
+                            canvas.width / 2,
+                            canvas.height / 2,
+                            -canvas.height / 2,
+                            500,
+                            -500
                         );
+                        node.name = rawNode.name;
                         break;
                     case "ObliqueCamera":
                         node = new ObliqueCamera(
-                            -rawNode.position.x,
-                            rawNode.position.x,
-                            rawNode.position.y,
-                            -rawNode.position.y,
+                            -canvas.width / 2,
+                            canvas.width / 2,
+                            canvas.height / 2,
+                            -canvas.height / 2,
                             100,
                             -1000
                         );
+                        node.name = rawNode.name;
                         break;
                     case "PerspectiveCamera":
-                        node = new PerspectiveCamera(60, 1, 50, -1000);
+                        node = new PerspectiveCamera(
+                            70,
+                            canvas.width / canvas.height,
+                            0.1,
+                            1000,
+                            1
+                        );
+                        node.name = rawNode.name;
+                        console.log("INI");
                         node.setPosition(
                             rawNode.position.x,
                             rawNode.position.y,
                             rawNode.position.z
                         );
+                        console.log("INI");
                         break;
                     default:
                         if (rawNode.mesh !== undefined) {
-                            node = meshMap[rawNode.mesh];
+                            console.log("SINI DONG", meshMap);
+                            console.log("rawnode", rawNode);
+                            console.log("SINI DONG", rawNode.name);
+                            console.log("rawNode.mesh", rawNode.mesh);
+                            node = meshMap[rawNode.mesh - 1];
+                            if (!node) {
+                                console.error(
+                                    `Mesh with index ${
+                                        rawNode.mesh - 1
+                                    } not found in meshMap.`
+                                );
+                                return;
+                            }
+                            console.log("TES", meshMap[0]);
+                            console.log("HASIL", node);
+                            node.name = rawNode.name;
                         } else {
+                            console.log("APASINI");
                             node = new Node();
+                            node.name = rawNode.name;
                         }
                         break;
                 }
 
-                node.name = rawNode.name;
+                console.log("ONO", node);
                 node.setPosition(
                     rawNode.position.x,
                     rawNode.position.y,
                     rawNode.position.z
                 );
+                console.log("ONO");
                 node.setScale(
                     new Vector3(
                         rawNode.scale.x,
@@ -121,6 +174,8 @@ export class SaveLoader {
                 });
             });
         }
+        console.log("YES3");
+        console.log(nodeMap);
 
         const rootNode = nodeMap[0];
         rootNode.getChildren().forEach((child) => {
