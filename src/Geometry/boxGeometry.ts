@@ -14,11 +14,11 @@ export class BoxGeometry extends BufferGeometry {
         const hw = width / 2, hh = height / 2, hd = depth / 2;
 
         const vertices = new Float32Array([
-            +hw, +hh, +hd, 1,
+            +hw, +hh, +hd, 1, // a
             -hw, +hh, +hd, 1,
             -hw, -hh, +hd, 1,
             +hw, -hh, +hd, 1,
-            +hw, +hh, -hd, 1,
+            +hw, +hh, -hd, 1, // e
             -hw, +hh, -hd, 1,
             -hw, -hh, -hd, 1,
             +hw, -hh, -hd, 1,
@@ -44,6 +44,27 @@ export class BoxGeometry extends BufferGeometry {
             1, 5, 6,
             6, 2, 1,
         ]);
+
+        // const indices = new Uint16Array([
+        //     // front
+        //     a, b, c,
+        //     c, d, a,
+        //     // back
+        //     e, h, g,
+        //     g, f, e,
+        //     // top
+        //     a, e, f,
+        //     f, b, a,
+        //     // bottom
+        //     d, c, g,
+        //     g, h, d,
+        //     // right
+        //     a, d, h,
+        //     h, e, a,
+        //     // left
+        //     b, f, g,
+        //     g, c, b,
+        // ]);
 
         const texcoord = new Float32Array([
             // front

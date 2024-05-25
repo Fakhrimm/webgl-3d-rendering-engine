@@ -7,7 +7,7 @@ import {OrthographicCamera} from "../Camera/orthographic-camera.ts";
 import {Camera} from "../Camera/camera.ts";
 import {ObliqueCamera} from "../Camera/oblique-camera.ts";
 import {PerspectiveCamera} from "../Camera/perspective-camera.ts";
-import {PlaneGeometry} from "../Geometry/plane-geometry.ts";
+import { RingGeometry } from "../Geometry/ringGeometry.ts";
 
 export class Scene extends Node {
     activeCamera: Camera | null = null;
@@ -70,9 +70,9 @@ export class Scene extends Node {
         let mesh = new Mesh(new BoxGeometry(50, 50, 50, true), material1);
         mesh.name = "Mesh";
 
-        let mesh2 = new Mesh(new BoxGeometry(200, 200, 200, false), material2);
+        let mesh2 = new Mesh(new RingGeometry(), material2);
         mesh2.name = "Mesh2";
-
+        
         // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z+'), material2);
         // mesh3.name = "Mesh3";
         // let mesh4 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z-'), material2);
@@ -127,7 +127,7 @@ export class Scene extends Node {
         obliqueCamera.setParent(originNode);
         perspectiveCamera.setParent(originNode);
         mesh2.setParent(scene);
-        mesh.setParent(mesh2);
+        // mesh.setParent(mesh2);
 
         // const node = new Node();
         // node.name = "Node";
@@ -139,6 +139,11 @@ export class Scene extends Node {
         // mesh6.setParent(node);
         // mesh7.setParent(node);
         // mesh8.setParent(node);
+        
+        // const meshRing = new Mesh(new BoxGeometry(), material2); 
+        // meshRing.name = "Ring";
+        // meshRing.setPosition(0, 0, 300);
+        // meshRing.setParent(scene);
 
         scene.setActiveCamera(OrthographicCamera);
         return scene;
