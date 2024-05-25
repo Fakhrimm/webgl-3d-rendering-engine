@@ -3,7 +3,7 @@ import { Color } from "../Math/color.ts";
 import { MaterialTypes } from "../Types/material-types.ts";
 import { ProgramInfo } from "../WebGL/program-info.ts";
 import { TextureTypes } from "../Types/texture-types.ts";
-import { IMaterial, IPhongMaterial } from "../Utils/model-interface.ts";
+import { IPhongMaterial } from "../Utils/model-interface.ts";
 
 export class PhongMaterial extends Material {
     private u_diffuseColor: Color;
@@ -76,7 +76,7 @@ export class PhongMaterial extends Material {
     public setSpecularColorFromRGB(r: number, g: number, b: number) {
         this.u_specularColor.setFromRGB(r, g, b);
     }
-    
+
     public setShininess(shininess: number) {
         this.u_shininess = shininess;
     }

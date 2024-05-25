@@ -148,15 +148,24 @@ export function elementListner(variables: Variables) {
     });
 
     const shader = container.getElement("shader") as HTMLInputElement;
+    let previousShaderState = shader.checked;
     shader.addEventListener("change", (event) => {
         const isChecked = (event.target as HTMLInputElement).checked;
         const selectedNode = variables.getTree().reference;
-        if (selectedNode instanceof Mesh) {
-            if (isChecked) {
-                selectedNode.geometry.setToSmoothShading();
+        try {
+            if (selectedNode instanceof Mesh) {
+                if (isChecked) {
+                    selectedNode.geometry.setToSmoothShading();
+                } else {
+                    selectedNode.geometry.setToFlatShading();
+                }
+                previousShaderState = isChecked;
             } else {
-                selectedNode.geometry.setToFlatShading();
+                throw new Error("Only Mesh can access this function.");
             }
+        } catch (error) {
+            showError(String(error));
+            shader.checked = previousShaderState;
         }
     });
 
@@ -179,6 +188,11 @@ export function elementListner(variables: Variables) {
     const reset = container.getElement("reset");
     reset.addEventListener("click", () => {
         getSelectedNode().setActiveCameraToDefault();
+        const selectedNode = variables.getTree().reference;
+        if (selectedNode instanceof Mesh) {
+            selectedNode.geometry.setToFlatShading();
+            shader.checked = false;
+        }
     });
 
     const colorPickerDiffuse = container.getElement(
