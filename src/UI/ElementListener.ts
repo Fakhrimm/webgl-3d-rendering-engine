@@ -20,7 +20,7 @@ export function elementListner(variables: Variables) {
     }
 
     function getSelectedNode() {
-        return variables.getTree().reference;
+        return variables.getScene();
     }
 
     function getOriginNode() {
