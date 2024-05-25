@@ -25,8 +25,15 @@ export class Variables {
     private _originScene: Scene;
 
     constructor(props: VariableInterface) {
-        const { scene, container, webGLRenderer, tree, renderer, originNode, originScene } =
-            props;
+        const {
+            scene,
+            container,
+            webGLRenderer,
+            tree,
+            renderer,
+            originNode,
+            originScene,
+        } = props;
 
         this._scene = scene;
         this._container = container;

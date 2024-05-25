@@ -53,6 +53,10 @@ export function elementListner(variables: Variables) {
                             material.setNormalTextureType(selectedIndex);
                             break;
                     }
+                } else {
+                    throw new Error(
+                        "Only PhongMaterial can access this function."
+                    );
                 }
             } else {
                 throw new Error("Only PhongMaterial can access this function.");
@@ -272,6 +276,8 @@ export function elementListner(variables: Variables) {
                 ) {
                     material.setDiffuseColorFromRGB(r, g, b);
                     previousDiffuseColor = color;
+                } else {
+                    throw new Error("Only Mesh can access this function.");
                 }
             } else {
                 throw new Error("Only Mesh can access this function.");
@@ -310,10 +316,14 @@ export function elementListner(variables: Variables) {
                 ) {
                     material.setSpecularColorFromRGB(r, g, b);
                     previousSpecularColor = color;
+                } else {
+                    throw new Error(
+                        "Only Mesh with Phong Material or Paralax Material can access this function."
+                    );
                 }
             } else {
                 throw new Error(
-                    "Only Mesh with Phong Material and Paralax Material can access this function."
+                    "Only Mesh with Phong Material or Paralax Material can access this function."
                 );
             }
         } catch (error) {
@@ -338,10 +348,14 @@ export function elementListner(variables: Variables) {
                 ) {
                     material.setShininess(value);
                     previousShininess = value.toString();
+                } else {
+                    throw new Error(
+                        "Only Mesh with Phong Material or Parallax Material can access this function."
+                    );
                 }
             } else {
                 throw new Error(
-                    "Only Mesh with Phong Material can access this function."
+                    "Only Mesh with Phong Material or Parallax Material can access this function."
                 );
             }
         } catch (error) {
@@ -359,6 +373,10 @@ export function elementListner(variables: Variables) {
                 const material = selectedNode.material;
                 if (material instanceof PhongMaterial) {
                     material.setDisplacementScale(value);
+                } else {
+                    throw new Error(
+                        "Only Mesh with PhongMaterial can access this function."
+                    );
                 }
             } else {
                 throw new Error(
@@ -380,6 +398,10 @@ export function elementListner(variables: Variables) {
                 const material = selectedNode.material;
                 if (material instanceof PhongMaterial) {
                     material.setDisplacementBias(value);
+                } else {
+                    throw new Error(
+                        "Only Mesh with PhongMaterial can access this function."
+                    );
                 }
             } else {
                 throw new Error(
@@ -401,6 +423,10 @@ export function elementListner(variables: Variables) {
                 const material = selectedNode.material;
                 if (material instanceof ParallaxMaterial) {
                     material.setHeightTextureType(value);
+                } else {
+                    throw new Error(
+                        "Only Mesh with Parallax Material can access this function."
+                    );
                 }
             } else {
                 throw new Error(
@@ -422,7 +448,11 @@ export function elementListner(variables: Variables) {
                 const material = selectedNode.material;
                 if (material instanceof ParallaxMaterial) {
                     material.setHeightScale(value);
-                }
+                } else {
+                throw new Error(
+                    "Only Mesh with Parallax Material can access this function."
+                );
+            }
             } else {
                 throw new Error(
                     "Only Mesh with Parallax Material can access this function."
