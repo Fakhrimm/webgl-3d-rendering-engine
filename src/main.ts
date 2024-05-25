@@ -37,6 +37,7 @@ const main = async () => {
     const sceneDummy = Scene.createSceneDummy(webGLRenderer.canvas);
 
     const treeRoot = Tree.mapSceneToTree(sceneDummy);
+    const originNode = sceneDummy.getOriginNode();
 
     const variables = new Variables({
         scene: sceneDummy,
@@ -44,6 +45,7 @@ const main = async () => {
         webGLRenderer,
         tree: treeRoot,
         renderer,
+        originNode: originNode,
     });
 
     // element listener
@@ -52,6 +54,7 @@ const main = async () => {
 
     // Render tree
     Tree.resetTree(container);
+    // console.log(variables);
     Tree.mapTreeToComponentTree(container, treeRoot, variables);
 
     requestAnimationFrame(() => renderScene(webGLRenderer, variables, false));

@@ -53,10 +53,10 @@ export class BufferGeometry {
         );
         this.calculateAndSetTangents();
 
-        console.log("position", this.getAttribute("a_position"));
-        console.log("normal", this.getAttribute("a_normal"));
-        console.log("texcoord", this.getAttribute("a_texcoord"));
-        console.log("tangent", this.getAttribute("a_tangent"));
+        // console.log("position", this.getAttribute("a_position"));
+        // console.log("normal", this.getAttribute("a_normal"));
+        // console.log("texcoord", this.getAttribute("a_texcoord"));
+        // console.log("tangent", this.getAttribute("a_tangent"));
     }
 
     get attributes() {

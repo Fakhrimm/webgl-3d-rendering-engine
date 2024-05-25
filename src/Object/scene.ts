@@ -1,12 +1,12 @@
-import {Node} from "./node";
-import {Mesh} from "./mesh.ts";
-import {BoxGeometry} from "../Geometry/boxGeometry.ts";
-import {BasicMaterial} from "../Material/basic-material.ts";
-import {PhongMaterial} from "../Material/phong-material.ts";
-import {OrthographicCamera} from "../Camera/orthographic-camera.ts";
-import {Camera} from "../Camera/camera.ts";
-import {ObliqueCamera} from "../Camera/oblique-camera.ts";
-import {PerspectiveCamera} from "../Camera/perspective-camera.ts";
+import { Node } from "./node";
+import { Mesh } from "./mesh.ts";
+import { BoxGeometry } from "../Geometry/boxGeometry.ts";
+import { BasicMaterial } from "../Material/basic-material.ts";
+import { PhongMaterial } from "../Material/phong-material.ts";
+import { OrthographicCamera } from "../Camera/orthographic-camera.ts";
+import { Camera } from "../Camera/camera.ts";
+import { ObliqueCamera } from "../Camera/oblique-camera.ts";
+import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
 import { RingGeometry } from "../Geometry/ringGeometry.ts";
 
 export class Scene extends Node {
@@ -21,9 +21,7 @@ export class Scene extends Node {
         return this.activeCamera;
     }
 
-    setActiveCamera(
-        cameraType: new (...args: any[]) => Camera
-    ): void {
+    setActiveCamera(cameraType: new (...args: any[]) => Camera): void {
         let foundCamera: Camera | null = null;
         this.traverseWithTotalBreak((node) => {
             if (node instanceof cameraType) {
@@ -51,9 +49,11 @@ export class Scene extends Node {
         }
     }
 
-    public static createSceneDummy(
-        canvas: HTMLCanvasElement | null
-    ): Scene {
+    getOriginNode(): Node {
+        return this.getChildren()[0];
+    }
+
+    public static createSceneDummy(canvas: HTMLCanvasElement | null): Scene {
         if (!canvas) {
             throw new Error("Canvas is null");
         }
@@ -72,7 +72,7 @@ export class Scene extends Node {
 
         let mesh2 = new Mesh(new RingGeometry(), material2);
         mesh2.name = "Mesh2";
-        
+
         // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z+'), material2);
         // mesh3.name = "Mesh3";
         // let mesh4 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z-'), material2);
@@ -85,7 +85,6 @@ export class Scene extends Node {
         // mesh7.name = "Mesh7";
         // let mesh8 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'y-'), material2);
         // mesh8.name = "Mesh8";
-
 
         const orthographicCamera = new OrthographicCamera(
             -canvas.width / 2,
@@ -121,8 +120,6 @@ export class Scene extends Node {
         // mesh2.setPosition(0, 0, -300);
         // mesh3.setPosition(0, 0, -300);
 
-
-
         orthographicCamera.setParent(originNode);
         obliqueCamera.setParent(originNode);
         perspectiveCamera.setParent(originNode);
@@ -139,8 +136,8 @@ export class Scene extends Node {
         // mesh6.setParent(node);
         // mesh7.setParent(node);
         // mesh8.setParent(node);
-        
-        // const meshRing = new Mesh(new BoxGeometry(), material2); 
+
+        // const meshRing = new Mesh(new BoxGeometry(), material2);
         // meshRing.name = "Ring";
         // meshRing.setPosition(0, 0, 300);
         // meshRing.setParent(scene);

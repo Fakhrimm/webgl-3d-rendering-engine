@@ -9,7 +9,6 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { AnimationRunner } from "../Animation/animationRunner.ts";
 import { Tree } from "./Tree.ts";
 import { renderScene } from "../main.ts";
-import { Camera } from "../Camera/camera.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -22,6 +21,10 @@ export function elementListner(variables: Variables) {
 
     function getSelectedNode() {
         return variables.getTree().reference;
+    }
+
+    function getOriginNode() {
+        return variables.getOriginNode();
     }
 
     // TOP
@@ -52,6 +55,7 @@ export function elementListner(variables: Variables) {
         console.log(file);
         SaveLoader.loadModel(file, (model) => {
             try {
+                console.log("YESS");
                 Tree.resetTree(container);
                 variables.setScene(model);
                 const tree = Tree.mapSceneToTree(variables.getScene());
@@ -90,23 +94,12 @@ export function elementListner(variables: Variables) {
 
     cameraSlider.addEventListener("input", () => {
         const val = cameraSlider.valueAsNumber;
-        const delta = val - previousValue;
-        const cameraNode = variables.getTree().reference.getActiveCamera();
-        if (cameraNode instanceof Camera) {
-            const rotationFactor = 50;
-            if (rotateAxis === "x") {
-                cameraNode.setRotationCameraY(
-                    (delta * Math.PI * rotationFactor) / 180
-                );
-            } else if (rotateAxis === "y") {
-                cameraNode.setRotationCameraX(
-                    (delta * Math.PI * rotationFactor) / 180
-                );
-            }
-            previousValue = val;
-            requestAnimationFrame(() =>
-                renderScene(variables.getWebGL(), variables, false)
-            );
+        const degrees = (val / 3.3) * 180;
+        const radians = degrees * (Math.PI / 180);
+        if (rotateAxis === "x") {
+            variables.getOriginNode().setRotationX(radians);
+        } else if (rotateAxis === "y") {
+            variables.getOriginNode().setRotationY(radians);
         }
     });
 
@@ -147,6 +140,9 @@ export function elementListner(variables: Variables) {
         const element = container.getElement(button.id);
         element.addEventListener("click", () => {
             getSelectedNode().setActiveCamera(button.camera);
+            console.log("YES");
+            console.log(getOriginNode());
+            console.log("YES");
         });
     });
 
