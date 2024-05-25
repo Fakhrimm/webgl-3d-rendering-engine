@@ -1,6 +1,5 @@
-import { Matrix4 } from "../Math/matrix-4";
-import { Node } from "../Object/node";
-import { Euler } from "../Math/euler";
+import {Matrix4} from "../Math/matrix-4";
+import {Node} from "../Object/node";
 
 export class Camera extends Node {
     protected _projectionMatrix = new Matrix4().identity();
@@ -15,6 +14,14 @@ export class Camera extends Node {
     get viewProjectionMatrix() {
         this._invWorldMatrix = this.worldMatrix.clone().invert();
         return this._projectionMatrix.clone().multiply(this._invWorldMatrix);
+    }
+
+    get viewMatrix() {
+        return this.worldMatrix.clone().invert();
+    }
+
+    get projectionMatrix() {
+        return this._projectionMatrix.clone();
     }
 
     computeProjectionMatrix() {

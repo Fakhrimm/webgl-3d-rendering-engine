@@ -55,13 +55,20 @@ export class WebGLRenderer {
         this.programInfos[MaterialTypes.BASIC].setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
             u_ambientColor: [0.2, 0.2, 0.2],
-            u_reverseLightDirection: [0, 0, 100],
+            u_reverseLightDirection: [0, 0, 1],
         });
 
         this.programInfos[MaterialTypes.PHONG].setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
             u_ambientColor: [0.2, 0.2, 0.2],
-            u_reverseLightDirection: [0, 0, 100],
+            u_reverseLightDirection: [0, 0, 1],
+        });
+        this.programInfos[MaterialTypes.PARALLAX].setUniforms({
+            u_view: camera.viewMatrix.elements,
+            u_projection: camera.projectionMatrix.elements,
+            u_viewProjection: camera.viewProjectionMatrix.elements,
+            u_ambientColor: [0.2, 0.2, 0.2],
+            u_reverseLightDirection: [0, 0, 1],
         });
     }
 
@@ -105,6 +112,12 @@ export class WebGLRenderer {
             this.gl,
             loadShader(ShaderType.PHONG_VERTEX),
             loadShader(ShaderType.PHONG_FRAGMENT)
+        );
+
+        this.programInfos[MaterialTypes.PARALLAX] = new ProgramInfo(
+            this.gl,
+            loadShader(ShaderType.PARALLAX_VERTEX),
+            loadShader(ShaderType.PARALLAX_FRAGMENT)
         );
     }
 

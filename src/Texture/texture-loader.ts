@@ -7,6 +7,8 @@ export class TextureLoader {
         [TextureTypes.DIFFUSE_1]: "../Assets/diffuse-1.png",
         [TextureTypes.DIFFUSE_2]: "../Assets/diffuse-2.jpeg",
         [TextureTypes.DIFFUSE_3]: "../Assets/diffuse-3.jpeg",
+        [TextureTypes.DIFFUSE_BRICKS]: "../Assets/diffuse_brick.png",
+        [TextureTypes.DIFFUSE_WOOD]: "../Assets/diffuse_wood.PNG",
         [TextureTypes.SPECULAR_0]: "../Assets/specular-default.png",
         [TextureTypes.SPECULAR_1]: "../Assets/specular-1.png",
         [TextureTypes.SPECULAR_2]: "../Assets/specular-2.jpeg",
@@ -15,8 +17,14 @@ export class TextureLoader {
         [TextureTypes.NORMAL_1]: "../Assets/normal-1.png",
         [TextureTypes.NORMAL_2]: "../Assets/normal-2.jpeg",
         [TextureTypes.NORMAL_3]: "../Assets/normal-3.jpeg",
+        [TextureTypes.NORMAL_BRICKS]: "../Assets/normal_brick.png",
+        [TextureTypes.NORMAL_WOOD]: "../Assets/normal_wood.png",
         [TextureTypes.DISPLACEMENT_0]: "../Assets/displacement-default.png",
         [TextureTypes.DISPLACEMENT_1]: "../Assets/displacement-1.png",
+        [TextureTypes.DISPLACEMENT_2]: "../Assets/displacement-2.jpg",
+        [TextureTypes.HEIGHT_0]: "../Assets/height-default.png",
+        [TextureTypes.HEIGHT_BRICKS]: "../Assets/height_brick.png",
+        [TextureTypes.HEIGHT_WOOD]: "../Assets/height_wood.png",
     };
 
     async loadTexture(gl: WebGLRenderingContext) {

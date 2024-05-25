@@ -204,10 +204,9 @@ class Vector3 {
 	dot( v: Vector3) {
 		return this.x * v.x + this.y * v.y + this.z * v.z;
 	}
-
-
-
-
+	toNumberArray() {
+		return [this.x, this.y, this.z];
+	}
 }
 
 // const _vector = new Vector3();
