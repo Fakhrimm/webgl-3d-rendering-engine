@@ -513,34 +513,39 @@
                         class="flex flex-col pl-4 pr-6 py-2 gap-1 border-b border-gray-500 text-white w-full"
                     >
                         <h1 class="text-xl font-bold">Texture</h1>
-                        <div class="flex flex-col gap-2">
-                            <div class="flex gap-3">
-                                <button
-                                    id="bump"
-                                    class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
+                        <div class="flex w-full justify-center gap-20">
+                            <div class="flex w-1/2 flex-col items-start gap-2">
+                                <label
+                                    for="textureType"
+                                    class="text-base text-white"
+                                    >Type</label
                                 >
-                                    Bump
-                                </button>
-                                <button
-                                    id="environment"
-                                    class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
+                                <select
+                                    id="textureType"
+                                    name="textureType"
+                                    class="p-2 w-full bg-gray-700 text-white border border-gray-600 rounded-lg cursor-pointer"
                                 >
-                                    Image
-                                </button>
+                                    <option value="diffuse">Diffuse</option>
+                                    <option value="specular">Specular</option>
+                                    <option value="normal">Normal</option>
+                                </select>
                             </div>
-                            <div class="flex gap-3">
-                                <button
-                                    id="reflective"
-                                    class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
+                            <div class="flex w-1/2 flex-col items-start gap-2">
+                                <label
+                                    for="textureIndex"
+                                    class="text-base text-white"
+                                    >Index</label
                                 >
-                                    Reflective
-                                </button>
-                                <button
-                                    id="none"
-                                    class="w-1/2 flex flex-col items-center py-1.5 bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
+                                <select
+                                    id="textureIndex"
+                                    name="textureIndex"
+                                    class="p-2 w-full bg-gray-700 text-white border border-gray-600 rounded-lg cursor-pointer"
                                 >
-                                    None
-                                </button>
+                                    <option value="0">1</option>
+                                    <option value="1">2</option>
+                                    <option value="2">3</option>
+                                    <option value="3">4</option>
+                                </select>
                             </div>
                         </div>
                     </div>

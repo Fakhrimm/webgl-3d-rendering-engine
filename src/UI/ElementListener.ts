@@ -31,6 +31,36 @@ export function elementListner(variables: Variables) {
         return variables.getOriginScene();
     }
 
+    function handleTextureChange() {
+        const selectedNode = variables.getTree().reference;
+        const selectedType = textureTypeSelect.value;
+        const selectedIndex = parseInt(textureIndexSelect.value, 10);
+        console.log(selectedIndex);
+
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (material instanceof PhongMaterial) {
+                    switch (selectedType) {
+                        case "diffuse":
+                            material.setDiffuseTextureType(selectedIndex);
+                            break;
+                        case "specular":
+                            material.setSpecularTextureType(selectedIndex);
+                            break;
+                        case "normal":
+                            material.setNormalTextureType(selectedIndex);
+                            break;
+                    }
+                }
+            } else {
+                throw new Error("Only PhongMaterial can access this function.");
+            }
+        } catch (error) {
+            showError(String(error));
+        }
+    }
+
     // TOP
     const help = container.getElement("help");
     const modalContainer = container.getElement("modalContainer");
@@ -77,7 +107,6 @@ export function elementListner(variables: Variables) {
 
     // LEFT
     let rotateAxis = "x";
-    let previousValue = 0;
 
     const rotateAxisDropdown = container.getElement(
         "rotateAxis"
@@ -92,8 +121,6 @@ export function elementListner(variables: Variables) {
 
     rotateAxisDropdown.addEventListener("change", () => {
         rotateAxis = rotateAxisDropdown.value;
-        previousValue = 0;
-        console.log(`Axis changed to: ${rotateAxis}`);
     });
 
     cameraSlider.addEventListener("input", () => {
@@ -357,6 +384,21 @@ export function elementListner(variables: Variables) {
     translateZ.addEventListener("input", () => {
         const val = translateZ.valueAsNumber;
         variables.getTree().reference.setPositionZ(val * 5);
+    });
+
+    // TEXTURE
+    const textureTypeSelect = container.getElement(
+        "textureTypeSelect"
+    ) as HTMLInputElement;
+    const textureIndexSelect = container.getElement(
+        "textureIndexSelect"
+    ) as HTMLInputElement;
+
+    textureTypeSelect.addEventListener("change", () => {
+        handleTextureChange();
+    });
+    textureIndexSelect.addEventListener("change", () => {
+        handleTextureChange();
     });
 
     // ANIMATION

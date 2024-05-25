@@ -145,4 +145,101 @@ export class Scene extends Node {
         scene.setActiveCamera(OrthographicCamera);
         return scene;
     }
+
+    public static createSceneDummyDog(canvas: HTMLCanvasElement | null): Scene {
+        if (!canvas) {
+            throw new Error("Canvas is null");
+        }
+        const scene = new Scene();
+        scene.name = "SceneDummyDog";
+
+        const originNode = new Node();
+        originNode.name = "OriginNode";
+        originNode.setParent(scene);
+
+        const bodyMaterial = new BasicMaterial();
+        const detailMaterial = new PhongMaterial();
+
+        // Body (Horizontal)
+        const body = new Mesh(new BoxGeometry(50, 50, 80, true), bodyMaterial);
+        body.name = "Body";
+        body.setPosition(0, 0, 0);
+        body.setParent(originNode);
+
+        // Head
+        const head = new Mesh(new BoxGeometry(30, 30, 30, true), bodyMaterial);
+        head.name = "Head";
+        head.setPosition(0, 0, 50);
+        head.setParent(body);
+
+        // Eyes
+        const eye1 = new Mesh(new BoxGeometry(5, 5, 5, true), detailMaterial);
+        eye1.name = "Eye1";
+        eye1.setPosition(-10, 10, 15);
+        eye1.setParent(head);
+
+        const eye2 = new Mesh(new BoxGeometry(5, 5, 5, true), detailMaterial);
+        eye2.name = "Eye2";
+        eye2.setPosition(10, 10, 15);
+        eye2.setParent(head);
+
+        // Nose
+        const nose = new Mesh(new BoxGeometry(5, 5, 5, true), detailMaterial);
+        nose.name = "Nose";
+        nose.setPosition(0, 0, 15);
+        nose.setParent(head);
+
+        // Legs
+        const leg1 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
+        leg1.name = "Leg1";
+        leg1.setPosition(-30, -25, 15);
+        leg1.setParent(body);
+
+        const leg2 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
+        leg2.name = "Leg2";
+        leg2.setPosition(30, -25, 15);
+        leg2.setParent(body);
+
+        const leg3 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
+        leg3.name = "Leg3";
+        leg3.setPosition(-30, -25, -25);
+        leg3.setParent(body);
+
+        const leg4 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
+        leg4.name = "Leg4";
+        leg4.setPosition(30, -25, -25);
+        leg4.setParent(body);
+
+        // Tail
+        const tail = new Mesh(new BoxGeometry(5, 30, 5, true), bodyMaterial);
+        tail.name = "Tail";
+        tail.setPosition(0, -15, -40);
+        tail.setParent(body);
+
+        // Ears
+        const ear1 = new Mesh(new BoxGeometry(5, 10, 5, true), bodyMaterial);
+        ear1.name = "Ear1";
+        ear1.setPosition(-10, 15, 10);
+        ear1.setParent(head);
+
+        const ear2 = new Mesh(new BoxGeometry(5, 10, 5, true), bodyMaterial);
+        ear2.name = "Ear2";
+        ear2.setPosition(10, 15, 10);
+        ear2.setParent(head);
+
+        const orthographicCamera = new OrthographicCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            -500,
+            500
+        );
+        orthographicCamera.name = "OrthoCamera";
+
+        orthographicCamera.setParent(originNode);
+
+        scene.setActiveCamera(OrthographicCamera);
+        return scene;
+    }
 }
