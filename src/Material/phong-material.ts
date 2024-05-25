@@ -69,12 +69,24 @@ export class PhongMaterial extends Material {
         });
     }
 
+    public getDiffuseColor(): Color {
+        return this.u_diffuseColor;
+    }
+
     public setDiffuseColorFromRGB(r: number, g: number, b: number) {
         this.u_diffuseColor.setFromRGB(r, g, b);
     }
 
+    public getSpecularColor(): Color {
+        return this.u_specularColor;
+    }
+
     public setSpecularColorFromRGB(r: number, g: number, b: number) {
         this.u_specularColor.setFromRGB(r, g, b);
+    }
+
+    public getShininess(): number {
+        return this.u_shininess;
     }
 
     public setShininess(shininess: number) {
@@ -102,8 +114,16 @@ export class PhongMaterial extends Material {
         this.normalTextureType = (index + 8) as TextureTypes;
     }
 
+    public getDisplacementScale(): number {
+        return this.displacementScale;
+    }
+
     public setDisplacementScale(value: number) {
         this.displacementScale = value;
+    }
+
+    public getDisplacementBias(): number {
+        return this.displacementBias;
     }
 
     public setDisplacementBias(value: number) {

@@ -231,18 +231,21 @@
                                         type="number"
                                         class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
                                         readonly
+                                        value="0"
                                     />
                                     <input
                                         id="gValueDiffuse"
                                         type="number"
                                         class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
                                         readonly
+                                        value="0"
                                     />
                                     <input
                                         id="bValueDiffuse"
                                         type="number"
                                         class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
                                         readonly
+                                        value="0"
                                     />
                                 </div>
                             </div>
@@ -267,18 +270,21 @@
                                         type="number"
                                         class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
                                         readonly
+                                        value="0"
                                     />
                                     <input
                                         id="gValueSpecular"
                                         type="number"
                                         class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
                                         readonly
+                                        value="0"
                                     />
                                     <input
                                         id="bValueSpecular"
                                         type="number"
                                         class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
                                         readonly
+                                        value="0"
                                     />
                                 </div>
                             </div>
@@ -293,6 +299,7 @@
                                 id="shininess"
                                 class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                 step="0.1"
+                                value="0"
                             />
                         </div>
                         <div
@@ -310,6 +317,7 @@
                                         id="displacementScale"
                                         class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                         step="0.1"
+                                        value="0"
                                     />
                                 </div>
                             </div>
@@ -325,6 +333,7 @@
                                         id="displacementBias"
                                         class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                         step="0.1"
+                                        value="0"
                                     />
                                 </div>
                             </div>
@@ -342,6 +351,7 @@
                                         id="heightTexture"
                                         class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                         step="0.1"
+                                        value="0"
                                     />
                                 </div>
                             </div>
@@ -355,6 +365,7 @@
                                         id="heightScale"
                                         class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                         step="0.1"
+                                        value="0"
                                     />
                                 </div>
                             </div>
@@ -685,23 +696,57 @@
                                 class="p-2 w-2/3 text-white cursor-pointer bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                             >
                                 <option value="normal">Normal</option>
-                                <option value="easeInOutSine">Ease In Out Sine</option>
-                                <option value="easeInOutQuad">Ease In Out Quad</option>
+                                <option value="easeInOutSine">
+                                    Ease In Out Sine
+                                </option>
+                                <option value="easeInOutQuad">
+                                    Ease In Out Quad
+                                </option>
                                 <option value="easeInOutCubic">
                                     Ease In Out Cubic
                                 </option>
                                 <option value="easeInOutQuart">
                                     Ease In Out Quart
                                 </option>
-                                <option value="Quint">
-                                    Ease In Out Quint
+                                <option value="Quint">Ease In Out Quint</option>
+                                <option value="easeInOutExpo">
+                                    Ease In Out Expo
                                 </option>
-                                <option value="easeInOutExpo">Ease In Out Expo</option>
-                                <option value="easeInOutCirc">Ease In Out Circ</option>
-                                <option value="easeInOutBack">Ease In Out Back</option>
-                                <option value="easeInOutElastic">Ease In Out Elastic</option>
-                                <option value="easeInOutBounce">Ease In Out Bounce</option>
+                                <option value="easeInOutCirc">
+                                    Ease In Out Circ
+                                </option>
+                                <option value="easeInOutBack">
+                                    Ease In Out Back
+                                </option>
+                                <option value="easeInOutElastic">
+                                    Ease In Out Elastic
+                                </option>
+                                <option value="easeInOutBounce">
+                                    Ease In Out Bounce
+                                </option>
                             </select>
+                        </div>
+                        <h5 class="pt-4">FPS</h5>
+                        <div class="flex w-full items-center gap-4">
+                            <input
+                                class="flex-grow"
+                                type="range"
+                                id="fpsSlider"
+                                name="fpsSlider"
+                                min="10"
+                                max="60"
+                                step="0.01"
+                            />
+                            <div class="flex items-center gap-2">
+                                <input
+                                    id="fps"
+                                    type="number"
+                                    class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg w-16"
+                                    value="0"
+                                    min="10"
+                                    max="60"
+                                />
+                            </div>
                         </div>
                     </div>
                     <!-- <div

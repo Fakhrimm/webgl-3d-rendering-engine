@@ -64,20 +64,40 @@ export class ParallaxMaterial extends Material {
         });
     }
 
+    public getDiffuseColor(): Color {
+        return this.u_diffuseColor;
+    }
+
     public setDiffuseColorFromRGB(r: number, g: number, b: number) {
         this.u_diffuseColor.setFromRGB(r, g, b);
+    }
+
+    public getSpecularColor(): Color {
+        return this.u_specularColor;
     }
 
     public setSpecularColorFromRGB(r: number, g: number, b: number) {
         this.u_specularColor.setFromRGB(r, g, b);
     }
 
+    public getShininess(): number {
+        return this.u_shininess;
+    }
+
     public setShininess(shininess: number) {
         this.u_shininess = shininess;
     }
 
+    public getHeightTextureType(): number {
+        return this.heightTextureType;
+    }
+
     public setHeightTextureType(value: number) {
         this.heightTextureType = value;
+    }
+
+    public getHeightScale(): number {
+        return this.heightScale;
     }
 
     public setHeightScale(value: number) {

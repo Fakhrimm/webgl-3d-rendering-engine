@@ -85,6 +85,9 @@ export class Container {
         const prev = document.getElementById("prev");
         const first = document.getElementById("first");
         const last = document.getElementById("last");
+        
+        const fps = document.getElementById("fps");
+        const fpsSlider = document.getElementById("fpsSlider"); 
 
         const textureTypeSelect = document.getElementById(
             "textureType"
@@ -164,6 +167,8 @@ export class Container {
         this.elementRefs.set("prev", prev as HTMLElement);
         this.elementRefs.set("first", first as HTMLElement);
         this.elementRefs.set("last", last as HTMLElement);
+        this.elementRefs.set("fps", fps as HTMLElement);
+        this.elementRefs.set("fpsSlider", fpsSlider as HTMLElement);
         this.elementRefs.set("saveFrame", saveFrame as HTMLElement);
         this.elementRefs.set("deleteFrame", deleteFrame as HTMLElement);
         this.elementRefs.set(

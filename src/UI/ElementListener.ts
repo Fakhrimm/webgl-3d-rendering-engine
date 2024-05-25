@@ -449,10 +449,10 @@ export function elementListner(variables: Variables) {
                 if (material instanceof ParallaxMaterial) {
                     material.setHeightScale(value);
                 } else {
-                throw new Error(
-                    "Only Mesh with Parallax Material can access this function."
-                );
-            }
+                    throw new Error(
+                        "Only Mesh with Parallax Material can access this function."
+                    );
+                }
             } else {
                 throw new Error(
                     "Only Mesh with Parallax Material can access this function."
@@ -564,6 +564,8 @@ export function elementListner(variables: Variables) {
     const prev = container.getElement("prev") as HTMLInputElement;
     const first = container.getElement("first") as HTMLInputElement;
     const last = container.getElement("last") as HTMLInputElement;
+    const fps = container.getElement("fps") as HTMLInputElement;
+    const fpsSlider = container.getElement("fpsSlider") as HTMLInputElement;
 
     play.addEventListener("click", () => {
         animationRunner.play();
@@ -613,5 +615,17 @@ export function elementListner(variables: Variables) {
 
     last.addEventListener("click", () => {
         animationRunner.last();
+    });
+
+    fps.addEventListener("input", () => {
+        const val = Number(fps.value);
+        fpsSlider.value = val.toString();
+        console.log("box", val);
+    });
+
+    fpsSlider.addEventListener("input", () => {
+        const val = Number(fpsSlider.value);
+        fps.value = val.toString();
+        console.log("input", val);
     });
 }

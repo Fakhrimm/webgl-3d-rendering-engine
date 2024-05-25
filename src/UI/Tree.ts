@@ -1,3 +1,7 @@
+import { BasicMaterial } from "../Material/basic-material";
+import { ParallaxMaterial } from "../Material/parallax-material";
+import { PhongMaterial } from "../Material/phong-material";
+import { Mesh } from "../Object/mesh";
 import { Scene } from "../Object/scene";
 import { Container } from "./Container";
 import { Variables } from "./Variables";
@@ -75,14 +79,14 @@ export class Tree {
 
                 // Set slider value
                 const rotation = activeComponent.getRotation();
-                rotateX.value = (rotation.x / (Math.PI * 1.5)).toFixed(2);
-                rotateY.value = (rotation.y / (Math.PI * 1.5)).toFixed(2);
-                rotateZ.value = (rotation.z / (Math.PI * 1.5)).toFixed(2);
+                rotateX.value = (rotation.x / (Math.PI * 1.5)).toString();
+                rotateY.value = (rotation.y / (Math.PI * 1.5)).toString();
+                rotateZ.value = (rotation.z / (Math.PI * 1.5)).toString();
 
                 const scale = activeComponent.getScale();
-                scaleX.value = scale.x.toFixed(2);
-                scaleY.value = scale.y.toFixed(2);
-                scaleZ.value = scale.z.toFixed(2);
+                scaleX.value = scale.x.toString();
+                scaleY.value = scale.y.toString();
+                scaleZ.value = scale.z.toString();
 
                 const position = activeComponent.getPosition();
                 const canvasWidth = variables.getWebGL().canvas.width;
@@ -91,12 +95,124 @@ export class Tree {
                 translateX.value = (
                     ((position.x + canvasWidth / 2) / canvasWidth) * 6.6 -
                     3.3
-                ).toFixed(2);
+                ).toString();
                 translateY.value = (
                     ((position.y + canvasHeight / 2) / canvasHeight) * 6.6 -
                     3.3
-                ).toFixed(2);
-                translateZ.value = (position.z / 5).toFixed(2);
+                ).toString();
+                translateZ.value = (position.z / 5).toString();
+
+                // Update color pickers
+                if (activeComponent instanceof Mesh) {
+                    const material = activeComponent.material;
+                    const colorPickerDiffuse = container.getElement(
+                        "colorPickerDiffuse"
+                    ) as HTMLInputElement;
+                    const rValueDiffuse = container.getElement(
+                        "rValueDiffuse"
+                    ) as HTMLInputElement;
+                    const gValueDiffuse = container.getElement(
+                        "gValueDiffuse"
+                    ) as HTMLInputElement;
+                    const bValueDiffuse = container.getElement(
+                        "bValueDiffuse"
+                    ) as HTMLInputElement;
+                    const colorPickerSpecular = container.getElement(
+                        "colorPickerSpecular"
+                    ) as HTMLInputElement;
+                    const rValueSpecular = container.getElement(
+                        "rValueSpecular"
+                    ) as HTMLInputElement;
+                    const gValueSpecular = container.getElement(
+                        "gValueSpecular"
+                    ) as HTMLInputElement;
+                    const bValueSpecular = container.getElement(
+                        "bValueSpecular"
+                    ) as HTMLInputElement;
+                    const shininess = container.getElement(
+                        "shininess"
+                    ) as HTMLInputElement;
+                    const displacementScale = container.getElement(
+                        "displacementScale"
+                    ) as HTMLInputElement;
+                    const displacementBias = container.getElement(
+                        "displacementBias"
+                    ) as HTMLInputElement;
+                    const heightTexture = container.getElement(
+                        "heightTexture"
+                    ) as HTMLInputElement;
+                    const heightScale = container.getElement(
+                        "heightScale"
+                    ) as HTMLInputElement;
+
+                    // Set value for color pickers
+                    if (
+                        material instanceof BasicMaterial ||
+                        material instanceof PhongMaterial ||
+                        material instanceof ParallaxMaterial
+                    ) {
+                        const diffuseColor = material
+                            .getDiffuseColor()
+                            .getFromRGB();
+                        colorPickerDiffuse.value = `#${(
+                            (1 << 24) +
+                            (diffuseColor.r << 16) +
+                            (diffuseColor.g << 8) +
+                            diffuseColor.b
+                        )
+                            .toString(16)
+                            .slice(1)}`;
+                        rValueDiffuse.value = diffuseColor.r.toString();
+                        gValueDiffuse.value = diffuseColor.g.toString();
+                        bValueDiffuse.value = diffuseColor.b.toString();
+                    }
+
+                    if (
+                        material instanceof PhongMaterial ||
+                        material instanceof ParallaxMaterial
+                    ) {
+                        const specularColor = material
+                            .getSpecularColor()
+                            .getFromRGB();
+                        colorPickerSpecular.value = `#${(
+                            (1 << 24) +
+                            (specularColor.r << 16) +
+                            (specularColor.g << 8) +
+                            specularColor.b
+                        )
+                            .toString(16)
+                            .slice(1)}`;
+                        rValueSpecular.value = specularColor.r.toString();
+                        gValueSpecular.value = specularColor.g.toString();
+                        bValueSpecular.value = specularColor.b.toString();
+
+                        shininess.value = material.getShininess().toString();
+                    }
+
+                    if (material instanceof PhongMaterial) {
+                        displacementScale.value = material
+                            .getDisplacementScale()
+                            .toString();
+                        displacementBias.value = material
+                            .getDisplacementBias()
+                            .toString();
+                    }
+
+                    if (material instanceof ParallaxMaterial) {
+                        heightTexture.value = material
+                            .getHeightTextureType()
+                            .toString();
+                        heightScale.value = material
+                            .getHeightScale()
+                            .toString();
+                    }
+                }
+                const fps = container.getElement("fps") as HTMLInputElement;
+                const fpsSlider = container.getElement(
+                    "fpsSlider"
+                ) as HTMLInputElement;
+                fps.value = "10";
+                fpsSlider.value = "10";
             },
         });
         container.addElement("#componentTree", button);
