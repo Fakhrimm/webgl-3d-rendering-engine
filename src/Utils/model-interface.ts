@@ -70,6 +70,26 @@ export interface IPhongMaterial extends IMaterial {
     displacementBias: number
 }
 
+export interface IParallaxMaterial extends IMaterial {
+    type: MaterialTypes.PARALLAX;
+    u_diffuseColor: number[];
+    u_specularColor: number[];
+    u_shininess: number;
+    u_ka: number;
+    u_kd: number;
+    u_ks: number;
+    diffTextureType: TextureTypes,
+    specTextureType: TextureTypes,
+    normalTextureType: TextureTypes,
+    displacementTextureType: TextureTypes,
+    displacementScale: number,
+    displacementBias: number
+}
+
+export interface IReflectionMaterial extends IMaterial {
+    type: MaterialTypes.REFLECTION;
+}
+
 export interface IAnimation {
     name: string,
     frames: IFrame[];

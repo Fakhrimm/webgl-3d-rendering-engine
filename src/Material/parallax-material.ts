@@ -3,6 +3,7 @@ import { Color } from "../Math/color.ts";
 import { TextureTypes } from "../Types/texture-types.ts";
 import { ProgramInfo } from "../WebGL/program-info.ts";
 import { MaterialTypes } from "../Types/material-types.ts";
+import { IMaterial, IParallaxMaterial } from "../Utils/model-interface.ts";
 
 export class ParallaxMaterial extends Material {
     private u_diffuseColor: Color;
@@ -102,5 +103,23 @@ export class ParallaxMaterial extends Material {
 
     public setHeightScale(value: number) {
         this.heightScale = value;
+    }
+
+    public toRaw(): IParallaxMaterial {
+        return {
+            type: MaterialTypes.PARALLAX,
+            u_diffuseColor: this.u_diffuseColor.get(),
+            u_specularColor: this.u_specularColor.get(),
+            u_shininess: this.u_shininess,
+            u_ka: this.u_ka,
+            u_kd: this.u_kd,
+            u_ks: this.u_ks,
+            diffTextureType: this.diffuseTextureType,
+            specTextureType: this.specularTextureType,
+            normalTextureType: this.normalTextureType,
+            displacementTextureType: this.heightTextureType,
+            displacementScale: this.heightScale,
+            displacementBias: 0,
+        };
     }
 }

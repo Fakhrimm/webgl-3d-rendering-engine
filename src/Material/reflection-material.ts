@@ -1,6 +1,7 @@
 import {Material} from "./material.ts";
 import {ProgramInfo} from "../WebGL/program-info.ts";
 import {MaterialTypes} from "../Types/material-types.ts";
+import { IMaterial, IReflectionMaterial } from "../Utils/model-interface.ts";
 
 export class ReflectionMaterial extends Material {
 
@@ -16,5 +17,11 @@ export class ReflectionMaterial extends Material {
         textures: WebGLTexture[]
     ): void {
 
+    }
+
+    public toRaw(): IReflectionMaterial {
+        return {
+            type: MaterialTypes.REFLECTION
+        };
     }
 }
