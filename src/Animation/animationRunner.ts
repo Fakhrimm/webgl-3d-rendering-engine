@@ -1,23 +1,56 @@
-import { error } from "console";
 import { Variables } from "../UI/Variables";
 import { AnimationClip, AnimationPath } from "./animation";
 
+function normal(t: any) {
+    return t;
+}
+
+function easeInSine(t: any) {
+    return 1 - Math.cos((t * Math.PI) / 2);
+}
+
+function easeInQuad(t: any) {
+    return t * t;
+}
+
+function easeInCubic(t: any) {
+    return t * t * t;
+}
+
+function easeInQuart(t: any) {
+    return t * t * t * t;
+}
+
+function easeInExpo(t: any) {
+    return t === 0 ? 0 : Math.pow(2, 10 * (t - 1));
+}
+
+function easeInCirc(t: any) {
+    return 1 - Math.sqrt(1 - t * t);
+}
+
+function tween(startValue: any, endValue: any, duration: any, easingFunc: any, currentTime: any) {
+    const t = Math.min(currentTime/duration, 1); // Normalized time
+    const easedT = easingFunc(t);
+    return startValue + (endValue - startValue) * easedT;
+}
+
 export class AnimationRunner {
-    isPlaying: boolean;
-    isReverse: boolean;
-    isAuto: boolean;
-    fps: number = 30;
+    private isPlaying: boolean;
+    private isReverse: boolean;
+    private isAuto: boolean;
+    private fps: number = 10;
     private root: Object;
     private currentFrame: number = 0;
     private deltaFrame: number = 0;
     private currentAnimation?: AnimationClip;
     private variables: Variables;
+    private easingType: string = "normal";
 
     constructor(
         animFile: string,
         root: Object,
-        variables: Variables,
-        { fps = 30 } = {}
+        variables: Variables
     ) {
         this.load(animFile).then((animationClip) => {
             this.currentAnimation = animationClip;
@@ -26,7 +59,6 @@ export class AnimationRunner {
         this.isReverse = false;
         this.isAuto = true;
         this.variables = variables;
-        this.fps = fps;
         this.root = root;
     }
 
@@ -48,31 +80,20 @@ export class AnimationRunner {
 
     public nextFrame() {
         if (!this.isPlaying) {
-            if (this.isReverse) {
-                if (this.currentFrame == 0) {
-                    this.currentFrame = this.length - 1;
-                } else {
-                    this.currentFrame--;
-                }
-            } else {
-                this.currentFrame = (this.currentFrame + 1) % this.length;
-            }
+            this.currentFrame = (this.currentFrame + 1) % this.length;
+            
             this.updateSceneGraph();
         }
     }
 
     public prevFrame() {
         if (!this.isPlaying) {
-            if (this.isReverse) {
-                this.currentFrame = (this.currentFrame + 1) % this.length;
+            if (this.currentFrame == 0) {
+                this.currentFrame = this.length - 1;
             } else {
-                if (this.currentFrame == 0) {
-                    this.currentFrame = this.length - 1;
-                } else {
-                    this.currentFrame--;
-                }
+                this.currentFrame--;
             }
-            // console.log(this.currentFrame);
+            
             this.updateSceneGraph();
         }
     }
@@ -103,32 +124,21 @@ export class AnimationRunner {
         return this.currentAnimation!.frames[this.currentFrame];
     }
 
+    public setEasingType(easingType: string) {
+        this.easingType = easingType;
+    }
+
     update(deltaSecond: number) {
         if (this.isPlaying) {
             this.deltaFrame += deltaSecond * this.fps;
             if (this.deltaFrame >= 1) {
-                // 1 frame
                 if (this.isReverse) {
-                    let temp =
-                        (this.currentFrame -
-                            Math.floor(this.deltaFrame) +
-                            2 * this.length) %
-                        this.length;
-                    if (this.currentFrame > temp && !this.isAuto) {
-                        this.pause();
-                    }
-
-                    this.currentFrame = temp;
+                    this.currentFrame = this.currentFrame - Math.floor(this.deltaFrame);
+                    this.currentFrame = this.currentFrame < 0 ? this.length + this.currentFrame : this.currentFrame;
                 } else {
-                    let temp =
-                        (this.currentFrame + Math.floor(this.deltaFrame)) %
-                        this.length;
-                    if (this.currentFrame < temp && !this.isAuto) {
-                        this.pause();
-                    }
-
-                    this.currentFrame = temp;
+                    this.currentFrame = (this.currentFrame + Math.floor(this.deltaFrame)) % this.length;
                 }
+                
                 this.deltaFrame %= 1;
                 this.updateSceneGraph();
             }
@@ -140,37 +150,26 @@ export class AnimationRunner {
             this.currentAnimation?.frames[0];
 
         let rootExists = false;
-
-        // console.log("MASUK 1");
         if (
             this.currentAnimation?.name == this.variables.getOriginScene().name
         ) {
-            // console.log(this.currentAnimation.name);
-            // console.log(this.variables.getOriginScene().name);
-            // console.log(this.variables.getTree().name);
-            // console.log("MASUK 2");
             if (frame?.keyframe) {
-                // console.log("MASUK 3");
                 for (let index in frame.keyframe) {
-                    // console.log("MASUK 4");
                     if (index == this.currentFrame.toString()) {
-                        // console.log("MASUK 5");
                         let element = frame.keyframe[index];
-                        // console.log("MASUK 6");
-
                         if (element.translation) {
                             this.variables
                                 .getOriginScene()
                                 .getOriginNode()
-                                .setPositionX(element.translation[0]);
+                                .setPositionX(tween(this.variables.getOriginScene().getOriginNode().getPosition().x, element.translation[0], this.deltaFrame, this.easingType, this.deltaFrame));
                             this.variables
                                 .getOriginScene()
                                 .getOriginNode()
-                                .setPositionY(element.translation[1]);
-                            this.variables
+                                .setPositionY(tween(this.variables.getOriginScene().getOriginNode().getPosition().y, element.translation[1], this.deltaFrame, this.easingType, this.deltaFrame));
+                                this.variables
                                 .getOriginScene()
                                 .getOriginNode()
-                                .setPositionZ(element.translation[2]);
+                                .setPositionZ(tween(this.variables.getOriginScene().getOriginNode().getPosition().z, element.translation[2], this.deltaFrame, this.easingType, this.deltaFrame));
                         }
 
                         if (element.rotation) {
@@ -178,19 +177,19 @@ export class AnimationRunner {
                                 .getOriginScene()
                                 .getOriginNode()
                                 .setRotationX(
-                                    element.rotation[0] * Math.PI * 1.5
+                                    tween(this.variables.getOriginScene().getOriginNode().getRotation().x, element.rotation[0] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
                                 );
                             this.variables
                                 .getOriginScene()
                                 .getOriginNode()
                                 .setRotationY(
-                                    element.rotation[1] * Math.PI * 1.5
+                                    tween(this.variables.getOriginScene().getOriginNode().getRotation().y, element.rotation[1] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
                                 );
                             this.variables
                                 .getOriginScene()
                                 .getOriginNode()
                                 .setRotationZ(
-                                    element.rotation[2] * Math.PI * 1.5
+                                    tween(this.variables.getOriginScene().getOriginNode().getRotation().z, element.rotation[2] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
                                 );
                         }
 
@@ -198,22 +197,21 @@ export class AnimationRunner {
                             this.variables
                                 .getOriginScene()
                                 .getOriginNode()
-                                .setScaleX(element.scale[0]);
+                                .setScaleX(tween(this.variables.getOriginScene().getOriginNode().getScale().x, element.scale[0] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame));
                             this.variables
                                 .getOriginScene()
                                 .getOriginNode()
-                                .setScaleY(element.scale[1]);
+                                .setScaleY(tween(this.variables.getOriginScene().getOriginNode().getScale().y, element.scale[1] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame));
                             this.variables
                                 .getOriginScene()
                                 .getOriginNode()
-                                .setScaleZ(element.scale[2]);
+                                .setScaleZ(tween(this.variables.getOriginScene().getOriginNode().getScale().z, element.scale[2] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame));
                         }
                     }
                 }
             }
 
             if (frame?.children) {
-                // console.log("tes", this.variables.getOriginScene());
                 this.updateChildren(
                     frame.children,
                     this.variables.getOriginScene()
@@ -232,7 +230,6 @@ export class AnimationRunner {
         animationChildren: { [childName: string]: AnimationPath },
         sceneChildren: any
     ) {
-        // console.log("tes2", animationChildren);
         for (let animationChildrenName of Object.keys(animationChildren)) {
             let child = animationChildren[animationChildrenName];
 
@@ -245,33 +242,38 @@ export class AnimationRunner {
 
                                 if (element.translation) {
                                     children.setPositionX(
-                                        element.translation[0]
+                                        tween(children.getPosition().x, element.translation[0], this.deltaFrame, this.easingType, this.deltaFrame)
                                     );
                                     children.setPositionY(
-                                        element.translation[1]
+                                        tween(children.getPosition().y, element.translation[1], this.deltaFrame, this.easingType, this.deltaFrame)
                                     );
                                     children.setPositionZ(
-                                        element.translation[2]
+                                        tween(children.getPosition().z, element.translation[2], this.deltaFrame, this.easingType, this.deltaFrame)
                                     );
                                 }
 
                                 if (element.rotation) {
-                                    // console.log("tes3", children);
                                     children.setRotationX(
-                                        element.rotation[0] * Math.PI * 1.5
+                                        tween(children.getRotation().x, element.rotation[0] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
                                     );
                                     children.setRotationY(
-                                        element.rotation[1] * Math.PI * 1.5
+                                        tween(children.getRotation().y, element.rotation[1] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
                                     );
                                     children.setRotationZ(
-                                        element.rotation[2] * Math.PI * 1.5
+                                        tween(children.getRotation().z, element.rotation[2] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
                                     );
                                 }
 
                                 if (element.scale) {
-                                    children.setScaleX(element.scale[0]);
-                                    children.setScaleY(element.scale[1]);
-                                    children.setScaleZ(element.scale[2]);
+                                    children.setScaleX(
+                                        tween(children.getScale().x, element.scale[0] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
+                                    );
+                                    children.setScaleY(
+                                        tween(children.getScale().y, element.scale[1] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
+                                    );
+                                    children.setScaleZ(
+                                        tween(children.getScale().z, element.scale[2] * Math.PI * 1.5, this.deltaFrame, this.easingType, this.deltaFrame)
+                                    );
                                 }
                             }
                         }

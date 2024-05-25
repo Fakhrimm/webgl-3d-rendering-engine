@@ -45,27 +45,6 @@ export class BoxGeometry extends BufferGeometry {
             6, 2, 1,
         ]);
 
-        // const indices = new Uint16Array([
-        //     // front
-        //     a, b, c,
-        //     c, d, a,
-        //     // back
-        //     e, h, g,
-        //     g, f, e,
-        //     // top
-        //     a, e, f,
-        //     f, b, a,
-        //     // bottom
-        //     d, c, g,
-        //     g, h, d,
-        //     // right
-        //     a, d, h,
-        //     h, e, a,
-        //     // left
-        //     b, f, g,
-        //     g, c, b,
-        // ]);
-
         const texcoord = new Float32Array([
             // front
             1, 1,  1,0,  0, 0,

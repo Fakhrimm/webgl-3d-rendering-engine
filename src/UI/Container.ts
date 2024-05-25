@@ -73,11 +73,8 @@ export class Container {
         const translateY = document.getElementById("translateY");
         const translateZ = document.getElementById("translateZ");
 
-        const textureTypeSelect = document.getElementById(
+        const easingTypeSelect = document.getElementById(
             "textureType"
-        ) as HTMLSelectElement;
-        const textureIndexSelect = document.getElementById(
-            "textureIndex"
         ) as HTMLSelectElement;
 
         const play = document.getElementById("play");
@@ -88,6 +85,13 @@ export class Container {
         const prev = document.getElementById("prev");
         const first = document.getElementById("first");
         const last = document.getElementById("last");
+
+        const textureTypeSelect = document.getElementById(
+            "textureType"
+        ) as HTMLSelectElement;
+        const textureIndexSelect = document.getElementById(
+            "textureIndex"
+        ) as HTMLSelectElement;
 
         const saveFrame = document.getElementById("saveFrame");
         const deleteFrame = document.getElementById("deleteFrame");
@@ -162,6 +166,10 @@ export class Container {
         this.elementRefs.set("last", last as HTMLElement);
         this.elementRefs.set("saveFrame", saveFrame as HTMLElement);
         this.elementRefs.set("deleteFrame", deleteFrame as HTMLElement);
+        this.elementRefs.set(
+            "easingTypeSelect",
+            easingTypeSelect as HTMLElement
+        );
     }
 
     public getElement(id: string): HTMLElement {
