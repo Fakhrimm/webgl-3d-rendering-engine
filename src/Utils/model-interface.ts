@@ -102,3 +102,33 @@ export interface IFrame {
 interface IKeyframe {
     rotation: number[]
 }
+
+export interface IOrthographicCamera extends INode {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    near: number;
+    far: number;
+    zoom: number;
+}
+
+export interface IObliqueCamera extends INode {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    near: number;
+    far: number;
+    alpha: number;
+    beta: number;
+    zoom: number;
+}
+
+export interface IPerspectiveCamera extends INode {
+    fov: number;
+    near: number;
+    far: number;
+    aspect: number;
+    zoom: number;
+}

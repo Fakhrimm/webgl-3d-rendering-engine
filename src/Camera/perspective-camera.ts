@@ -1,3 +1,4 @@
+import { IPerspectiveCamera } from "../Utils/model-interface";
 import {Camera} from "./camera";
 
 export class PerspectiveCamera extends Camera {
@@ -38,6 +39,20 @@ export class PerspectiveCamera extends Camera {
 		this.computeProjectionMatrix();
 	}
 
-
+	public toRaw(): IPerspectiveCamera {
+		const raw = super.toRaw()
+        return {
+            name: raw.name,
+            position: raw.position, 
+            scale: raw.position,
+            rotation: raw.rotation,
+            children: raw.children,
+			fov: this.fov,
+			aspect: this.aspect,
+			near: this.near,
+			far: this.far,
+			zoom: this.zoom
+        }
+	}
 }
 

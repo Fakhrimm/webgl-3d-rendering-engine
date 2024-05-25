@@ -1,3 +1,4 @@
+import { IObliqueCamera } from "../Utils/model-interface";
 import {Camera} from "./camera";
 
 export class ObliqueCamera extends Camera {
@@ -41,5 +42,25 @@ export class ObliqueCamera extends Camera {
     override setZoom(newZoom: number) {
         super.setZoom(newZoom);
         this.computeProjectionMatrix();
+    }
+
+    public toRaw(): IObliqueCamera {
+        const raw = super.toRaw()
+        return {
+            name: raw.name,
+            position: raw.position, 
+            scale: raw.position,
+            rotation: raw.rotation,
+            children: raw.children,
+			left: this.left,
+			right: this.right,
+			top: this.top,
+			bottom: this.bottom,
+			near: this.near,
+			far: this.far,
+            alpha: this.alpha,
+            beta: this.beta,
+			zoom: this.zoom
+        }
     }
 }
