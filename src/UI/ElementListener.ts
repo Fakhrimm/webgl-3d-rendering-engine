@@ -107,7 +107,6 @@ export function elementListner(variables: Variables) {
         });
     });
 
-
     // LEFT
     let rotateAxis = "x";
 
@@ -520,10 +519,12 @@ export function elementListner(variables: Variables) {
         variables
     );
 
-    const easingTypeSelect = container.getElement("easingTypeSelect") as HTMLInputElement;
+    const easingTypeSelect = container.getElement(
+        "easingTypeSelect"
+    ) as HTMLInputElement;
     easingTypeSelect.addEventListener("change", () => {
-        console.log(easingTypeSelect.value);
-    })
+        animationRunner.setEasingType(easingTypeSelect.value);
+    });
 
     const play = container.getElement("play") as HTMLInputElement;
     const pause = container.getElement("pause") as HTMLInputElement;

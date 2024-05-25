@@ -74,7 +74,7 @@ export class Container {
         const translateZ = document.getElementById("translateZ");
 
         const easingTypeSelect = document.getElementById(
-            "textureType"
+            "easingType"
         ) as HTMLSelectElement;
 
         const play = document.getElementById("play");
