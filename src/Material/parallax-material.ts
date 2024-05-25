@@ -1,8 +1,8 @@
-import {Material} from "./material.ts";
-import {Color} from "../Math/color.ts";
-import {TextureTypes} from "../Types/texture-types.ts";
-import {ProgramInfo} from "../WebGL/program-info.ts";
-import {MaterialTypes} from "../Types/material-types.ts";
+import { Material } from "./material.ts";
+import { Color } from "../Math/color.ts";
+import { TextureTypes } from "../Types/texture-types.ts";
+import { ProgramInfo } from "../WebGL/program-info.ts";
+import { MaterialTypes } from "../Types/material-types.ts";
 
 export class ParallaxMaterial extends Material {
     private u_diffuseColor: Color;
@@ -28,7 +28,7 @@ export class ParallaxMaterial extends Material {
         specTextureType: TextureTypes = TextureTypes.SPECULAR_0,
         normalTextureType: TextureTypes = TextureTypes.NORMAL_BRICKS,
         heightTextureType: TextureTypes = TextureTypes.HEIGHT_BRICKS,
-        heightScale: number = 0.1,
+        heightScale: number = 0.1
     ) {
         super();
         this._materialType = MaterialTypes.PARALLAX;
@@ -45,7 +45,10 @@ export class ParallaxMaterial extends Material {
         this.heightScale = heightScale;
     }
 
-    public setUniforms(programInfo: ProgramInfo, textures: WebGLTexture[]): void {
+    public setUniforms(
+        programInfo: ProgramInfo,
+        textures: WebGLTexture[]
+    ): void {
         programInfo.setUniforms({
             u_diffuseColor: this.u_diffuseColor.get(),
             u_specularColor: this.u_specularColor.get(),
@@ -59,5 +62,25 @@ export class ParallaxMaterial extends Material {
             u_heightTexture: textures[this.heightTextureType],
             u_heightScale: this.heightScale,
         });
+    }
+
+    public setDiffuseColorFromRGB(r: number, g: number, b: number) {
+        this.u_diffuseColor.setFromRGB(r, g, b);
+    }
+
+    public setSpecularColorFromRGB(r: number, g: number, b: number) {
+        this.u_specularColor.setFromRGB(r, g, b);
+    }
+
+    public setShininess(shininess: number) {
+        this.u_shininess = shininess;
+    }
+
+    public setHeightTextureType(value: number) {
+        this.heightTextureType = value;
+    }
+
+    public setHeightScale(value: number) {
+        this.heightScale = value;
     }
 }

@@ -1,8 +1,8 @@
-import {Material} from "./material.ts";
-import {Color} from "../Math/color.ts";
-import {MaterialTypes} from "../Types/material-types.ts";
-import {ProgramInfo} from "../WebGL/program-info.ts";
-import {TextureTypes} from "../Types/texture-types.ts";
+import { Material } from "./material.ts";
+import { Color } from "../Math/color.ts";
+import { MaterialTypes } from "../Types/material-types.ts";
+import { ProgramInfo } from "../WebGL/program-info.ts";
+import { TextureTypes } from "../Types/texture-types.ts";
 import { IMaterial, IPhongMaterial } from "../Utils/model-interface.ts";
 
 export class PhongMaterial extends Material {
@@ -31,7 +31,7 @@ export class PhongMaterial extends Material {
         normalTextureType: TextureTypes = TextureTypes.NORMAL_1,
         displacementTextureType: TextureTypes = TextureTypes.DISPLACEMENT_0,
         displacementScale: number = 100,
-        displacementBias: number = 0.0,
+        displacementBias: number = 0.0
     ) {
         super();
         this._materialType = MaterialTypes.PHONG;
@@ -49,7 +49,10 @@ export class PhongMaterial extends Material {
         this.displacementBias = displacementBias;
     }
 
-    override setUniforms(programInfo: ProgramInfo, textures: WebGLTexture[]): void {
+    override setUniforms(
+        programInfo: ProgramInfo,
+        textures: WebGLTexture[]
+    ): void {
         programInfo.setUniforms({
             u_diffuseColor: this.u_diffuseColor.get(),
             u_specularColor: this.u_specularColor.get(),
@@ -73,6 +76,7 @@ export class PhongMaterial extends Material {
     public setSpecularColorFromRGB(r: number, g: number, b: number) {
         this.u_specularColor.setFromRGB(r, g, b);
     }
+    
     public setShininess(shininess: number) {
         this.u_shininess = shininess;
     }
@@ -88,14 +92,22 @@ export class PhongMaterial extends Material {
         if (index < 0 || index > 3) {
             throw new Error("Invalid texture type");
         }
-        this.specularTextureType = index + 4 as TextureTypes;
+        this.specularTextureType = (index + 4) as TextureTypes;
     }
 
     public setNormalTextureType(index: number) {
         if (index < 0 || index > 3) {
             throw new Error("Invalid texture type");
         }
-        this.normalTextureType = index + 8 as TextureTypes;
+        this.normalTextureType = (index + 8) as TextureTypes;
+    }
+
+    public setDisplacementScale(value: number) {
+        this.displacementScale = value;
+    }
+
+    public setDisplacementBias(value: number) {
+        this.displacementBias = value;
     }
 
     public toRaw(): IPhongMaterial {
@@ -112,7 +124,7 @@ export class PhongMaterial extends Material {
             normalTextureType: this.normalTextureType,
             displacementTextureType: this.displacementTextureType,
             displacementScale: this.displacementScale,
-            displacementBias: this.displacementBias
-        }
+            displacementBias: this.displacementBias,
+        };
     }
 }

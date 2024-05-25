@@ -9,6 +9,7 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { AnimationRunner } from "../Animation/animationRunner.ts";
 import { Tree } from "./Tree.ts";
 import { renderScene } from "../main.ts";
+import { ParallaxMaterial } from "../Material/parallax-material.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -69,7 +70,6 @@ export function elementListner(variables: Variables) {
     help.addEventListener("click", () => {
         modalContainer.style.display = "block";
     });
-
     modalBackdrop.addEventListener("click", () => {
         modalContainer.style.display = "none";
     });
@@ -80,14 +80,13 @@ export function elementListner(variables: Variables) {
     saveFile.addEventListener("click", () => {
         SaveLoader.saveModel(variables.getScene(), "pixar.json");
     });
-
     loadFile.addEventListener("change", () => {
         const file = loadFile.files?.[0];
         if (!file) {
             return;
         }
         console.log(file);
-        SaveLoader.loadModel(file, (model) => {
+        SaveLoader.loadModel(file, variables.getWebGL().canvas, (model) => {
             try {
                 console.log("YESS");
                 Tree.resetTree(container);
@@ -207,6 +206,17 @@ export function elementListner(variables: Variables) {
         "bValueSpecular"
     ) as HTMLInputElement;
     const shininess = container.getElement("shininess") as HTMLInputElement;
+    const displacementScale = container.getElement(
+        "displacementScale"
+    ) as HTMLInputElement;
+    const displacementBias = container.getElement(
+        "displacementBias"
+    ) as HTMLInputElement;
+    const heightTexture = container.getElement(
+        "heightTexture"
+    ) as HTMLInputElement;
+    const heightScale = container.getElement("heightScale") as HTMLInputElement;
+
     const errorPopup = container.getElement("errorPopup") as HTMLInputElement;
     const errorMessage = container.getElement(
         "errorMessage"
@@ -240,14 +250,11 @@ export function elementListner(variables: Variables) {
                 const material = selectedNode.material;
                 if (
                     material instanceof BasicMaterial ||
-                    material instanceof PhongMaterial
+                    material instanceof PhongMaterial ||
+                    material instanceof ParallaxMaterial
                 ) {
                     material.setDiffuseColorFromRGB(r, g, b);
                     previousDiffuseColor = color;
-                } else {
-                    throw new Error(
-                        "Only Mesh with BasicMaterial or PhongMaterial can access this function."
-                    );
                 }
             } else {
                 throw new Error("Only Mesh can access this function.");
@@ -280,16 +287,17 @@ export function elementListner(variables: Variables) {
         try {
             if (selectedNode instanceof Mesh) {
                 const material = selectedNode.material;
-                if (material instanceof PhongMaterial) {
+                if (
+                    material instanceof PhongMaterial ||
+                    material instanceof ParallaxMaterial
+                ) {
                     material.setSpecularColorFromRGB(r, g, b);
                     previousSpecularColor = color;
-                } else {
-                    throw new Error(
-                        "Only Mesh with PhongMaterial can access this function."
-                    );
                 }
             } else {
-                throw new Error("Only Mesh can access this function.");
+                throw new Error(
+                    "Only Mesh with Phong Material and Paralax Material can access this function."
+                );
             }
         } catch (error) {
             showError(String(error));
@@ -307,20 +315,105 @@ export function elementListner(variables: Variables) {
         try {
             if (selectedNode instanceof Mesh) {
                 const material = selectedNode.material;
-                if (material instanceof PhongMaterial) {
+                if (
+                    material instanceof PhongMaterial ||
+                    material instanceof ParallaxMaterial
+                ) {
                     material.setShininess(value);
                     previousShininess = value.toString();
-                } else {
-                    throw new Error(
-                        "Only Mesh with PhongMaterial can access this function."
-                    );
                 }
             } else {
-                throw new Error("Only Mesh can access this function.");
+                throw new Error(
+                    "Only Mesh with Phong Material can access this function."
+                );
             }
         } catch (error) {
             showError(String(error));
             shininess.value = previousShininess;
+        }
+    });
+
+    let previousDisplacementScale = displacementScale.value;
+    displacementScale.addEventListener("input", (event) => {
+        const value = Number((event.target as HTMLInputElement).value);
+        const selectedNode = variables.getTree().reference;
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (material instanceof PhongMaterial) {
+                    material.setDisplacementScale(value);
+                }
+            } else {
+                throw new Error(
+                    "Only Mesh with PhongMaterial can access this function."
+                );
+            }
+        } catch (error) {
+            showError(String(error));
+            displacementScale.value = previousDisplacementScale;
+        }
+    });
+
+    let previousDisplacementBias = displacementBias.value;
+    displacementBias.addEventListener("input", (event) => {
+        const value = Number((event.target as HTMLInputElement).value);
+        const selectedNode = variables.getTree().reference;
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (material instanceof PhongMaterial) {
+                    material.setDisplacementBias(value);
+                }
+            } else {
+                throw new Error(
+                    "Only Mesh with PhongMaterial can access this function."
+                );
+            }
+        } catch (error) {
+            showError(String(error));
+            displacementBias.value = previousDisplacementBias;
+        }
+    });
+
+    let previousHeightTexture = heightTexture.value;
+    heightTexture.addEventListener("input", (event) => {
+        const value = Number((event.target as HTMLInputElement).value);
+        const selectedNode = variables.getTree().reference;
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (material instanceof ParallaxMaterial) {
+                    material.setHeightTextureType(value);
+                }
+            } else {
+                throw new Error(
+                    "Only Mesh with Parallax Material can access this function."
+                );
+            }
+        } catch (error) {
+            showError(String(error));
+            heightTexture.value = previousHeightTexture;
+        }
+    });
+
+    let previousHeightScale = heightScale.value;
+    heightScale.addEventListener("input", (event) => {
+        const value = Number((event.target as HTMLInputElement).value);
+        const selectedNode = variables.getTree().reference;
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (material instanceof ParallaxMaterial) {
+                    material.setHeightScale(value);
+                }
+            } else {
+                throw new Error(
+                    "Only Mesh with Parallax Material can access this function."
+                );
+            }
+        } catch (error) {
+            showError(String(error));
+            heightScale.value = previousHeightScale;
         }
     });
 

@@ -40,6 +40,10 @@ export class Container {
         const gValueSpecular = document.getElementById("gValueSpecular");
         const bValueSpecular = document.getElementById("bValueSpecular");
         const shininess = document.getElementById("shininess");
+        const displacementScale = document.getElementById("displacementScale");
+        const displacementBias = document.getElementById("displacementBias");
+        const heightTexture = document.getElementById("heightTexture");
+        const heightScale = document.getElementById("heightScale");
 
         const errorPopup = document.getElementById(
             "errorPopup"
@@ -69,8 +73,12 @@ export class Container {
         const translateY = document.getElementById("translateY");
         const translateZ = document.getElementById("translateZ");
 
-        const textureTypeSelect = document.getElementById("textureType") as HTMLSelectElement;
-        const textureIndexSelect = document.getElementById("textureIndex") as HTMLSelectElement;
+        const textureTypeSelect = document.getElementById(
+            "textureType"
+        ) as HTMLSelectElement;
+        const textureIndexSelect = document.getElementById(
+            "textureIndex"
+        ) as HTMLSelectElement;
 
         const play = document.getElementById("play");
         const pause = document.getElementById("pause");
@@ -116,6 +124,10 @@ export class Container {
         this.elementRefs.set("gValueSpecular", gValueSpecular as HTMLElement);
         this.elementRefs.set("bValueSpecular", bValueSpecular as HTMLElement);
         this.elementRefs.set("shininess", shininess as HTMLElement);
+        this.elementRefs.set("displacementScale", displacementScale as HTMLElement);
+        this.elementRefs.set("displacementBias", displacementBias as HTMLElement);
+        this.elementRefs.set("heightTexture", heightTexture as HTMLElement);
+        this.elementRefs.set("heightScale", heightScale as HTMLElement);
         this.elementRefs.set("errorPopup", errorPopup as HTMLElement);
         this.elementRefs.set("errorMessage", errorMessage as HTMLElement);
         this.elementRefs.set("closeErrorPopup", closeErrorPopup as HTMLElement);
@@ -132,8 +144,14 @@ export class Container {
         this.elementRefs.set("translateX", translateX as HTMLElement);
         this.elementRefs.set("translateY", translateY as HTMLElement);
         this.elementRefs.set("translateZ", translateZ as HTMLElement);
-        this.elementRefs.set("textureTypeSelect", textureTypeSelect as HTMLElement);
-        this.elementRefs.set("textureIndexSelect", textureIndexSelect as HTMLElement);
+        this.elementRefs.set(
+            "textureTypeSelect",
+            textureTypeSelect as HTMLElement
+        );
+        this.elementRefs.set(
+            "textureIndexSelect",
+            textureIndexSelect as HTMLElement
+        );
         this.elementRefs.set("play", play as HTMLElement);
         this.elementRefs.set("pause", pause as HTMLElement);
         this.elementRefs.set("reverse", reverse as HTMLElement);

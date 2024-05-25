@@ -107,8 +107,8 @@
                         class="flex flex-col pl-4 pr-6 py-2 gap-1 border-b border-gray-600 text-gray-200 w-full"
                     >
                         <h1 class="text-xl font-bold">Camera Angle</h1>
-                        <div class="flex flex-col gap-2">
-                            <div class="flex flex-row">
+                        <div class="flex w-full gap-2">
+                            <div class="flex w-3/4 flex-row">
                                 <input
                                     class="w-full"
                                     type="range"
@@ -119,16 +119,11 @@
                                     step="0.05"
                                 />
                             </div>
-                            <div class="flex flex-row items-center gap-2">
-                                <label
-                                    for="rotateAxis"
-                                    class="text-base text-white"
-                                    >Rotate Axis:</label
-                                >
+                            <div class="flex w-1/4 flex-row items-center">
                                 <select
                                     id="rotateAxis"
                                     name="rotateAxis"
-                                    class="p-2 bg-gray-700 text-white border border-gray-600 rounded-lg cursor-pointer"
+                                    class="p-2 w-full text-white bg-gray-800 border border-gray-600 text-sm font-bold active:bg-violet-500 rounded-lg cursor-pointer"
                                 >
                                     <option value="x">X Axis</option>
                                     <option value="y">Y Axis</option>
@@ -288,16 +283,81 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col justify-center gap-2 mt-4">
-                            <h1 class="text-lg font-bold text-white">
-                                Shininess
-                            </h1>
+
+                        <div class="flex flex-col gap-2 w-full">
+                            <label for="shininess" class="text-lg"
+                                >Shininess</label
+                            >
                             <input
                                 type="number"
                                 id="shininess"
                                 class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                 step="0.1"
                             />
+                        </div>
+                        <div
+                            class="flex w-full justify-center items-center gap-4"
+                        >
+                            <div class="flex gap-4 items-center">
+                                <div class="flex flex-col gap-2 w-full">
+                                    <label
+                                        for="displacementScale"
+                                        class="text-lg"
+                                        >Displacement Scale</label
+                                    >
+                                    <input
+                                        type="number"
+                                        id="displacementScale"
+                                        class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                        step="0.1"
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-center">
+                                <div class="flex flex-col gap-2 w-full">
+                                    <label
+                                        for="displacementBias"
+                                        class="text-lg"
+                                        >Displacement Bias</label
+                                    >
+                                    <input
+                                        type="number"
+                                        id="displacementBias"
+                                        class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                        step="0.1"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="flex w-full justify-center items-center gap-4"
+                        >
+                            <div class="flex gap-4 items-center">
+                                <div class="flex flex-col gap-2 w-full">
+                                    <label for="heightTexture" class="text-lg"
+                                        >Height Texture</label
+                                    >
+                                    <input
+                                        type="number"
+                                        id="heightTexture"
+                                        class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                        step="0.1"
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-center">
+                                <div class="flex flex-col gap-2 w-full">
+                                    <label for="heightScale" class="text-lg"
+                                        >Height Scale</label
+                                    >
+                                    <input
+                                        type="number"
+                                        id="heightScale"
+                                        class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                        step="0.1"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -523,7 +583,7 @@
                                 <select
                                     id="textureType"
                                     name="textureType"
-                                    class="p-2 w-full bg-gray-700 text-white border border-gray-600 rounded-lg cursor-pointer"
+                                    class="p-2 w-full bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500 text-white cursor-pointer"
                                 >
                                     <option value="diffuse">Diffuse</option>
                                     <option value="specular">Specular</option>
@@ -539,7 +599,7 @@
                                 <select
                                     id="textureIndex"
                                     name="textureIndex"
-                                    class="p-2 w-full bg-gray-700 text-white border border-gray-600 rounded-lg cursor-pointer"
+                                    class="p-2 w-full text-white cursor-pointer bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                                 >
                                     <option value="0">1</option>
                                     <option value="1">2</option>
