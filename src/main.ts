@@ -26,7 +26,8 @@ const main = async () => {
     }
 
     const textureLoader = new TextureLoader();
-    const textures = await textureLoader.loadTexture(gl);
+    const textures = textureLoader.loadDefaultTexture(gl);
+    textureLoader.loadTexture(gl, textures);
 
     // Load shaders
     const webGLRenderer = new WebGLRenderer(canvas, gl, textures);
