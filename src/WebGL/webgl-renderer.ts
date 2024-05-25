@@ -11,10 +11,13 @@ export class WebGLRenderer {
     gl: WebGLRenderingContext;
     programInfos: ProgramInfo[] = [];
     textures: WebGLTexture[];
-    constructor(canvas: HTMLCanvasElement, gl: WebGLRenderingContext, textures: WebGLTexture[]) {
+    textureCubeMap: WebGLTexture;
+
+    constructor(canvas: HTMLCanvasElement, gl: WebGLRenderingContext, textures: WebGLTexture[], textureCubeMap: WebGLTexture) {
         this.canvas = canvas;
         this.gl = gl;
         this.textures = textures;
+        this.textureCubeMap = textureCubeMap;
         this.loadProgramInfos();
     }
 
@@ -65,12 +68,21 @@ export class WebGLRenderer {
             u_reverseLightDirection: [0, 0, 1],
         });
         this.programInfos[MaterialTypes.PARALLAX].setUniforms({
+            u_worldCameraPosition: camera.cameraPosition.toNumberArray(),
             u_view: camera.viewMatrix.elements,
             u_projection: camera.projectionMatrix.elements,
             u_viewProjection: camera.viewProjectionMatrix.elements,
             u_ambientColor: [0.2, 0.2, 0.2],
             u_reverseLightDirection: [0, 0, 1],
         });
+
+        this.programInfos[MaterialTypes.REFLECTION].setUniforms({
+            u_worldCameraPosition: camera.cameraPosition.toNumberArray(),
+            u_projection: camera.projectionMatrix.elements,
+            u_view: camera.viewMatrix.elements,
+            u_textureCubeMap: this.textureCubeMap,
+        });
+
     }
 
     private draw(geometry: BufferGeometry) {
@@ -119,6 +131,12 @@ export class WebGLRenderer {
             this.gl,
             loadShader(ShaderType.PARALLAX_VERTEX),
             loadShader(ShaderType.PARALLAX_FRAGMENT)
+        );
+
+        this.programInfos[MaterialTypes.REFLECTION] = new ProgramInfo(
+            this.gl,
+            loadShader(ShaderType.REFLECTION_VERTEX),
+            loadShader(ShaderType.REFLECTION_FRAGMENT)
         );
     }
 

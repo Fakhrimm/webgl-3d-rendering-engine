@@ -24,6 +24,9 @@ export class Camera extends Node {
         return this._projectionMatrix.clone();
     }
 
+    get cameraPosition() {
+        return this.getPosition().clone().applyMatrix4(this.worldMatrix);
+    }
     computeProjectionMatrix() {
         throw new Error(
             "Camera.computeProjectionMatrix() must be implemented in derived classes."

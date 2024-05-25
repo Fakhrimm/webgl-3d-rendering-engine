@@ -28,9 +28,10 @@ const main = async () => {
     const textureLoader = new TextureLoader();
     const textures = textureLoader.loadDefaultTexture(gl);
     textureLoader.loadTexture(gl, textures);
+    const textureCubeMap = textureLoader.loadCubeTexture(gl);
 
     // Load shaders
-    const webGLRenderer = new WebGLRenderer(canvas, gl, textures);
+    const webGLRenderer = new WebGLRenderer(canvas, gl, textures, textureCubeMap);
 
     // Setup and render
     const renderer = new Render(webGLRenderer);

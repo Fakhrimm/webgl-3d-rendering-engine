@@ -26,7 +26,7 @@ export class TextureLoader {
         [TextureTypes.HEIGHT_WOOD]: "../Assets/height_wood.png",
     };
 
-    loadTexture(gl: WebGLRenderingContext, textures: WebGLTexture[] = []) {
+    public loadTexture(gl: WebGLRenderingContext, textures: WebGLTexture[] = []) {
         for (const [key, path] of Object.entries(this.texturePath)) {
             try {
                 const image = new Image()
@@ -60,7 +60,7 @@ export class TextureLoader {
 
     public loadDefaultTexture(gl: WebGLRenderingContext) {
         const textures: WebGLTexture[] = [];
-        for (const [key, path] of Object.entries(this.texturePath)) {
+        for (const [key] of Object.entries(this.texturePath)) {
             try {
                 const textureType = parseInt(key) as TextureTypes;
                 const texture = gl.createTexture();
@@ -81,22 +81,60 @@ export class TextureLoader {
 
     }
 
-    private loadImage(path: string) {
-        return new Promise<HTMLImageElement>((resolve, reject) => {
+    public loadCubeTexture(gl: WebGLRenderingContext) {
+        const texture = gl.createTexture();
+        if (!texture) {
+            throw new Error("Failed to create texture");
+        }
+        gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+        const faceInfos = [
+            {
+                target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+                url: '../Assets/Cubemap/pos-x.jpg',
+            },
+            {
+                target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+                url: '../Assets/Cubemap/neg-x.jpg',
+            },
+            {
+                target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+                url: '../Assets/Cubemap/pos-y.jpg',
+            },
+            {
+                target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+                url: '../Assets/Cubemap/neg-y.jpg',
+            },
+            {
+                target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+                url: '../Assets/Cubemap/pos-z.jpg',
+            },
+            {
+                target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+                url: '../Assets/Cubemap/neg-z.jpg',
+            },
+        ];
+        faceInfos.forEach((faceInfo) => {
+            const {target, url} = faceInfo;
             const image = new Image();
+            const level = 0;
+            const internalFormat = gl.RGBA;
+            const width = 512;
+            const height = 512;
+            const format = gl.RGBA;
+            const type = gl.UNSIGNED_BYTE;
+            gl.texImage2D(target, level, internalFormat, width, height, 0, format, type, null);
+            image.src = url;
             image.onload = () => {
-                resolve(image);
+                gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+                gl.texImage2D(target, level, internalFormat, format, type, image);
+                gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+                console.log("Loaded image", url);
             };
-            image.onerror = (error) => {
-                reject(error);
-            }
-            image.src = path;
         });
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+        // gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
+        return texture;
     }
-
-    // public getTexture(textureType: TextureTypes) {
-    //     return this.textures[textureType];
-    // }
 
     private isPowerOf2(value: number) {
         return (value & (value - 1)) == 0;

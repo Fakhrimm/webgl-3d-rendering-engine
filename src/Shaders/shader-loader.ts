@@ -4,6 +4,8 @@ import phongVertexShader from "./phong-vertex.vert?raw";
 import phongFragmentShader from "./phong-fragment.frag?raw";
 import parallaxVertexShader from "./parallax-vertex.vert?raw";
 import parallaxFragmentShader from "./parallax-fragment.frag?raw";
+import reflectionFragmentShader from "./reflection-fragment.frag?raw";
+import reflectionVertexShader from "./reflection-vertex.vert?raw";
 
 export enum ShaderType {
     BASIC_VERTEX,
@@ -11,7 +13,9 @@ export enum ShaderType {
     PHONG_VERTEX,
     PHONG_FRAGMENT,
     PARALLAX_VERTEX,
-    PARALLAX_FRAGMENT
+    PARALLAX_FRAGMENT,
+    REFLECTION_VERTEX,
+    REFLECTION_FRAGMENT
 }
 
 
@@ -30,6 +34,10 @@ export function loadShader(shaderType: ShaderType): string {
             return parallaxVertexShader
         case ShaderType.PARALLAX_FRAGMENT:
             return parallaxFragmentShader
+        case ShaderType.REFLECTION_FRAGMENT:
+            return reflectionFragmentShader
+        case ShaderType.REFLECTION_VERTEX:
+            return reflectionVertexShader
         default:
             throw new Error("ShaderType not implemented in loader");
     }
