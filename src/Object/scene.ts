@@ -7,7 +7,7 @@ import { OrthographicCamera } from "../Camera/orthographic-camera.ts";
 import { Camera } from "../Camera/camera.ts";
 import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
-import { RingGeometry } from "../Geometry/ringGeometry.ts";
+import { RingsHollow } from "../Geometry/ringsHollow.ts";
 
 export class Scene extends Node {
     activeCamera: Camera | null = null;
@@ -67,10 +67,10 @@ export class Scene extends Node {
         let material1 = new BasicMaterial();
         let material2 = new PhongMaterial();
 
-        let mesh = new Mesh(new BoxGeometry(50, 50, 50, true), material1);
+        let mesh = new Mesh(new RingsHollow, material2);
         mesh.name = "Mesh";
 
-        let mesh2 = new Mesh(new BoxGeometry(200, 200, 200, false), material2);
+        let mesh2 = new Mesh(new RingsHollow(), material2);
         mesh2.name = "Mesh2";
 
         // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z+'), material2);
@@ -124,7 +124,7 @@ export class Scene extends Node {
         obliqueCamera.setParent(originNode);
         perspectiveCamera.setParent(originNode);
         mesh2.setParent(scene);
-        // mesh.setParent(mesh2);
+        // mesh.setParent(scene);
 
         // const node = new Node();
         // node.name = "Node";
