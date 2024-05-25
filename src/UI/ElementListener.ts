@@ -27,6 +27,10 @@ export function elementListner(variables: Variables) {
         return variables.getOriginNode();
     }
 
+    function getOriginScene() {
+        return variables.getOriginScene();
+    }
+
     // TOP
     const help = container.getElement("help");
     const modalContainer = container.getElement("modalContainer");
@@ -97,9 +101,9 @@ export function elementListner(variables: Variables) {
         const degrees = (val / 3.3) * 180;
         const radians = degrees * (Math.PI / 180);
         if (rotateAxis === "x") {
-            variables.getOriginNode().setRotationX(radians);
+            getOriginNode().setRotationX(radians);
         } else if (rotateAxis === "y") {
-            variables.getOriginNode().setRotationY(radians);
+            getOriginNode().setRotationY(radians);
         }
     });
 
@@ -359,7 +363,7 @@ export function elementListner(variables: Variables) {
     let lastFrameTime: number | undefined;
     const animationRunner = new AnimationRunner(
         "../Animation/Animations/boxspin.json",
-        variables.getTree().reference,
+        getOriginScene(),
         variables
     );
 

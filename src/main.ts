@@ -46,6 +46,7 @@ const main = async () => {
         tree: treeRoot,
         renderer,
         originNode: originNode,
+        originScene: sceneDummy,
     });
 
     // element listener

@@ -12,6 +12,7 @@ export interface VariableInterface {
     tree: TreeInterface;
     renderer: Render;
     originNode: Node;
+    originScene: Scene;
 }
 
 export class Variables {
@@ -21,9 +22,10 @@ export class Variables {
     private _tree: TreeInterface;
     private _renderer: Render;
     private _originNode: Node;
+    private _originScene: Scene;
 
     constructor(props: VariableInterface) {
-        const { scene, container, webGLRenderer, tree, renderer, originNode } =
+        const { scene, container, webGLRenderer, tree, renderer, originNode, originScene } =
             props;
 
         this._scene = scene;
@@ -32,6 +34,7 @@ export class Variables {
         this._tree = tree;
         this._renderer = renderer;
         this._originNode = originNode;
+        this._originScene = originScene;
     }
 
     public getScene() {
@@ -64,5 +67,9 @@ export class Variables {
 
     public getOriginNode() {
         return this._originNode;
+    }
+
+    public getOriginScene() {
+        return this._originScene;
     }
 }

@@ -1,6 +1,6 @@
-import { error } from 'console';
-import { Variables } from '../UI/Variables';
-import { AnimationClip, AnimationPath } from './animation';
+import { error } from "console";
+import { Variables } from "../UI/Variables";
+import { AnimationClip, AnimationPath } from "./animation";
 
 export class AnimationRunner {
     isPlaying: boolean;
@@ -13,7 +13,12 @@ export class AnimationRunner {
     private currentAnimation?: AnimationClip;
     private variables: Variables;
 
-    constructor(animFile: string, root: Object, variables: Variables, { fps = 30 } = {}) {
+    constructor(
+        animFile: string,
+        root: Object,
+        variables: Variables,
+        { fps = 30 } = {}
+    ) {
         this.load(animFile).then((animationClip) => {
             this.currentAnimation = animationClip;
         });
@@ -28,7 +33,7 @@ export class AnimationRunner {
     public play() {
         this.isPlaying = true;
     }
-    
+
     public pause() {
         this.isPlaying = false;
     }
@@ -55,7 +60,7 @@ export class AnimationRunner {
             this.updateSceneGraph();
         }
     }
-   
+
     public prevFrame() {
         if (!this.isPlaying) {
             if (this.isReverse) {
@@ -67,7 +72,7 @@ export class AnimationRunner {
                     this.currentFrame--;
                 }
             }
-            console.log(this.currentFrame);
+            // console.log(this.currentFrame);
             this.updateSceneGraph();
         }
     }
@@ -81,7 +86,7 @@ export class AnimationRunner {
 
     public last() {
         if (!this.isPlaying) {
-            this.currentFrame = this.length-1;
+            this.currentFrame = this.length - 1;
             this.updateSceneGraph();
         }
     }
@@ -89,7 +94,7 @@ export class AnimationRunner {
     get CurrentFrame() {
         return this.currentFrame;
     }
-   
+
     get length() {
         return this.currentAnimation!.totalFrames;
     }
@@ -101,22 +106,29 @@ export class AnimationRunner {
     update(deltaSecond: number) {
         if (this.isPlaying) {
             this.deltaFrame += deltaSecond * this.fps;
-            if (this.deltaFrame >= 1) { // 1 frame
-                if (this.isReverse) { 
-                    let temp = (this.currentFrame - Math.floor(this.deltaFrame) + 2*this.length) % this.length;
+            if (this.deltaFrame >= 1) {
+                // 1 frame
+                if (this.isReverse) {
+                    let temp =
+                        (this.currentFrame -
+                            Math.floor(this.deltaFrame) +
+                            2 * this.length) %
+                        this.length;
                     if (this.currentFrame > temp && !this.isAuto) {
                         this.pause();
                     }
 
                     this.currentFrame = temp;
                 } else {
-                    let temp = (this.currentFrame + Math.floor(this.deltaFrame)) % this.length;
+                    let temp =
+                        (this.currentFrame + Math.floor(this.deltaFrame)) %
+                        this.length;
                     if (this.currentFrame < temp && !this.isAuto) {
                         this.pause();
                     }
 
                     this.currentFrame = temp;
-                }                
+                }
                 this.deltaFrame %= 1;
                 this.updateSceneGraph();
             }
@@ -124,76 +136,142 @@ export class AnimationRunner {
     }
 
     private updateSceneGraph() {
-        const frame: AnimationPath | undefined = this.currentAnimation?.frames[0];
+        const frame: AnimationPath | undefined =
+            this.currentAnimation?.frames[0];
 
         let rootExists = false;
 
-        if (this.currentAnimation?.name == this.variables.getTree().name) {
+        // console.log("MASUK 1");
+        if (
+            this.currentAnimation?.name == this.variables.getOriginScene().name
+        ) {
+            // console.log(this.currentAnimation.name);
+            // console.log(this.variables.getOriginScene().name);
+            // console.log(this.variables.getTree().name);
+            // console.log("MASUK 2");
             if (frame?.keyframe) {
+                // console.log("MASUK 3");
                 for (let index in frame.keyframe) {
+                    // console.log("MASUK 4");
                     if (index == this.currentFrame.toString()) {
+                        // console.log("MASUK 5");
                         let element = frame.keyframe[index];
-    
+                        // console.log("MASUK 6");
+
                         if (element.translation) {
-                            this.variables.getTree().reference.setPositionX(element.translation[0]);
-                            this.variables.getTree().reference.setPositionY(element.translation[1]);
-                            this.variables.getTree().reference.setPositionZ(element.translation[2]);
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setPositionX(element.translation[0]);
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setPositionY(element.translation[1]);
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setPositionZ(element.translation[2]);
                         }
-        
+
                         if (element.rotation) {
-                            this.variables.getTree().reference.setRotationX(element.rotation[0] * Math.PI * 1.5);
-                            this.variables.getTree().reference.setRotationY(element.rotation[1] * Math.PI * 1.5);
-                            this.variables.getTree().reference.setRotationZ(element.rotation[2] * Math.PI * 1.5);
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setRotationX(
+                                    element.rotation[0] * Math.PI * 1.5
+                                );
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setRotationY(
+                                    element.rotation[1] * Math.PI * 1.5
+                                );
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setRotationZ(
+                                    element.rotation[2] * Math.PI * 1.5
+                                );
                         }
-        
+
                         if (element.scale) {
-                            this.variables.getTree().reference.setScaleX(element.scale[0]);
-                            this.variables.getTree().reference.setScaleY(element.scale[1]);
-                            this.variables.getTree().reference.setScaleZ(element.scale[2]);
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setScaleX(element.scale[0]);
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setScaleY(element.scale[1]);
+                            this.variables
+                                .getOriginScene()
+                                .getOriginNode()
+                                .setScaleZ(element.scale[2]);
                         }
                     }
                 }
             }
 
             if (frame?.children) {
-                this.updateChildren(frame.children, this.variables.getTree());    
+                // console.log("tes", this.variables.getOriginScene());
+                this.updateChildren(
+                    frame.children,
+                    this.variables.getOriginScene()
+                );
             }
 
             rootExists = true;
         }
 
         if (!rootExists) {
-            throw new Error('Scene must be selected before playing');
+            throw new Error("Scene must be selected before playing animation");
         }
     }
 
-    private updateChildren(animationChildren: { [childName: string]: AnimationPath; }, sceneChildren: any) {
+    private updateChildren(
+        animationChildren: { [childName: string]: AnimationPath },
+        sceneChildren: any
+    ) {
+        // console.log("tes2", animationChildren);
         for (let animationChildrenName of Object.keys(animationChildren)) {
             let child = animationChildren[animationChildrenName];
-            
+
             for (let children of sceneChildren.children) {
                 if (children.name == animationChildrenName) {
                     if (child.keyframe) {
                         for (let index in child.keyframe) {
                             if (index == this.currentFrame.toString()) {
                                 let element = child.keyframe[index];
-                    
+
                                 if (element.translation) {
-                                    children.reference.setPositionX(element.translation[0]);
-                                    children.reference.setPositionY(element.translation[1]);
-                                    children.reference.setPositionZ(element.translation[2]);
+                                    children.setPositionX(
+                                        element.translation[0]
+                                    );
+                                    children.setPositionY(
+                                        element.translation[1]
+                                    );
+                                    children.setPositionZ(
+                                        element.translation[2]
+                                    );
                                 }
-                    
+
                                 if (element.rotation) {
-                                    children.reference.setRotationX(element.rotation[0] * Math.PI * 1.5);
-                                    children.reference.setRotationY(element.rotation[1] * Math.PI * 1.5);
-                                    children.reference.setRotationZ(element.rotation[2] * Math.PI * 1.5);
+                                    // console.log("tes3", children);
+                                    children.setRotationX(
+                                        element.rotation[0] * Math.PI * 1.5
+                                    );
+                                    children.setRotationY(
+                                        element.rotation[1] * Math.PI * 1.5
+                                    );
+                                    children.setRotationZ(
+                                        element.rotation[2] * Math.PI * 1.5
+                                    );
                                 }
-                    
+
                                 if (element.scale) {
-                                    children.reference.setScaleX(element.scale[0]);
-                                    children.reference.setScaleY(element.scale[1]);
-                                    children.reference.setScaleZ(element.scale[2]);
+                                    children.setScaleX(element.scale[0]);
+                                    children.setScaleY(element.scale[1]);
+                                    children.setScaleZ(element.scale[2]);
                                 }
                             }
                         }
@@ -210,10 +288,12 @@ export class AnimationRunner {
     private async load(animFile: string): Promise<AnimationClip | undefined> {
         const response = await fetch(animFile);
         if (!response.ok) {
-            console.error(`Failed to load animation file: ${response.statusText}`);
+            console.error(
+                `Failed to load animation file: ${response.statusText}`
+            );
             return;
         }
-    
+
         const animationClip: AnimationClip = await response.json();
 
         return animationClip;

@@ -158,7 +158,7 @@ export class RingGeometry extends BufferGeometry {
         }
 
         // console.log("vertices", vertices);
-        console.log("indices", indices);
+        // console.log("indices", indices);
 
         this.setAllInputs(new Float32Array(vertices), new Uint16Array(indices), new Float32Array(texcoord));
     }
