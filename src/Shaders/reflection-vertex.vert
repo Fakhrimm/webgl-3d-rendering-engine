@@ -20,7 +20,7 @@ void main() {
     // Dikalikan world inverse transpose untuk mendapatkan normal yang benar
     // Ketika dilakukan scaling
     // webglfundamentals.org/webgl/lessons/webgl-3d-lighting-directional.html
-    v_worldNormal = (u_world * vec4(a_normal, 0)).xyz;
+    v_worldNormal = (mat3(u_worldInverseTranspose) * a_normal).xyz;
 
     gl_Position = u_projection * u_view * v_worldPosition;
 }

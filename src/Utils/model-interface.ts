@@ -60,6 +60,7 @@ export interface IMaterial {
 export interface IBasicMaterial extends IMaterial {
     type: MaterialTypes.BASIC;
     u_diffuseColor: number[];
+    u_ambientColor: number[];
     diffuseTextureType: TextureTypes;
 }
 

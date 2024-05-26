@@ -41,8 +41,8 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
         canvas.width / 2,
         canvas.height / 2,
         -canvas.height / 2,
-        1000,
-        -1000
+        -1000,
+        +1000
     )
     obliqueCamera.name = "ObliqueCamera"
 
@@ -190,7 +190,7 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
     perspectiveCamera.setParent(origin)
     orthographicCamera.setParent(origin)
     obliqueCamera.setParent(origin)
-    // palm.setParent(scene)
+    palm.setParent(scene)
 
 
     scene.setActiveCamera(PerspectiveCamera)
@@ -229,8 +229,8 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         canva.width / 2,
         canva.height / 2,
         -canva.height / 2,
-        1000,
-        -1000
+        -1000,
+        +1000
     )
     obliqueCamera.name = "ObliqueCamera"
     obliqueCamera.setParent(origin)
@@ -260,10 +260,10 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         0.2,
         0.8,
         0.5,
-        TextureTypes.DIFFUSE_BRICKS,
+        TextureTypes.DIFFUSE_0,
         TextureTypes.SPECULAR_0,
-        TextureTypes.NORMAL_BRICKS,
-        TextureTypes.HEIGHT_BRICKS,
+        TextureTypes.NORMAL_0,
+        TextureTypes.HEIGHT_WOOD,
         0.05,
     )
     const m4 = new ReflectionMaterial()
@@ -272,7 +272,7 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         TextureTypes.DIFFUSE_0
     )
 
-    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m3);
+    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m4);
     mesh1.name = "mesh1"
     mesh1.setParent(scene)
 
