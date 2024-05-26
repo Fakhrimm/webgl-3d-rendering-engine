@@ -81,7 +81,7 @@ export class Scene extends Node {
         originNode.setParent(scene);
 
         let material1 = new BasicMaterial(Color.BLACK);
-        let material2 = new BasicMaterial();
+        let material2 = new PhongMaterial();
         // let material3 = new ParallaxMaterial();
         // let material4 = new ReflectionMaterial();
         material1.setDiffuseColorFromRGB(255, 0, 0);
@@ -89,8 +89,8 @@ export class Scene extends Node {
         let mesh2 = new Mesh(new BoxGeometry(100,100,100,false), material2);
         mesh2.name = "Mesh2";
 
-        let mesh = new Mesh(new BoxGeometry(100, 100, 100, false), material1);
-        mesh.name = "Mesh";
+        // let mesh = new Mesh(new BoxGeometry(100, 100, 100, false), material1);
+        // mesh.name = "Mesh";
 
 
         // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 20, 1, 1, 'z+'), material3);
@@ -137,14 +137,14 @@ export class Scene extends Node {
         perspectiveCamera.setPosition(0, 0, 1000);
         orthographicCamera.setPosition(0, 0, 650);
 
-        mesh.setPosition(0, 400, 0);
+        // mesh.setPosition(0, 400, 0);
         // mesh2.setPosition(0, 0, -300);
         // mesh3.setPosition(0, 0, -300);
 
         orthographicCamera.setParent(originNode);
         obliqueCamera.setParent(originNode);
         perspectiveCamera.setParent(originNode);
-        mesh.setParent(scene);
+        // mesh.setParent(scene);
         mesh2.setParent(scene);
 
         // const node = new Node();
