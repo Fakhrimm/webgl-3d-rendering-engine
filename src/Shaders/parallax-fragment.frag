@@ -3,6 +3,7 @@ precision mediump float;
 varying vec2 v_texCoord;
 varying vec3 v_worldViewDirection;
 varying vec3 v_lightDirection;
+varying vec4 v_color;
 
 uniform vec3 u_ambientColor;
 uniform vec3 u_diffuseColor;
@@ -14,6 +15,7 @@ uniform float  u_ks;
 uniform int u_materialType;
 uniform float u_heightScale;
 uniform vec3 u_reverseLightDirection;
+uniform float u_useVertexColor;
 
 uniform sampler2D u_diffuseTexture;
 uniform sampler2D u_specularTexture;
@@ -27,6 +29,11 @@ vec2 parallaxMapping(vec3 viewDir, vec2 texCoords) {
 }
 
 void main() {
+    if (u_useVertexColor > 0.9) {
+        gl_FragColor = v_color;
+        return;
+    }
+
     vec3 worldViewDirection = normalize(v_worldViewDirection);
     vec3 lightDirection = normalize(v_lightDirection);
 

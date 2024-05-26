@@ -2,12 +2,16 @@ import { BufferAttribute } from "./bufferAttribute";
 import { Vector3 } from "../Math/vector-3.ts";
 import { Vector2 } from "../Math/vector-2.ts";
 import { IBufferGeometry } from "../Utils/model-interface.ts";
+import {Color} from "../Math/color.ts";
 
 export class BufferGeometry {
     private readonly _attributes: { [name: string]: BufferAttribute };
     protected inputPosition!: Float32Array;
     protected inputIndices!: Uint16Array;
     protected inputTexcoord!: Float32Array;
+    protected vertexColor: Color = new Color(1, 0, 0);
+    protected u_useVertexColor: number = 0;
+
     private _indices?: BufferAttribute;
     private isSmoothShading: boolean;
 
@@ -15,24 +19,29 @@ export class BufferGeometry {
         isSmoothShading = false,
         inputPosition = new Float32Array(),
         inputIndices = new Uint16Array(),
-        inputTexcoord = new Float32Array()
+        inputTexcoord = new Float32Array(),
+        vertexColor: Color = new Color(1, 0, 0),
+        u_useVertexColor: number = 0
     ) {
         this._attributes = {};
         this.isSmoothShading = isSmoothShading;
+        this.u_useVertexColor = u_useVertexColor;
 
         if (inputPosition.length > 0) {
-            this.setAllInputs(inputPosition, inputIndices, inputTexcoord);
+            this.setAllInputs(inputPosition, inputIndices, inputTexcoord, vertexColor);
         }
     }
 
     protected setAllInputs(
         inputPosition: Float32Array,
         inputIndices: Uint16Array = new Uint16Array(),
-        inputTexcoord: Float32Array = new Float32Array()
+        inputTexcoord: Float32Array = new Float32Array(),
+        vertexColor: Color = new Color(1, 0, 0),
     ) {
         this.inputPosition = inputPosition;
         this.inputIndices = inputIndices;
         this.inputTexcoord = inputTexcoord;
+        this.vertexColor = vertexColor;
 
         // If inputIndices is empty, we need to calculate inputIndices and adjust inputPosition
         if (inputIndices.length === 0) {
@@ -52,6 +61,8 @@ export class BufferGeometry {
             new BufferAttribute(this.inputTexcoord, 2)
         );
         this.calculateAndSetTangents();
+
+        this.calculateAndSetVertexColor()
 
         // console.log("position", this.getAttribute("a_position"));
         // console.log("normal", this.getAttribute("a_normal"));
@@ -76,6 +87,14 @@ export class BufferGeometry {
         return this._attributes[name];
     }
 
+    get useVertexColor() {
+        return this.u_useVertexColor;
+    }
+
+    public set useVertexColor(value: number) {
+        this.u_useVertexColor = value;
+    }
+
     setAttribute(name: string, attribute: BufferAttribute) {
         this._attributes[name] = attribute;
         return this;
@@ -88,6 +107,18 @@ export class BufferGeometry {
     setToFlatShading() {
         this.isSmoothShading = false;
         this.calculateAndSetAttributes();
+    }
+
+    calculateAndSetVertexColor() {
+        const color = new Float32Array(4 * this.inputIndices.length);
+        for (let i = 0; i < this.inputIndices.length; i++) {
+            const colorArray = this.vertexColor.get();
+            color[i * 4] = colorArray[0];
+            color[i * 4 + 1] = colorArray[1];
+            color[i * 4 + 2] = colorArray[2];
+            color[i * 4 + 3] = 1;
+        }
+        this.setAttribute("a_color", new BufferAttribute(color, 4));
     }
 
     calculateAndSetAttributes() {
@@ -320,6 +351,8 @@ export class BufferGeometry {
             inputPosition: [...this.inputPosition],
             inputIndices: [...this.inputIndices],
             inputTexcoord: [...this.inputTexcoord],
+            vertexColor: this.vertexColor.get(),
+            u_useVertexColor: this.u_useVertexColor,
         };
     }
 
@@ -328,7 +361,9 @@ export class BufferGeometry {
             raw.isSmoothShading,
             new Float32Array(raw.inputPosition),
             new Uint16Array((raw.inputIndices)),
-            new Float32Array((raw.inputTexcoord))
+            new Float32Array((raw.inputTexcoord)),
+            new Color(raw.vertexColor[0], raw.vertexColor[1], raw.vertexColor[2]),
+            raw.u_useVertexColor
         );
     }
 }

@@ -3,6 +3,7 @@
     varying vec4 v_viewSpacePosition;
     varying vec2 v_texCoord;
     varying mat3 v_tbn;
+    varying vec4 v_color;
 
     uniform vec3 u_ambientColor;
     uniform vec3 u_diffuseColor;
@@ -13,12 +14,17 @@
     uniform float  u_ks;
     uniform vec3 u_reverseLightDirection;
     uniform int u_materialType;
+    uniform float u_useVertexColor;
 
     uniform sampler2D u_diffuseTexture;
     uniform sampler2D u_specularTexture;
     uniform sampler2D u_normalTexture;
 
     void main() {
+        if (u_useVertexColor > 0.9) {
+            gl_FragColor = v_color;
+            return;
+        }
 
         vec3 normal = texture2D(u_normalTexture, v_texCoord).rgb;
         normal = normal * 2.0 - 1.0;

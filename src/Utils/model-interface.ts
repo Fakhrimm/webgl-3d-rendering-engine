@@ -51,6 +51,8 @@ export interface IBufferGeometry {
     inputPosition: number[],
     inputIndices: number[],
     inputTexcoord: number[],
+    vertexColor: number[],
+    u_useVertexColor: number,
 }
 
 export interface IMaterial {

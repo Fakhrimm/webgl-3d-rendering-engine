@@ -2,10 +2,12 @@ attribute vec4 a_position;
 attribute vec3 a_normal;
 attribute vec2 a_texcoord;
 attribute vec3 a_tangent;
+attribute vec4 a_color;
 
 varying vec2 v_texCoord;
 varying vec3 v_worldViewDirection;
 varying vec3 v_lightDirection;
+varying vec4 v_color;
 
 uniform mat4 u_viewProjection;
 uniform mat4 u_view;
@@ -15,6 +17,7 @@ uniform mat4 u_worldInverseTranspose;
 uniform vec3 u_reverseLightDirection;
 
 void main() {
+    v_color = a_color;
     v_texCoord = a_texcoord;
 
     // Dikalikan world inverse transpose untuk mendapatkan normal yang benar

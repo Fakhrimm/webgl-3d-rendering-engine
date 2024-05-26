@@ -46,6 +46,7 @@ export class WebGLRenderer {
                 programInfo.setUniforms({
                     u_world: node.getWorldMatrix().elements,
                     u_worldInverseTranspose: node.getWorldInverseTransposeMatrix().elements,
+                    u_useVertexColor: geometry.useVertexColor,
                 });
                 this.draw(geometry);
             } else if (!(node instanceof Camera)) {
