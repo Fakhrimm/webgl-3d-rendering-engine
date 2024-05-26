@@ -70,6 +70,7 @@ Pixar 3D engine is TypeScript Web app that can be used to process 3D model. Pixa
     - Last
     - Easing Type (Normal, Ease In Sine, Ease In Quad, Ease In Cubic, Ease In Quart, Ease In Quart, Ease In Expo, Ease In Circ)
     - FPS
+16. Vertex Coloring
 
 for guide on how to use them you can check out the guidebook on ```docs``` folder or visit this link https://drive.google.com/file/d/1cCt04FIItlkYmnVUMD6qgZvk__HkweeL/view?usp=sharing
 
@@ -88,6 +89,7 @@ for guide on how to use them you can check out the guidebook on ```docs``` folde
 |                                       | Hand articulated model and animation         |
 |                                       | Tesseract hollow model                       |
 |                                       | Load File                                    |
+|                                       | Vertex Color                                 |
 | Muhammad Equilibrie Fajria (13521047) | Camera                                       |
 |                                       | Save and load File                           |
 |                                       | Guide document                               |
