@@ -104299,7 +104299,13 @@
           1,
           1,
           1
-        ]
+        ],
+        "vertexColor": [
+          1,
+          0,
+          0
+        ],
+        "u_useVertexColor": 0
       },
       "material": {
         "type": 1,
