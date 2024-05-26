@@ -7,6 +7,7 @@ import { IPhongMaterial } from "../Utils/model-interface.ts";
 
 export class PhongMaterial extends Material {
     private u_diffuseColor: Color;
+    private u_ambientColor: Color;
     private u_specularColor: Color;
     private u_shininess: number;
     private u_ka: number;
@@ -21,6 +22,7 @@ export class PhongMaterial extends Material {
 
     constructor(
         u_diffuseColor: Color = Color.WHITE,
+        u_ambientColor: Color = Color.WHITE,
         u_specularColor: Color = Color.WHITE,
         u_shininess: number = 50,
         u_ka: number = 0.2,
@@ -36,6 +38,7 @@ export class PhongMaterial extends Material {
         super();
         this._materialType = MaterialTypes.PHONG;
         this.u_diffuseColor = u_diffuseColor;
+        this.u_ambientColor = u_ambientColor;
         this.u_specularColor = u_specularColor;
         this.u_shininess = u_shininess;
         this.u_ka = u_ka;
@@ -55,6 +58,7 @@ export class PhongMaterial extends Material {
     ): void {
         programInfo.setUniforms({
             u_diffuseColor: this.u_diffuseColor.get(),
+            u_ambientColor: this.u_ambientColor.get(),
             u_specularColor: this.u_specularColor.get(),
             u_shininess: this.u_shininess,
             u_ka: this.u_ka,
@@ -141,6 +145,7 @@ export class PhongMaterial extends Material {
         return {
             type: MaterialTypes.PHONG,
             u_diffuseColor: this.u_diffuseColor.get(),
+            u_ambientColor: this.u_ambientColor.get(),
             u_specularColor: this.u_specularColor.get(),
             u_shininess: this.u_shininess,
             u_ka: this.u_ka,
@@ -157,6 +162,7 @@ export class PhongMaterial extends Material {
     public static fromRaw(raw: IPhongMaterial): PhongMaterial {
         return new PhongMaterial(
             Color.fromArray(raw.u_diffuseColor),
+            Color.fromArray(raw.u_ambientColor),
             Color.fromArray(raw.u_specularColor),
             raw.u_shininess,
             raw.u_ka,

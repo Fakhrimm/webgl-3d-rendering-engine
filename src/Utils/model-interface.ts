@@ -67,6 +67,7 @@ export interface IBasicMaterial extends IMaterial {
 export interface IPhongMaterial extends IMaterial {
     type: MaterialTypes.PHONG;
     u_diffuseColor: number[];
+    u_ambientColor: number[];
     u_specularColor: number[];
     u_shininess: number;
     u_ka: number;

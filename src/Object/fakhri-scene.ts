@@ -48,10 +48,11 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
 
     const m1 = new BasicMaterial(
         Color.BLUE,
-        Color.BLUE,
+        Color.BLACK,
         TextureTypes.DIFFUSE_0
     )
     const m2 = new PhongMaterial(
+        Color.WHITE,
         Color.WHITE,
         Color.WHITE,
         50,
@@ -85,6 +86,7 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
         TextureTypes.DIFFUSE_0
     )
     const m6 = new PhongMaterial(
+        Color.WHITE,
         Color.WHITE,
         Color.WHITE,
         50,
@@ -212,7 +214,6 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         20000,
         1)
     perspectiveCamera.name = "PerspectiveCamera"
-    perspectiveCamera.setPosition(0, 0, 500)
     perspectiveCamera.setParent(origin)
 
     const orthographicCamera = new OrthographicCamera(
@@ -239,10 +240,11 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
 
     const m1 = new BasicMaterial(
         Color.BLUE,
-        Color.BLUE,
+        Color.BLACK,
         TextureTypes.DIFFUSE_0
     )
     const m2 = new PhongMaterial(
+        Color.BLACK,
         Color.WHITE,
         Color.WHITE,
         50,
@@ -251,7 +253,7 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         0.5,
         TextureTypes.DIFFUSE_0,
         TextureTypes.SPECULAR_0,
-        TextureTypes.NORMAL_1,
+        TextureTypes.NORMAL_0,
         TextureTypes.DISPLACEMENT_0,
         100,
         0.0
@@ -276,10 +278,11 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         TextureTypes.DIFFUSE_0
     )
 
-    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m4);
+    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m2);
     mesh1.name = "mesh1"
     mesh1.setParent(scene)
 
     scene.setActiveCamera(PerspectiveCamera)
+    perspectiveCamera.setPosition(0, 0, 300)
     return scene
 }

@@ -57,14 +57,12 @@ export class WebGLRenderer {
     private setGlobalUniforms(camera: Camera) {
         this.programInfos[MaterialTypes.BASIC].setUniforms({
             u_viewProjection: camera.viewProjectionMatrix.elements,
-            u_ambientColor: [0.2, 0.2, 0.2],
             u_reverseLightDirection: [0, 0, 1],
         });
 
         this.programInfos[MaterialTypes.PHONG].setUniforms({
             u_view: camera.viewMatrix.elements,
             u_projection: camera.projectionMatrix.elements,
-            u_ambientColor: [0.2, 0.2, 0.2],
             u_reverseLightDirection: [0, 0, 1],
         });
         this.programInfos[MaterialTypes.PARALLAX].setUniforms({
