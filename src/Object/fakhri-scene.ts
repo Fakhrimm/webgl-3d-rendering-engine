@@ -11,6 +11,7 @@ import {Mesh} from "./mesh.ts";
 import {Node} from "./node.ts";
 import {Color} from "../Math/color.ts";
 import {TextureTypes} from "../Types/texture-types.ts";
+import {tesseractHollowGeometry} from "../Geometry/tesseract-hollow-geometry.ts";
 
 export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
     const scene = new Scene();
@@ -279,11 +280,11 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         TextureTypes.DIFFUSE_0
     )
 
-    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m1);
+    const mesh1 = new Mesh(tesseractHollowGeometry(80, 250, 20), m1);
     mesh1.name = "mesh1"
     mesh1.setParent(scene)
 
     scene.setActiveCamera(PerspectiveCamera)
-    perspectiveCamera.setPosition(0, 0, 300)
+    perspectiveCamera.setPosition(0, 0, 500)
     return scene
 }

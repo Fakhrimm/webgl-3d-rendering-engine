@@ -35,8 +35,7 @@ function makeHollowCube(outMat: Vector3[][]) {
 export function tesseractHollowGeometry(
     innerLength = 120,
     outerlength = 400,
-    thickness = 30,
-    numOfSegments = 30
+    thickness = 30
 ) {
 
     const halfInner = innerLength / 2;
