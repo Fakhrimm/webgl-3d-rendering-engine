@@ -147,4 +147,20 @@ export class PhongMaterial extends Material {
             displacementBias: this.displacementBias,
         };
     }
+    public static fromRaw(raw: IPhongMaterial): PhongMaterial {
+        return new PhongMaterial(
+            Color.fromArray(raw.u_diffuseColor),
+            Color.fromArray(raw.u_specularColor),
+            raw.u_shininess,
+            raw.u_ka,
+            raw.u_kd,
+            raw.u_ks,
+            raw.diffTextureType,
+            raw.specTextureType,
+            raw.normalTextureType,
+            raw.displacementTextureType,
+            raw.displacementScale,
+            raw.displacementBias
+        );
+    }
 }

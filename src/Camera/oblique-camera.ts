@@ -1,5 +1,7 @@
 import { IObliqueCamera } from "../Utils/model-interface";
 import {Camera} from "./camera";
+import {NodeTypes} from "../Types/node-types.ts";
+import {Euler} from "../Math/euler.ts";
 
 export class ObliqueCamera extends Camera {
     top: number;
@@ -13,6 +15,7 @@ export class ObliqueCamera extends Camera {
 
     constructor(left = - 1, right = 1, top = 1, bottom = - 1, near = 0.1, far = 2000) {
         super();
+        this.nodeType = NodeTypes.OBLIQUE_CAMERA;
         this.left = left;
         this.right = right;
         this.top = top;
@@ -48,8 +51,9 @@ export class ObliqueCamera extends Camera {
         const raw = super.toRaw()
         return {
             name: raw.name,
+            nodeType: raw.nodeType,
             position: raw.position, 
-            scale: raw.position,
+            scale: raw.scale,
             rotation: raw.rotation,
             children: raw.children,
 			left: this.left,
@@ -62,5 +66,22 @@ export class ObliqueCamera extends Camera {
             beta: this.beta,
 			zoom: this.zoom
         }
+    }
+    public static fromRaw(raw: IObliqueCamera): ObliqueCamera {
+        const camera = new ObliqueCamera();
+        camera.name = raw.name;
+        camera.setPosition(raw.position.x, raw.position.y, raw.position.z);
+        camera.setScale(raw.scale.x, raw.scale.y, raw.scale.z);
+        camera.setRotationFromEuler(new Euler(raw.rotation.x, raw.rotation.y, raw.rotation.z));
+        camera.left = raw.left;
+        camera.right = raw.right;
+        camera.top = raw.top;
+        camera.bottom = raw.bottom;
+        camera.near = raw.near;
+        camera.far = raw.far;
+        camera.alpha = raw.alpha;
+        camera.beta = raw.beta;
+        camera.zoom = raw.zoom;
+        return camera;
     }
 }

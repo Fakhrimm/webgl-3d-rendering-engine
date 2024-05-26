@@ -10,6 +10,7 @@ import { AnimationRunner } from "../Animation/animationRunner.ts";
 import { Tree } from "./Tree.ts";
 import { renderScene } from "../main.ts";
 import { ParallaxMaterial } from "../Material/parallax-material.ts";
+import {loadScene} from "../Utils/loader.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -84,31 +85,31 @@ export function elementListner(variables: Variables) {
     saveFile.addEventListener("click", () => {
         SaveLoader.saveModel(variables.getScene(), "pixar.json");
     });
-    loadFile.addEventListener("change", () => {
+    loadFile.addEventListener("change", async () => {
         const file = loadFile.files?.[0];
         if (!file) {
             return;
         }
         console.log(file);
-        SaveLoader.loadModel(file, variables.getWebGL().canvas, (model) => {
-            try {
-                console.log("YESS");
-                Tree.resetTree(container);
-                variables.setScene(model);
-                const tree = Tree.mapSceneToTree(variables.getScene());
-                console.log("TREE", tree);
-                Tree.mapTreeToComponentTree(container, tree, variables);
-                console.log("LANJUT");
-                container.getElement("activeComponent").innerHTML = tree.name;
-                console.log("FINAL");
-                requestAnimationFrame(() =>
-                    renderScene(variables.getWebGL(), variables, false)
-                );
-                console.log("BERHASIL");
-            } catch (error) {
-                throw new Error(`Failed to load model: ${error}`);
-            }
-        });
+        const model = await loadScene(file, variables.getWebGL().canvas);
+        try {
+            console.log("YESS");
+            Tree.resetTree(container);
+            variables.setScene(model);
+            const tree = Tree.mapSceneToTree(variables.getScene());
+            console.log("TREE", tree);
+            Tree.mapTreeToComponentTree(container, tree, variables);
+            console.log("LANJUT");
+            container.getElement("activeComponent").innerHTML = tree.name;
+            console.log("FINAL");
+            requestAnimationFrame(() =>
+                renderScene(variables.getWebGL(), variables, false)
+            );
+            console.log("BERHASIL");
+        } catch (error) {
+            throw new Error(`Failed to load model: ${error}`);
+        }
+
     });
 
     // LEFT

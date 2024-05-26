@@ -317,19 +317,18 @@ export class BufferGeometry {
     public toRaw(): IBufferGeometry {
         return {
             isSmoothShading: this.isSmoothShading,
-            inputPosition: this.inputPosition,
-            inputIndices: this.inputIndices,
-            inputTexcoord: this.inputTexcoord,
+            inputPosition: [...this.inputPosition],
+            inputIndices: [...this.inputIndices],
+            inputTexcoord: [...this.inputTexcoord],
         };
     }
 
     public static fromRaw(raw: IBufferGeometry): BufferGeometry {
-        const geometry = new BufferGeometry(
+        return new BufferGeometry(
             raw.isSmoothShading,
-            new Float32Array(Object.values(raw.inputPosition)),
-            new Uint16Array(Object.values(raw.inputIndices)),
-            new Float32Array(Object.values(raw.inputTexcoord))
+            new Float32Array(raw.inputPosition),
+            new Uint16Array((raw.inputIndices)),
+            new Float32Array((raw.inputTexcoord))
         );
-        return geometry;
     }
 }

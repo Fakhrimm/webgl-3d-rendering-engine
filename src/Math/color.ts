@@ -40,4 +40,8 @@ export class Color {
     public static GREEN = new Color(0, 1, 0);
     public static BLUE = new Color(0, 0, 1);
     public static BLACK = new Color(0, 0, 0);
+
+    static fromArray(u_diffuseColor: number[]) {
+        return new Color(u_diffuseColor[0], u_diffuseColor[1], u_diffuseColor[2]);
+    }
 }

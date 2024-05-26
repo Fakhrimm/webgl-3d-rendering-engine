@@ -1,5 +1,7 @@
 import { IOrthographicCamera } from "../Utils/model-interface";
 import {Camera} from "./camera";
+import {NodeTypes} from "../Types/node-types.ts";
+import {Euler} from "../Math/euler.ts";
 
 export class OrthographicCamera extends Camera {
 	top: number;
@@ -10,8 +12,8 @@ export class OrthographicCamera extends Camera {
 	far: number;
 
 	constructor(left = - 1, right = 1, top = 1, bottom = - 1, near = 0.1, far = 2000) {
-
 		super();
+		this.nodeType = NodeTypes.ORTHOGRAPHIC_CAMERA;
 		this.left = left;
 		this.right = right;
 		this.top = top;
@@ -45,8 +47,9 @@ export class OrthographicCamera extends Camera {
         const raw = super.toRaw()
         return {
             name: raw.name,
+			nodeType: raw.nodeType,
             position: raw.position, 
-            scale: raw.position,
+            scale: raw.scale,
             rotation: raw.rotation,
             children: raw.children,
 			left: this.left,
@@ -57,5 +60,22 @@ export class OrthographicCamera extends Camera {
 			far: this.far,
 			zoom: this.zoom
         }
+	}
+
+	public static fromRaw(raw: IOrthographicCamera): OrthographicCamera {
+		const camera = new OrthographicCamera(
+			raw.left,
+			raw.right,
+			raw.top,
+			raw.bottom,
+			raw.near,
+			raw.far
+		);
+		camera.name = raw.name;
+		camera.setPosition(raw.position.x, raw.position.y, raw.position.z);
+		camera.setScale(raw.scale.x, raw.scale.y, raw.scale.z);
+		camera.setRotationFromEuler(new Euler(raw.rotation.x, raw.rotation.y, raw.rotation.z));
+		camera.zoom = raw.zoom;
+		return camera;
 	}
 }

@@ -3,9 +3,11 @@ import { Vector3 } from "../Math/vector-3";
 import { Euler } from "../Math/euler.ts";
 import { Quaternion } from "../Math/quaternion.ts";
 import { INode } from "../Utils/model-interface.ts";
+import {NodeTypes} from "../Types/node-types.ts";
 
 export class Node {
     public name: string = "";
+    protected nodeType: NodeTypes;
     protected parent: Node | null = null;
     private children: Node[] = [];
 
@@ -14,10 +16,11 @@ export class Node {
     private rotation: Euler = new Euler(0, 0, 0);
     private quaternion: Quaternion = new Quaternion().identity();
 
-    private localMatrix: Matrix4 = new Matrix4();
+    protected localMatrix: Matrix4 = new Matrix4();
     protected worldMatrix: Matrix4 = new Matrix4();
 
     constructor() {
+        this.nodeType = NodeTypes.NODE;
         const onRotationChange = () => {
             this.quaternion.setFromEuler(this.rotation, false);
         };
@@ -95,8 +98,8 @@ export class Node {
         return this.position;
     }
 
-    public setScale(scale: Vector3) {
-        this.scale = scale;
+    public setScale(x: number, y: number, z: number) {
+        this.scale = new Vector3(x, y, z);
     }
 
     public setScaleX(x: number) {
@@ -174,6 +177,7 @@ export class Node {
     public toRaw(): INode {
         return {
             name: this.name,
+            nodeType: this.nodeType,
             position: {
                 x: this.position.x,
                 y: this.position.y,
@@ -191,5 +195,14 @@ export class Node {
             },
             children: [],
         };
+    }
+
+    public static fromRaw(raw: INode): Node {
+        const node = new Node();
+        node.name = raw.name;
+        node.setPosition(raw.position.x, raw.position.y, raw.position.z);
+        node.setScale(raw.scale.x, raw.scale.y, raw.scale.z);
+        node.setRotationFromEuler(new Euler(raw.rotation.x, raw.rotation.y, raw.rotation.z));
+        return node;
     }
 }

@@ -1,13 +1,15 @@
 import { MaterialTypes } from "../Types/material-types";
 import { TextureTypes } from "../Types/texture-types";
+import {NodeTypes} from "../Types/node-types.ts";
 
 export interface IModel {
     nodes: INode[];
-    meshes: IMesh[];
+    meshes: IMeshMap;
 }
 
 export interface INode {
     name: string;
+    nodeType: NodeTypes;
     position: IVector3;
     scale: IVector3;
     rotation: IEuler;
@@ -15,8 +17,11 @@ export interface INode {
     mesh?: number;
 }
 
+export interface ISceneNode extends INode {
+
+}
+
 export interface IMeshNode extends INode {
-    mesh: number;
 }
 
 interface IVector3 {
@@ -37,11 +42,15 @@ export interface IMesh {
     animation: IAnimation;
 }
 
+export interface IMeshMap {
+    [key: number]: IMesh;
+}
+
 export interface IBufferGeometry {
     isSmoothShading: boolean,
-    inputPosition: Float32Array,
-    inputIndices: Uint16Array,
-    inputTexcoord: Float32Array,
+    inputPosition: number[],
+    inputIndices: number[],
+    inputTexcoord: number[],
 }
 
 export interface IMaterial {
@@ -81,9 +90,8 @@ export interface IParallaxMaterial extends IMaterial {
     diffTextureType: TextureTypes,
     specTextureType: TextureTypes,
     normalTextureType: TextureTypes,
-    displacementTextureType: TextureTypes,
-    displacementScale: number,
-    displacementBias: number
+    heightTextureType: TextureTypes,
+    heightScale: number,
 }
 
 export interface IReflectionMaterial extends IMaterial {

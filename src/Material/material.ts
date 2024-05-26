@@ -19,17 +19,4 @@ export abstract class Material {
             type: this._materialType,
         };
     }
-
-    public static async fromRaw(raw: IMaterial): Promise<Material> {
-        switch (raw.type) {
-            case MaterialTypes.BASIC:
-                const { BasicMaterial } = await import("./basic-material");
-                return new BasicMaterial();
-            case MaterialTypes.PHONG:
-                const { PhongMaterial } = await import("./phong-material");
-                return new PhongMaterial();
-            default:
-                throw new Error(`Unknown material type: ${raw.type}`);
-        }
-    }
 }

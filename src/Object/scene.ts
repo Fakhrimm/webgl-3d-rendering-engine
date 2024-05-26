@@ -1,24 +1,41 @@
-import { Node } from "./node";
-import { Mesh } from "./mesh.ts";
-import { BoxGeometry } from "../Geometry/boxGeometry.ts";
-import { BasicMaterial } from "../Material/basic-material.ts";
-import { PhongMaterial } from "../Material/phong-material.ts";
-import { OrthographicCamera } from "../Camera/orthographic-camera.ts";
-import { Camera } from "../Camera/camera.ts";
-import { ObliqueCamera } from "../Camera/oblique-camera.ts";
-import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
-import { RingGeometry } from "../Geometry/ringGeometry.ts";
+import {Node} from "./node";
+import {Mesh} from "./mesh.ts";
+import {BoxGeometry} from "../Geometry/boxGeometry.ts";
+import {BasicMaterial} from "../Material/basic-material.ts";
+import {PhongMaterial} from "../Material/phong-material.ts";
+import {OrthographicCamera} from "../Camera/orthographic-camera.ts";
+import {Camera} from "../Camera/camera.ts";
+import {ObliqueCamera} from "../Camera/oblique-camera.ts";
+import {PerspectiveCamera} from "../Camera/perspective-camera.ts";
+import {ParallaxMaterial} from "../Material/parallax-material.ts";
+import {ReflectionMaterial} from "../Material/reflection-material.ts";
+import {RingGeometry} from "../Geometry/ringGeometry.ts";
+import {Color} from "../Math/color.ts";
+import {ISceneNode} from "../Utils/model-interface.ts";
+import {Euler} from "../Math/euler.ts";
+import {NodeTypes} from "../Types/node-types.ts";
 
 export class Scene extends Node {
     activeCamera: Camera | null = null;
 
     constructor() {
         super();
+        this.nodeType = NodeTypes.SCENE;
         this.parent = null;
     }
 
     public getActiveCamera(): Camera | null {
         return this.activeCamera;
+    }
+
+    public static fromRaw(raw: ISceneNode): Scene {
+        const scene = new Scene();
+        scene.name = raw.name;
+        scene.setPosition(raw.position.x, raw.position.y, raw.position.z);
+        scene.setScale(raw.scale.x, raw.scale.y, raw.scale.z);
+        scene.setRotationFromEuler(new Euler(raw.rotation.x, raw.rotation.y, raw.rotation.z));
+        scene.updateLocalMatrix()
+        return scene;
     }
 
     setActiveCamera(cameraType: new (...args: any[]) => Camera): void {
@@ -64,16 +81,20 @@ export class Scene extends Node {
         originNode.name = "OriginNode";
         originNode.setParent(scene);
 
-        let material1 = new BasicMaterial();
-        let material2 = new PhongMaterial();
+        let material1 = new BasicMaterial(Color.BLACK);
+        let material2 = new BasicMaterial();
+        // let material3 = new ParallaxMaterial();
+        // let material4 = new ReflectionMaterial();
+        material1.setDiffuseColorFromRGB(255, 0, 0);
 
-        let mesh = new Mesh(new BoxGeometry(50, 50, 50, true), material1);
-        mesh.name = "Mesh";
-
-        let mesh2 = new Mesh(new BoxGeometry(200, 200, 200, false), material1);
+        let mesh2 = new Mesh(new BoxGeometry(100,100,100,false), material2);
         mesh2.name = "Mesh2";
 
-        // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z+'), material2);
+        let mesh = new Mesh(new BoxGeometry(100, 100, 100, false), material1);
+        mesh.name = "Mesh";
+
+
+        // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 20, 1, 1, 'z+'), material3);
         // mesh3.name = "Mesh3";
         // let mesh4 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z-'), material2);
         // mesh4.name = "Mesh4";
@@ -91,8 +112,8 @@ export class Scene extends Node {
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            -500,
-            500
+            1000,
+            -1000
         );
         orthographicCamera.name = "OrthoCamera";
 
@@ -107,30 +128,31 @@ export class Scene extends Node {
         obliqueCamera.name = "ObliqueCamera";
 
         const perspectiveCamera = new PerspectiveCamera(
-            70,
+            60,
             canvas.width / canvas.height,
             0.1,
-            1000,
+            20000,
             1
         );
         perspectiveCamera.name = "PerspectiveCamera";
-        perspectiveCamera.setPosition(0, 0, 300);
+        perspectiveCamera.setPosition(0, 0, 1000);
+        orthographicCamera.setPosition(0, 0, 650);
 
-        mesh.setPosition(0, 0, 300);
+        mesh.setPosition(0, 400, 0);
         // mesh2.setPosition(0, 0, -300);
         // mesh3.setPosition(0, 0, -300);
 
         orthographicCamera.setParent(originNode);
         obliqueCamera.setParent(originNode);
         perspectiveCamera.setParent(originNode);
+        mesh.setParent(scene);
         mesh2.setParent(scene);
-        // mesh.setParent(mesh2);
 
         // const node = new Node();
         // node.name = "Node";
         // node.setParent(scene);
 
-        // mesh3.setParent(node);
+        // mesh3.setParent(scene);
         // mesh4.setParent(node);
         // mesh5.setParent(node);
         // mesh6.setParent(node);

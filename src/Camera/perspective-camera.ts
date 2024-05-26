@@ -1,5 +1,7 @@
 import { IPerspectiveCamera } from "../Utils/model-interface";
 import {Camera} from "./camera";
+import {NodeTypes} from "../Types/node-types.ts";
+import {Euler} from "../Math/euler.ts";
 
 export class PerspectiveCamera extends Camera {
     fov: number;
@@ -9,6 +11,7 @@ export class PerspectiveCamera extends Camera {
 
 	constructor(fov = 60, aspect = 1, near = 0.1, far = 2000, zoom: number = 1) {
 		super();
+		this.nodeType = NodeTypes.PERSPECTIVE_CAMERA;
 		this.fov = fov;
 		this.near = near;
 		this.far = far;
@@ -43,8 +46,9 @@ export class PerspectiveCamera extends Camera {
 		const raw = super.toRaw()
         return {
             name: raw.name,
+			nodeType: raw.nodeType,
             position: raw.position, 
-            scale: raw.position,
+            scale: raw.scale,
             rotation: raw.rotation,
             children: raw.children,
 			fov: this.fov,
@@ -53,6 +57,19 @@ export class PerspectiveCamera extends Camera {
 			far: this.far,
 			zoom: this.zoom
         }
+	}
+	public static fromRaw(raw: IPerspectiveCamera): PerspectiveCamera {
+		const camera = new PerspectiveCamera(
+			raw.fov,
+			raw.aspect,
+			raw.near,
+			raw.far,
+			raw.zoom);
+		camera.name = raw.name;
+		camera.setPosition(raw.position.x, raw.position.y, raw.position.z);
+		camera.setScale(raw.scale.x, raw.scale.y, raw.scale.z);
+		camera.setRotationFromEuler(new Euler(raw.rotation.x, raw.rotation.y, raw.rotation.z));
+		return camera;
 	}
 }
 

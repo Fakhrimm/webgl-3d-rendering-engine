@@ -54,4 +54,10 @@ export class BasicMaterial extends Material {
             diffuseTextureType: this.diffuseTextureType,
         };
     }
+    public static fromRaw(raw: IBasicMaterial): BasicMaterial {
+        return new BasicMaterial(
+            new Color(raw.u_diffuseColor[0], raw.u_diffuseColor[1], raw.u_diffuseColor[2]),
+            raw.diffuseTextureType
+        )
+    }
 }
