@@ -26,14 +26,14 @@ function pushRotatedVertex(vertices: any, x: any, y: any, z: any, w: any, theta:
     vertices.push(...rotatedVertex);
 }
 
-export class RingsHollow extends BufferGeometry {
+export class PipeHollow extends BufferGeometry {
     innerRadius: number;
     outerRadius: number;
     numOfSegments: number;
     phiDistance: number;
     depth: number;
 
-    constructor(innerRadius = 120, outerRadius = 150, numOfSegments = 30, depth = 30) {
+    constructor(innerRadius = 120, outerRadius = 150, numOfSegments = 30, depth = 200) {
         super();
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
@@ -68,7 +68,7 @@ export class RingsHollow extends BufferGeometry {
         }
 
         for (let i = 0; i < numOfSegments; i++) {
-            let a = i * 24;
+            let a = i * 8;
             let b = a + 1;
             let c = a + 2;
             let d = a + 3;

@@ -8,6 +8,7 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
 import { Scene } from "./scene.ts";
 import { Color } from "../Math/color.ts";
+import { PipeHollow } from "../Geometry/pipeHollow.ts";
 
 export class LibriScene extends Scene {
     activeCamera: Camera | null = null;
@@ -172,4 +173,68 @@ export class LibriScene extends Scene {
         scene.setActiveCamera(PerspectiveCamera);
         return scene;
     }
+
+    public static createScenePipe(canvas: HTMLCanvasElement | null): LibriScene {
+        if (!canvas) {
+            throw new Error("Canvas is null");
+        }
+        // Create new scene
+        const scene = new LibriScene();
+        scene.name = "PipeScene";
+
+        // Create origin node
+        const originNode = new Node();
+        originNode.name = "OriginNode";
+
+        // Create cameras
+        const orthographicCamera = new OrthographicCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            1000,
+            -1000
+        );
+        orthographicCamera.name = "OrthoCamera";
+
+        const obliqueCamera = new ObliqueCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            100,
+            -1000
+        );
+        obliqueCamera.name = "ObliqueCamera";
+
+        const perspectiveCamera = new PerspectiveCamera(
+            60,
+            canvas.width / canvas.height,
+            0.1,
+            20000,
+            1
+        );
+        perspectiveCamera.name = "PerspectiveCamera";
+        perspectiveCamera.setPosition(0, 0, 1000);
+        orthographicCamera.setPosition(0, 0, 650);
+
+        // Create material for meshes
+        let material1 = new BasicMaterial(Color.BLACK);
+
+        // Create pipe
+        let pipe = new Mesh(new PipeHollow(), material1);
+        pipe.name = "Pipe";
+
+        // Setting parent for all node
+        originNode.setParent(scene);
+
+        orthographicCamera.setParent(originNode);
+        obliqueCamera.setParent(originNode);
+        perspectiveCamera.setParent(originNode);
+
+        pipe.setParent(scene);
+
+        scene.setActiveCamera(PerspectiveCamera);
+        return scene;
+    }   
 }
