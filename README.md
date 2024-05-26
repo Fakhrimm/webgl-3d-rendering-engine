@@ -44,6 +44,7 @@ Pixar 3D engine is TypeScript Web app that can be used to process 3D model. Pixa
 4. Color Picker
     - Diffuse Color
     - Specular Color
+    - Ambient Color
 5. Shininess
 6. Displacement Scale
 7. Displacement Bias  
@@ -90,6 +91,7 @@ for guide on how to use them you can check out the guidebook on ```docs``` folde
 |                                       | Tesseract hollow model                       |
 |                                       | Load File                                    |
 |                                       | Vertex Color                                 |
+|                                       | Ambient Color                                |
 | Muhammad Equilibrie Fajria (13521047) | Camera                                       |
 |                                       | Save and load File                           |
 |                                       | Guide document                               |
