@@ -112,7 +112,7 @@ export class AnimationRunner {
     private isPlaying: boolean;
     private isReverse: boolean;
     private isAuto: boolean;
-    private fps: number = 10;
+    private fps: number = 35;
     private currentFrame: number = 0;
     private deltaFrame: number = 0;
     private currentAnimation?: AnimationClip;
