@@ -56,10 +56,10 @@ Pixar 3D engine is TypeScript Web app that can be used to process 3D model. Pixa
     - Rotate
     - Scale
     - Translate
-15. Texture
+14. Texture
     - Type (Diffuse, Specular, dan Normal)
     - Index (1, 2, 3, dan 4)
-16. Animation
+15. Animation
     - Play
     - Pause
     - Reverse
@@ -75,31 +75,32 @@ for guide on how to use them you can check out the guidebook on ```docs``` folde
 
 
 ## Member and Contributions
-| Member                                  | Contribution                              
-|:----------------------------------------|:------------------------------------------
-| Fakhri Muhammad Mahendra (13521045)     | Node
-|                                         | Transformations
-|                                         | Material
-|                                         | Scene
-|                                         | Light Shading
-|                                         | Smooth Shading                          
-|                                         | Parallax Mapping                        
-|                                         | Reflection                              
-|                                         | Hand articulated model and animation    
-|                                         | Tesseract hollow model                  
-| Muhammad Equilibrie Fajria (13521047)   | Camera
-|                                         | Save and load
-|                                         | Guide document
-|                                         | Slime articulated model and animation
-|                                         | Pipe hollow model
-| Louis Caesa Kesuma (13521069)           | Geometry
-|                                         | Mesh
-|                                         | Animation
-|                                         | Tweening
-|                                         | Creeper articulated model and animation
-|                                         | Orb and Rings hollow model
-| Austin Gabriel Pardosi (13521084)       | UI
-|                                         | Integrate UI and all the 3D engine functions
-|                                         | Setup Typescript
-|                                         | Spider articulated model and animation
-|                                         | Ring hollow model
+| Member                                | Contribution                                 |
+|:--------------------------------------|:---------------------------------------------|
+| Fakhri Muhammad Mahendra (13521045)   | Node                                         |
+|                                       | Transformations                              |
+|                                       | Material                                     |
+|                                       | Scene                                        |
+|                                       | Light Shading                                |
+|                                       | Smooth Shading                               |
+|                                       | Parallax Mapping                             |
+|                                       | Reflection                                   |
+|                                       | Hand articulated model and animation         |
+|                                       | Tesseract hollow model                       |
+|                                       | Load File                                    |
+| Muhammad Equilibrie Fajria (13521047) | Camera                                       |
+|                                       | Save and load File                           |
+|                                       | Guide document                               |
+|                                       | Slime articulated model and animation        |
+|                                       | Pipe hollow model                            |
+| Louis Caesa Kesuma (13521069)         | Geometry                                     |
+|                                       | Mesh                                         |
+|                                       | Animation                                    |
+|                                       | Tweening                                     |
+|                                       | Creeper articulated model and animation      |
+|                                       | Orb and Rings hollow model                   |
+| Austin Gabriel Pardosi (13521084)     | UI                                           |
+|                                       | Integrate UI and all the 3D engine functions |
+|                                       | Setup Typescript                             |
+|                                       | Spider articulated model and animation       |
+|                                       | Ring hollow model                            |
