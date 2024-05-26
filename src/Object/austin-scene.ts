@@ -91,35 +91,36 @@ export class AustinScene extends Scene {
         let rightEye = new Mesh(new BoxGeometry(20, 20, 20, true), materialEye);
         rightEye.name = "rightEye";
 
-        const orthographicCamera = new OrthographicCamera(
-            -canvas.width / 2,
-            canvas.width / 2,
-            canvas.height / 2,
-            -canvas.height / 2,
-            -500,
-            500
-        );
-        orthographicCamera.name = "OrthoCamera";
+    const perspectiveCamera = new PerspectiveCamera(
+        60,
+        canvas.width / canvas.height,
+        0.1,
+        20000,
+        1)
+    perspectiveCamera.name = "PerspectiveCamera"
+    perspectiveCamera.setParent(originNode)
 
-        const obliqueCamera = new ObliqueCamera(
-            -canvas.width / 2,
-            canvas.width / 2,
-            canvas.height / 2,
-            -canvas.height / 2,
-            100,
-            -1000
-        );
-        obliqueCamera.name = "ObliqueCamera";
+    const orthographicCamera = new OrthographicCamera(
+        -canvas.width / 2,
+        canvas.width / 2,
+        canvas.height / 2,
+        -canvas.height / 2,
+        -1000,
+        +1000
+    )
+    orthographicCamera.name = "OrthoCamera"
+    orthographicCamera.setParent(originNode)
 
-        const perspectiveCamera = new PerspectiveCamera(
-            70,
-            canvas.width / canvas.height,
-            0.1,
-            1000,
-            1
-        );
-        perspectiveCamera.name = "PerspectiveCamera";
-        perspectiveCamera.setPosition(0, 0, 300);
+    const obliqueCamera = new ObliqueCamera(
+        -canvas.width / 2,
+        canvas.width / 2,
+        canvas.height / 2,
+        -canvas.height / 2,
+        -1000,
+        +1000
+    )
+    obliqueCamera.name = "ObliqueCamera"
+    obliqueCamera.setParent(originNode)
 
         head.setPosition(0, 0, -100);
         body.setPosition(0, 0, 0);
@@ -236,7 +237,8 @@ export class AustinScene extends Scene {
         rightBackLeg.setParent(rightBackLegLimb);
         rightBackLeg.setPosition(0, 0, 0);
 
-        scene.setActiveCamera(OrthographicCamera);
+        scene.setActiveCamera(PerspectiveCamera)
+        perspectiveCamera.setPosition(0, 0, 1000)
         return scene;
     }
 
@@ -261,35 +263,36 @@ export class AustinScene extends Scene {
         ring.setRotationY(-2.874557278034661);
         ring.setRotationZ(-6.408849013323179);
 
+        const perspectiveCamera = new PerspectiveCamera(
+            60,
+            canvas.width / canvas.height,
+            0.1,
+            20000,
+            1)
+        perspectiveCamera.name = "PerspectiveCamera"
+        perspectiveCamera.setParent(originNode)
+    
         const orthographicCamera = new OrthographicCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            -500,
-            500
-        );
-        orthographicCamera.name = "OrthoCamera";
-
+            -1000,
+            +1000
+        )
+        orthographicCamera.name = "OrthoCamera"
+        orthographicCamera.setParent(originNode)
+    
         const obliqueCamera = new ObliqueCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            100,
-            -1000
-        );
-        obliqueCamera.name = "ObliqueCamera";
-
-        const perspectiveCamera = new PerspectiveCamera(
-            70,
-            canvas.width / canvas.height,
-            0.1,
-            1000,
-            1
-        );
-        perspectiveCamera.name = "PerspectiveCamera";
-        perspectiveCamera.setPosition(0, 0, 300);
+            -1000,
+            +1000
+        )
+        obliqueCamera.name = "ObliqueCamera"
+        obliqueCamera.setParent(originNode)
 
         ring.setPosition(0, 50, 300);
 
@@ -299,7 +302,8 @@ export class AustinScene extends Scene {
 
         ring.setParent(scene);
 
-        scene.setActiveCamera(OrthographicCamera);
+        scene.setActiveCamera(PerspectiveCamera);
+        perspectiveCamera.setPosition(0, 0, 1000);
         return scene;
     }
 }

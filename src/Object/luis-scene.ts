@@ -13,6 +13,7 @@ import { Orb } from "../Geometry/orb.ts";
 import { DiffuseTextureTypes } from "../Types/diffuse_texture_types.ts";
 import { TextureTypes } from "../Types/texture-types.ts";
 import { ParallaxMaterial } from "../Material/parallax-material.ts";
+import { RingsHollow } from "../Geometry/ringsHollow.ts";
 
 export class LuisScene extends Scene {
     activeCamera: Camera | null = null;
@@ -122,7 +123,7 @@ export class LuisScene extends Scene {
             20000,
             1)
         perspectiveCamera.name = "PerspectiveCamera"
-        perspectiveCamera.setPosition(0, 0, 1000)
+        perspectiveCamera.setParent(originNode)
     
         const orthographicCamera = new OrthographicCamera(
             -canvas.width / 2,
@@ -133,16 +134,18 @@ export class LuisScene extends Scene {
             +1000
         )
         orthographicCamera.name = "OrthoCamera"
+        orthographicCamera.setParent(originNode)
     
         const obliqueCamera = new ObliqueCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            1000,
-            -1000
+            -1000,
+            +1000
         )
         obliqueCamera.name = "ObliqueCamera"
+        obliqueCamera.setParent(originNode)
 
         head.setPosition(0, 130, 0);
         body.setPosition(0, 50, 300);
@@ -155,10 +158,6 @@ export class LuisScene extends Scene {
         rightLegFrontLimb.setPosition(30, -80, 25);
         rightLegFront.setPosition(20, -18, 0);
 
-        orthographicCamera.setParent(originNode);
-        obliqueCamera.setParent(originNode);
-        perspectiveCamera.setParent(originNode);
-
         body.setParent(scene);
         head.setParent(body);
         leftLegFrontLimb.setParent(body);
@@ -170,7 +169,9 @@ export class LuisScene extends Scene {
         rightLegBackLimb.setParent(body);
         rightLegBack.setParent(rightLegBackLimb);
 
-        scene.setActiveCamera(PerspectiveCamera)
+        scene.setActiveCamera(PerspectiveCamera);
+        perspectiveCamera.setPosition(0, 0, 1000);
+
         return scene;
     }
 
@@ -185,35 +186,39 @@ export class LuisScene extends Scene {
         originNode.name = "OriginNode";
         originNode.setParent(scene);
 
+        const perspectiveCamera = new PerspectiveCamera(
+            60,
+            canvas.width / canvas.height,
+            0.1,
+            20000,
+            1)
+        perspectiveCamera.name = "PerspectiveCamera"
+        perspectiveCamera.setParent(originNode)
+    
         const orthographicCamera = new OrthographicCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            -500,
-            500
-        );
-        orthographicCamera.name = "OrthoCamera";
-
+            -1000,
+            +1000
+        )
+        orthographicCamera.name = "OrthoCamera"
+        orthographicCamera.setParent(originNode)
+    
         const obliqueCamera = new ObliqueCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            100,
-            -1000
-        );
-        obliqueCamera.name = "ObliqueCamera";
+            -1000,
+            +1000
+        )
+        obliqueCamera.name = "ObliqueCamera"
+        obliqueCamera.setParent(originNode)
 
-        const perspectiveCamera = new PerspectiveCamera(
-            70,
-            canvas.width / canvas.height,
-            0.1,
-            1000,
-            1
-        );
-        perspectiveCamera.name = "PerspectiveCamera";
-        perspectiveCamera.setPosition(0, 0, 300);
+
+        perspectiveCamera.setPosition(0, 0, 1000);
         orthographicCamera.setParent(originNode);
         obliqueCamera.setParent(originNode);
         perspectiveCamera.setParent(originNode);
@@ -224,6 +229,65 @@ export class LuisScene extends Scene {
         orb.name = "Orb";
         orb.setParent(scene);
         orb.setRotationY(-1.3);
+
+        scene.setActiveCamera(PerspectiveCamera)
+        return scene;
+    }
+
+    public static createRingsScene(canvas: HTMLCanvasElement | null): LuisScene {
+        if (!canvas) {
+            throw new Error("Canvas is null");
+        }
+        const scene = new LuisScene();
+        scene.name = "OrbScene";
+
+        const originNode = new Node();
+        originNode.name = "OriginNode";
+        originNode.setParent(scene);
+
+        const perspectiveCamera = new PerspectiveCamera(
+            60,
+            canvas.width / canvas.height,
+            0.1,
+            20000,
+            1)
+        perspectiveCamera.name = "PerspectiveCamera"
+        perspectiveCamera.setParent(originNode)
+    
+        const orthographicCamera = new OrthographicCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            -1000,
+            +1000
+        )
+        orthographicCamera.name = "OrthoCamera"
+        orthographicCamera.setParent(originNode)
+    
+        const obliqueCamera = new ObliqueCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            -1000,
+            +1000
+        )
+        obliqueCamera.name = "ObliqueCamera"
+        obliqueCamera.setParent(originNode)
+
+
+        perspectiveCamera.setPosition(0, 0, 1000);
+        orthographicCamera.setParent(originNode);
+        obliqueCamera.setParent(originNode);
+        perspectiveCamera.setParent(originNode);
+
+
+        let material1 = new PhongMaterial();
+        let orb = new Mesh(new RingsHollow(), material1);
+        orb.name = "Orb";
+        orb.setParent(scene);
+        orb.setPosition(0, 0, 500);
 
         scene.setActiveCamera(PerspectiveCamera)
         return scene;
