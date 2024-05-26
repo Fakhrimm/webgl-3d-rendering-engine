@@ -1,5 +1,6 @@
 import {Matrix4} from "../Math/matrix-4";
 import {Node} from "../Object/node";
+import {Euler} from "../Math/euler.ts";
 
 export class Camera extends Node {
     protected _projectionMatrix = new Matrix4().identity();
@@ -42,8 +43,9 @@ export class Camera extends Node {
     }
 
     toDefault() {
-        this.setLocalMatrix(new Matrix4().identity());
-        this.updateWorldMatrix();
+        this.setPosition(0, 0, 1000);
+        this.setRotationFromEuler(new Euler(0, 0, 0));
+        this.setScale(1, 1, 1);
         this.setZoom(1);
     }
 }

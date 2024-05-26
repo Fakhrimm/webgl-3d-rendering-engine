@@ -4,6 +4,7 @@ import { Euler } from "../Math/euler.ts";
 import { Quaternion } from "../Math/quaternion.ts";
 import { INode } from "../Utils/model-interface.ts";
 import {NodeTypes} from "../Types/node-types.ts";
+import {Camera} from "../Camera/camera.ts";
 
 export class Node {
     public name: string = "";
@@ -172,6 +173,21 @@ export class Node {
         }
 
         return true;
+    }
+
+    public searchCamera(cameraType: new (...args: any[]) => Camera): Camera | null {
+        let foundCamera: Camera | null = null;
+        this.traverseWithTotalBreak((node) => {
+            if (node instanceof cameraType) {
+                foundCamera = node as Camera;
+                return false; // Found the camera, stop traversal
+            }
+            return true; // Continue traversal otherwise
+        });
+        if (!foundCamera) {
+            console.warn("No camera of type", cameraType, "found in the node");
+        }
+        return foundCamera;
     }
 
     public getParent(): Node | null {

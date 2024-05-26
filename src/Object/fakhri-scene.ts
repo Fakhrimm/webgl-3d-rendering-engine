@@ -240,7 +240,7 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
     obliqueCamera.setParent(origin)
 
     const m1 = new BasicMaterial(
-        Color.BLUE,
+        Color.BLACK,
         Color.BLACK,
         TextureTypes.DIFFUSE_0
     )
@@ -279,7 +279,7 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         TextureTypes.DIFFUSE_0
     )
 
-    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m2);
+    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m1);
     mesh1.name = "mesh1"
     mesh1.setParent(scene)
 

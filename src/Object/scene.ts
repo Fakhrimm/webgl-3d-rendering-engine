@@ -1,15 +1,8 @@
 import {Node} from "./node";
-import {Mesh} from "./mesh.ts";
-import {BoxGeometry} from "../Geometry/boxGeometry.ts";
-import {BasicMaterial} from "../Material/basic-material.ts";
-import {PhongMaterial} from "../Material/phong-material.ts";
 import {OrthographicCamera} from "../Camera/orthographic-camera.ts";
 import {Camera} from "../Camera/camera.ts";
 import {ObliqueCamera} from "../Camera/oblique-camera.ts";
 import {PerspectiveCamera} from "../Camera/perspective-camera.ts";
-import {ParallaxMaterial} from "../Material/parallax-material.ts";
-import {ReflectionMaterial} from "../Material/reflection-material.ts";
-import {Color} from "../Math/color.ts";
 import {ISceneNode} from "../Utils/model-interface.ts";
 import {Euler} from "../Math/euler.ts";
 import {NodeTypes} from "../Types/node-types.ts";
@@ -54,9 +47,21 @@ export class Scene extends Node {
     }
 
     setActiveCameraToDefault(): void {
-        if (this.activeCamera) {
-            this.activeCamera.toDefault();
+        const origin = this.getOriginNode();
+        origin.setPosition(0, 0, 0);
+        origin.setScale(1, 1, 1);
+        origin.setRotationFromEuler(new Euler(0, 0, 0));
+
+        const orthographicCamera = origin.searchCamera(OrthographicCamera);
+        const obliqueCamera = origin.searchCamera(ObliqueCamera);
+        const perspectiveCamera = origin.searchCamera(PerspectiveCamera);
+
+        if (!orthographicCamera || !obliqueCamera || !perspectiveCamera) {
+            throw new Error("Missing camera found in the scene");
         }
+        orthographicCamera.toDefault();
+        obliqueCamera.toDefault();
+        perspectiveCamera.toDefault();
     }
 
     setActiveCameraZoom(zoom: number): void {
@@ -67,200 +72,5 @@ export class Scene extends Node {
 
     getOriginNode(): Node {
         return this.getChildren()[0];
-    }
-
-    public static createSceneDummy(canvas: HTMLCanvasElement | null): Scene {
-        if (!canvas) {
-            throw new Error("Canvas is null");
-        }
-        const scene = new Scene();
-        scene.name = "SceneDummy";
-
-        const originNode = new Node();
-        originNode.name = "OriginNode";
-        originNode.setParent(scene);
-
-        let material1 = new BasicMaterial(Color.BLACK);
-        let material2 = new PhongMaterial();
-        // let material3 = new ParallaxMaterial();
-        // let material4 = new ReflectionMaterial();
-        material1.setDiffuseColorFromRGB(255, 0, 0);
-
-        let mesh2 = new Mesh(new BoxGeometry(100,100,100,false), material2);
-        mesh2.name = "Mesh2";
-
-        // let mesh = new Mesh(new BoxGeometry(100, 100, 100, false), material1);
-        // mesh.name = "Mesh";
-
-
-        // let mesh3 = new Mesh(new PlaneGeometry(200, 200, 20, 1, 1, 'z+'), material3);
-        // mesh3.name = "Mesh3";
-        // let mesh4 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'z-'), material2);
-        // mesh4.name = "Mesh4";
-        // let mesh5 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'x+'), material2);
-        // mesh5.name = "Mesh5";
-        // let mesh6 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'x-'), material2);
-        // mesh6.name = "Mesh6";
-        // let mesh7 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'y+'), material2);
-        // mesh7.name = "Mesh7";
-        // let mesh8 = new Mesh(new PlaneGeometry(200, 200, 200, 1, 1, 'y-'), material2);
-        // mesh8.name = "Mesh8";
-
-        const orthographicCamera = new OrthographicCamera(
-            -canvas.width / 2,
-            canvas.width / 2,
-            canvas.height / 2,
-            -canvas.height / 2,
-            1000,
-            -1000
-        );
-        orthographicCamera.name = "OrthoCamera";
-
-        const obliqueCamera = new ObliqueCamera(
-            -canvas.width / 2,
-            canvas.width / 2,
-            canvas.height / 2,
-            -canvas.height / 2,
-            100,
-            -1000
-        );
-        obliqueCamera.name = "ObliqueCamera";
-
-        const perspectiveCamera = new PerspectiveCamera(
-            60,
-            canvas.width / canvas.height,
-            0.1,
-            20000,
-            1
-        );
-        perspectiveCamera.name = "PerspectiveCamera";
-        perspectiveCamera.setPosition(0, 0, 1000);
-        orthographicCamera.setPosition(0, 0, 650);
-
-        // mesh.setPosition(0, 400, 0);
-        // mesh2.setPosition(0, 0, -300);
-        // mesh3.setPosition(0, 0, -300);
-
-        orthographicCamera.setParent(originNode);
-        obliqueCamera.setParent(originNode);
-        perspectiveCamera.setParent(originNode);
-        // mesh.setParent(scene);
-        mesh2.setParent(scene);
-
-        // const node = new Node();
-        // node.name = "Node";
-        // node.setParent(scene);
-
-        // mesh3.setParent(scene);
-        // mesh4.setParent(node);
-        // mesh5.setParent(node);
-        // mesh6.setParent(node);
-        // mesh7.setParent(node);
-        // mesh8.setParent(node);
-
-        // const meshRing = new Mesh(new BoxGeometry(), material2);
-        // meshRing.name = "Ring";
-        // meshRing.setPosition(0, 0, 300);
-        // meshRing.setParent(scene);
-
-        scene.setActiveCamera(OrthographicCamera);
-        return scene;
-    }
-
-    public static createSceneDummyDog(canvas: HTMLCanvasElement | null): Scene {
-        if (!canvas) {
-            throw new Error("Canvas is null");
-        }
-        const scene = new Scene();
-        scene.name = "SceneDummyDog";
-
-        const originNode = new Node();
-        originNode.name = "OriginNode";
-        originNode.setParent(scene);
-
-        const bodyMaterial = new BasicMaterial();
-        const detailMaterial = new PhongMaterial();
-
-        // Body (Horizontal)
-        const body = new Mesh(new BoxGeometry(50, 50, 80, true), bodyMaterial);
-        body.name = "Body";
-        body.setPosition(0, 0, 0);
-        body.setParent(originNode);
-
-        // Head
-        const head = new Mesh(new BoxGeometry(30, 30, 30, true), bodyMaterial);
-        head.name = "Head";
-        head.setPosition(0, 0, 50);
-        head.setParent(body);
-
-        // Eyes
-        const eye1 = new Mesh(new BoxGeometry(5, 5, 5, true), detailMaterial);
-        eye1.name = "Eye1";
-        eye1.setPosition(-10, 10, 15);
-        eye1.setParent(head);
-
-        const eye2 = new Mesh(new BoxGeometry(5, 5, 5, true), detailMaterial);
-        eye2.name = "Eye2";
-        eye2.setPosition(10, 10, 15);
-        eye2.setParent(head);
-
-        // Nose
-        const nose = new Mesh(new BoxGeometry(5, 5, 5, true), detailMaterial);
-        nose.name = "Nose";
-        nose.setPosition(0, 0, 15);
-        nose.setParent(head);
-
-        // Legs
-        const leg1 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
-        leg1.name = "Leg1";
-        leg1.setPosition(-30, -25, 15);
-        leg1.setParent(body);
-
-        const leg2 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
-        leg2.name = "Leg2";
-        leg2.setPosition(30, -25, 15);
-        leg2.setParent(body);
-
-        const leg3 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
-        leg3.name = "Leg3";
-        leg3.setPosition(-30, -25, -25);
-        leg3.setParent(body);
-
-        const leg4 = new Mesh(new BoxGeometry(10, 40, 10, true), bodyMaterial);
-        leg4.name = "Leg4";
-        leg4.setPosition(30, -25, -25);
-        leg4.setParent(body);
-
-        // Tail
-        const tail = new Mesh(new BoxGeometry(5, 30, 5, true), bodyMaterial);
-        tail.name = "Tail";
-        tail.setPosition(0, -15, -40);
-        tail.setParent(body);
-
-        // Ears
-        const ear1 = new Mesh(new BoxGeometry(5, 10, 5, true), bodyMaterial);
-        ear1.name = "Ear1";
-        ear1.setPosition(-10, 15, 10);
-        ear1.setParent(head);
-
-        const ear2 = new Mesh(new BoxGeometry(5, 10, 5, true), bodyMaterial);
-        ear2.name = "Ear2";
-        ear2.setPosition(10, 15, 10);
-        ear2.setParent(head);
-
-        const orthographicCamera = new OrthographicCamera(
-            -canvas.width / 2,
-            canvas.width / 2,
-            canvas.height / 2,
-            -canvas.height / 2,
-            -500,
-            500
-        );
-        orthographicCamera.name = "OrthoCamera";
-
-        orthographicCamera.setParent(originNode);
-
-        scene.setActiveCamera(OrthographicCamera);
-        return scene;
     }
 }
