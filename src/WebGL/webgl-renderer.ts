@@ -68,7 +68,6 @@ export class WebGLRenderer {
             u_reverseLightDirection: [0, 0, 1],
         });
         this.programInfos[MaterialTypes.PARALLAX].setUniforms({
-            u_worldCameraPosition: camera.cameraPosition.toNumberArray(),
             u_view: camera.viewMatrix.elements,
             u_projection: camera.projectionMatrix.elements,
             u_viewProjection: camera.viewProjectionMatrix.elements,
