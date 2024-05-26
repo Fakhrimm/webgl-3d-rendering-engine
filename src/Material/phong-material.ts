@@ -94,24 +94,31 @@ export class PhongMaterial extends Material {
     }
 
     public setDiffuseTextureType(index: number) {
-        if (index < 0 || index > 3) {
-            throw new Error("Invalid texture type");
+        if (index < 0 || index > 5) {
+            throw new Error("Invalid texture type, diffuse max index 6");
         }
         this.diffuseTextureType = index as TextureTypes;
     }
 
     public setSpecularTextureType(index: number) {
         if (index < 0 || index > 3) {
-            throw new Error("Invalid texture type");
+            throw new Error("Invalid texture type, specular max index 4");
         }
-        this.specularTextureType = (index + 4) as TextureTypes;
+        this.specularTextureType = (index + 6) as TextureTypes;
     }
 
     public setNormalTextureType(index: number) {
-        if (index < 0 || index > 3) {
-            throw new Error("Invalid texture type");
+        if (index < 0 || index > 5) {
+            throw new Error("Invalid texture type, normal max index 6");
         }
-        this.normalTextureType = (index + 8) as TextureTypes;
+        this.normalTextureType = (index + 10) as TextureTypes;
+    }
+
+    public setDisplacementTextureType(index: number) {
+        if (index < 0 || index > 2) {
+            throw new Error("Invalid texture type, displacement max index 3");
+        }
+        this.displacementTextureType = (index + 16) as TextureTypes;
     }
 
     public getDisplacementScale(): number {

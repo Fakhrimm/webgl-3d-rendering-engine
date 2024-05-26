@@ -94,8 +94,11 @@ export class ParallaxMaterial extends Material {
         return this.heightTextureType;
     }
 
-    public setHeightTextureType(value: number) {
-        this.heightTextureType = value;
+    public setHeightTextureType(index: number) {
+        if (index < 0 || index > 2) {
+            throw new Error("Invalid texture type, displacement max index 3");
+        }
+        this.heightTextureType = (index + 19) as TextureTypes;
     }
 
     public getHeightScale(): number {

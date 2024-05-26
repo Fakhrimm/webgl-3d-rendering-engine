@@ -30,10 +30,6 @@ export function elementListner(variables: Variables) {
         return variables.getOriginNode();
     }
 
-    function getOriginScene() {
-        return variables.getOriginScene();
-    }
-
     function handleTextureChange() {
         const selectedNode = variables.getTree().reference;
         const selectedType = textureTypeSelect.value;
@@ -54,14 +50,23 @@ export function elementListner(variables: Variables) {
                         case "normal":
                             material.setNormalTextureType(selectedIndex);
                             break;
+                        case "displacement":
+                            material.setDisplacementTextureType(selectedIndex);
+                    }
+                } else if (material instanceof ParallaxMaterial) {
+                    switch (selectedType) {
+                        case "height":
+                            material.setHeightTextureType(selectedIndex);
                     }
                 } else {
                     throw new Error(
-                        "Only PhongMaterial can access this function."
+                        "Only PhongMaterial(all exclude height) or ParallaxMaterial (height) can access this function."
                     );
                 }
             } else {
-                throw new Error("Only PhongMaterial can access this function.");
+                throw new Error(
+                    "Only PhongMaterial or ParallaxMaterial can access this function."
+                );
             }
         } catch (error) {
             showError(String(error));
@@ -102,7 +107,7 @@ export function elementListner(variables: Variables) {
                 variables.setScene(scene);
                 variables.setOriginNode(originNode);
                 variables.setOriginScene(scene);
-    
+
                 const tree = Tree.mapSceneToTree(variables.getScene());
                 console.log("TREE", tree);
                 Tree.mapTreeToComponentTree(container, tree, variables);
@@ -246,9 +251,9 @@ export function elementListner(variables: Variables) {
     const displacementBias = container.getElement(
         "displacementBias"
     ) as HTMLInputElement;
-    const heightTexture = container.getElement(
-        "heightTexture"
-    ) as HTMLInputElement;
+    // const heightTexture = container.getElement(
+    //     "heightTexture"
+    // ) as HTMLInputElement;
     const heightScale = container.getElement("heightScale") as HTMLInputElement;
 
     const errorPopup = container.getElement("errorPopup") as HTMLInputElement;
@@ -427,30 +432,30 @@ export function elementListner(variables: Variables) {
         }
     });
 
-    let previousHeightTexture = heightTexture.value;
-    heightTexture.addEventListener("input", (event) => {
-        const value = Number((event.target as HTMLInputElement).value);
-        const selectedNode = variables.getTree().reference;
-        try {
-            if (selectedNode instanceof Mesh) {
-                const material = selectedNode.material;
-                if (material instanceof ParallaxMaterial) {
-                    material.setHeightTextureType(value);
-                } else {
-                    throw new Error(
-                        "Only Mesh with Parallax Material can access this function."
-                    );
-                }
-            } else {
-                throw new Error(
-                    "Only Mesh with Parallax Material can access this function."
-                );
-            }
-        } catch (error) {
-            showError(String(error));
-            heightTexture.value = previousHeightTexture;
-        }
-    });
+    // let previousHeightTexture = heightTexture.value;
+    // heightTexture.addEventListener("input", (event) => {
+    //     const value = Number((event.target as HTMLInputElement).value);
+    //     const selectedNode = variables.getTree().reference;
+    //     try {
+    //         if (selectedNode instanceof Mesh) {
+    //             const material = selectedNode.material;
+    //             if (material instanceof ParallaxMaterial) {
+    //                 material.setHeightTextureType(value);
+    //             } else {
+    //                 throw new Error(
+    //                     "Only Mesh with Parallax Material can access this function."
+    //                 );
+    //             }
+    //         } else {
+    //             throw new Error(
+    //                 "Only Mesh with Parallax Material can access this function."
+    //             );
+    //         }
+    //     } catch (error) {
+    //         showError(String(error));
+    //         heightTexture.value = previousHeightTexture;
+    //     }
+    // });
 
     let previousHeightScale = heightScale.value;
     heightScale.addEventListener("input", (event) => {
@@ -556,9 +561,7 @@ export function elementListner(variables: Variables) {
 
     // ANIMATION
     let lastFrameTime: number | undefined;
-    const animationRunner = new AnimationRunner(
-        variables
-    );
+    const animationRunner = new AnimationRunner(variables);
 
     const easingTypeSelect = container.getElement(
         "easingTypeSelect"
@@ -584,7 +587,6 @@ export function elementListner(variables: Variables) {
         } catch (error) {
             showError(String(error));
         }
-        
 
         function runAnim(currentTime: number) {
             if (lastFrameTime === undefined) lastFrameTime = currentTime;
