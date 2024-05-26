@@ -63,6 +63,18 @@ export class Color {
         return new Color(0, 0.25, 0.07);
     }
 
+    public static get SLIMEGREEN(): Color {
+        return new Color(119 / 255, 191 / 255, 99 / 255);
+    }
+
+    public static get SLIMEGRAY(): Color {
+        return new Color(70 / 255, 115 / 255, 57 / 255);
+    }
+
+    public static get SLIMMEDARKGREEN(): Color {
+        return new Color(82 / 255, 140 / 255, 66 / 250);
+    }
+
     static fromArray(u_diffuseColor: number[]) {
         return new Color(
             u_diffuseColor[0],
