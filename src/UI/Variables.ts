@@ -76,7 +76,15 @@ export class Variables {
         return this._originNode;
     }
 
+    public setOriginNode(node: Node) {
+        this._originNode = node;
+    }
+
     public getOriginScene() {
         return this._originScene;
+    }
+
+    public setOriginScene(scene: Scene) {
+        this._originScene = scene;
     }
 }
