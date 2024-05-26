@@ -113,7 +113,6 @@ export class AnimationRunner {
     private isReverse: boolean;
     private isAuto: boolean;
     private fps: number = 10;
-    private root: Object;
     private currentFrame: number = 0;
     private deltaFrame: number = 0;
     private currentAnimation?: AnimationClip;
@@ -122,7 +121,6 @@ export class AnimationRunner {
 
     constructor(
         animFile: string,
-        root: Object,
         variables: Variables
     ) {
         this.load(animFile).then((animationClip) => {
@@ -132,7 +130,6 @@ export class AnimationRunner {
         this.isReverse = false;
         this.isAuto = true;
         this.variables = variables;
-        this.root = root;
     }
 
     public play() {
@@ -193,12 +190,13 @@ export class AnimationRunner {
         return this.currentAnimation!.totalFrames;
     }
 
-    private get frame() {
-        return this.currentAnimation!.frames[this.currentFrame];
-    }
-
     public setEasingType(easingType: string) {
         this.easingType = easingType;
+    }
+
+    public setFPS(fps: number) {
+        console.log("fps", fps);
+        this.fps = fps;
     }
 
     update(deltaSecond: number) {

@@ -35,11 +35,29 @@ export class Color {
         this.set(r, g, b);
     }
 
-    public static WHITE = new Color(1, 1, 1);
-    public static RED = new Color(1, 0, 0);
-    public static GREEN = new Color(0, 1, 0);
-    public static BLUE = new Color(0, 0, 1);
-    public static BLACK = new Color(0, 0, 0);
+    public static get WHITE(): Color {
+        return new Color(1, 1, 1);
+    }
+
+    public static get RED(): Color {
+        return new Color(1, 0, 0);
+    }
+
+    public static get GREEN(): Color {
+        return new Color(0, 1, 0);
+    }
+
+    public static get BLUE(): Color {
+        return new Color(0, 0, 1);
+    }
+
+    public static get BLACK(): Color {
+        return new Color(0, 0, 0);
+    }
+    
+    public static get DARKGREEN(): Color {
+        return new Color(0, 0.25, 0.07);
+    }
 
     static fromArray(u_diffuseColor: number[]) {
         return new Color(u_diffuseColor[0], u_diffuseColor[1], u_diffuseColor[2]);

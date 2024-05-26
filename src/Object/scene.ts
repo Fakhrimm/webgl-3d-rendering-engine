@@ -9,7 +9,6 @@ import {ObliqueCamera} from "../Camera/oblique-camera.ts";
 import {PerspectiveCamera} from "../Camera/perspective-camera.ts";
 import {ParallaxMaterial} from "../Material/parallax-material.ts";
 import {ReflectionMaterial} from "../Material/reflection-material.ts";
-import {RingGeometry} from "../Geometry/ringGeometry.ts";
 import {Color} from "../Math/color.ts";
 import {ISceneNode} from "../Utils/model-interface.ts";
 import {Euler} from "../Math/euler.ts";

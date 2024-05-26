@@ -1,0 +1,257 @@
+{
+    "name": "CreeperScene",
+    "totalFrames": 11,
+    "frames": [
+        {  
+            "keyframe": {
+                "0": {
+                    "rotation": [0, 0.1, 0]
+                },
+                "1": {
+                    "rotation": [0, 0.1, 0]
+                },
+                "2": {
+                    "rotation": [0, 0.1, 0]
+                },
+                "3": {
+                    "rotation": [0, 0.1, 0]
+                },
+                "4": {
+                    "rotation": [0, 0.1, 0]
+                },
+                "5": {
+                    "rotation": [0, 0.1, 0]
+                },
+                "6": {
+                    "rotation": [0, 0.1, 0]
+                }
+            },
+            "children": {
+                "body": {
+                    "keyframe": {
+                        "0": {
+                            "translation": [-250, 50, 0]
+                        },
+                        "1": {
+                            "translation": [-200, 50, 0]
+                        },
+                        "2": {
+                            "translation": [-150, 50, 0]
+                        },
+                        "3": {
+                            "translation": [-100, 50, 0]
+                        },
+                        "4": {
+                            "translation": [-50, 50, 0]
+                        },
+                        "5": {
+                            "translation": [0, 50, 0]
+                        },
+                        "6": {
+                            "translation": [50, 50, 0]
+                        },
+                        "7": {
+                            "translation": [100, 50, 0]
+                        },
+                        "8": {
+                            "translation": [150, 50, 0]
+                        },
+                        "9": {
+                            "translation": [200, 50, 0]
+                        },
+                        "10": {
+                            "translation": [250, 50, 0]
+                        }
+                    },
+                    "children": {
+                        "head": {
+                            "keyframe": {
+                                "0": {
+                                    "rotation": [0, 0, 0]
+                                },
+                                "1": {
+                                    "rotation": [0, 0.2, 0]
+                                },
+                                "2": {
+                                    "rotation": [0, 0.4, 0]
+                                },
+                                "3": {
+                                    "rotation": [0, 0.6, 0]
+                                },
+                                "4": {
+                                    "rotation": [0, 0.8, 0]
+                                },
+                                "5": {
+                                    "rotation": [0, 1, 0]
+                                },
+                                "6": {
+                                    "rotation": [0, 0.8, 0]
+                                },
+                                "7": {
+                                    "rotation": [0, 0.6, 0]
+                                },
+                                "8": {
+                                    "rotation": [0, 0.4, 0]
+                                },
+                                "9": {
+                                    "rotation": [0, 0.2, 0]
+                                },
+                                "10": {
+                                    "rotation": [0, 0, 0]
+                                }
+                            }
+                        },
+                        "leftLegFront": {
+                            "keyframe": {
+                                "0": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "1": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "2": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "3": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "4": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "5": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "6": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "7": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "8": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "9": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "10": {
+                                    "rotation": [0, 0, 0.4]
+                                }
+                            }
+                        },
+                        "rightLegFront": {
+                            "keyframe": {
+                                "0": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "1": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "2": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "3": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "4": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "5": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "6": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "7": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "8": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "9": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "10": {
+                                    "rotation": [0, 0, 0.2]
+                                }
+                            }
+                        },
+                        "leftLegBack": {
+                            "keyframe": {
+                                "0": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "1": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "2": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "3": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "4": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "5": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "6": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "7": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "8": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "9": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "10": {
+                                    "rotation": [0, 0, 0.2]
+                                }
+                            }
+                        },
+                        "rightLegBack": {
+                            "keyframe": {
+                                "0": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "1": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "2": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "3": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "4": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "5": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "6": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "7": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "8": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "9": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "10": {
+                                    "rotation": [0, 0, 0.4]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

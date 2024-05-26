@@ -545,8 +545,7 @@ export function elementListner(variables: Variables) {
     // ANIMATION
     let lastFrameTime: number | undefined;
     const animationRunner = new AnimationRunner(
-        "../Animation/Animations/boxspin.json",
-        getOriginScene(),
+        "../Animation/Animations/creeper.json",
         variables
     );
 
@@ -621,12 +620,12 @@ export function elementListner(variables: Variables) {
     fps.addEventListener("input", () => {
         const val = Number(fps.value);
         fpsSlider.value = val.toString();
-        console.log("box", val);
+        animationRunner.setFPS(val);
     });
 
     fpsSlider.addEventListener("input", () => {
         const val = Number(fpsSlider.value);
         fps.value = val.toString();
-        console.log("input", val);
+        animationRunner.setFPS(val);
     });
 }
