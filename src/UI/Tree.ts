@@ -154,6 +154,8 @@ export class Tree {
                         const diffuseColor = material
                             .getDiffuseColor()
                             .getFromRGB();
+                        console.log("diffuse", diffuseColor);
+                        console.log("diffuse rill", material.getDiffuseColor());
                         colorPickerDiffuse.value = `#${(
                             (1 << 24) +
                             (diffuseColor.r << 16) +
@@ -161,7 +163,9 @@ export class Tree {
                             diffuseColor.b
                         )
                             .toString(16)
-                            .slice(1)}`;
+                            .slice(1)
+                            .padStart(6, "0")}`;
+                        console.log("color diffuse", colorPickerDiffuse.value);
                         rValueDiffuse.value = diffuseColor.r.toString();
                         gValueDiffuse.value = diffuseColor.g.toString();
                         bValueDiffuse.value = diffuseColor.b.toString();
