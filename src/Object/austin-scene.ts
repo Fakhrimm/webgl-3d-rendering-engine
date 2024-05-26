@@ -86,97 +86,6 @@ export class AustinScene extends Scene {
         let tail = new Mesh(new BoxGeometry(110, 110, 130, true), material1);
         tail.name = "tail";
 
-        // Angkle
-        //right
-        let rightAngkleFront = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        rightAngkleFront.name = "rightAngkleFront";
-        let rightAngkleFront2 = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        rightAngkleFront2.name = "rightAngkleFront2";
-        let rightAngkleBack = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        rightAngkleBack.name = "rightAngkleBack";
-        let rightAngkleBack2 = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        rightAngkleBack2.name = "rightAngkleBack2";
-
-        //left
-        let leftAngkleFront = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        leftAngkleFront.name = "leftAngkleFront";
-        let leftAngkleFront2 = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        leftAngkleFront2.name = "leftAngkleFront2";
-        let leftAngkleBack = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        leftAngkleBack.name = "leftAngkleBack";
-        let leftAngkleBack2 = new Mesh(
-            new BoxGeometry(1, 1, 1, false),
-            materialAngkle
-        );
-        leftAngkleBack2.name = "leftAngkleBack2";
-
-        // Leg
-        //right
-        let rightLegFront = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        rightLegFront.name = "rightLegFront";
-        let rightLegBack = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        rightLegBack.name = "rightLegBack";
-        let rightLegFront2 = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        rightLegFront2.name = "rightLegFront2";
-        let rightLegBack2 = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        rightLegBack2.name = "rightLegBack2";
-
-        //left
-        let leftLegFront = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        leftLegFront.name = "leftLegFront";
-        let leftLegBack = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        leftLegBack.name = "leftLegBack";
-        let leftLegFront2 = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        leftLegFront2.name = "leftLegFront2";
-        let leftLegBack2 = new Mesh(
-            new BoxGeometry(25, 100, 25, false),
-            material3
-        );
-        leftLegBack2.name = "leftLegBack2";
-
-        // EYE
         let leftEye = new Mesh(new BoxGeometry(20, 20, 20, true), materialEye);
         leftEye.name = "leftEye";
         let rightEye = new Mesh(new BoxGeometry(20, 20, 20, true), materialEye);
@@ -214,89 +123,11 @@ export class AustinScene extends Scene {
 
         head.setPosition(0, 0, -100);
         body.setPosition(0, 0, 0);
+        body.setRotationY(135);
         tail.setPosition(0, 0, 100);
 
         leftEye.setPosition(15, 15, -56);
         rightEye.setPosition(-23, 15, -46);
-
-        // left angkle entity
-        leftAngkleFront.setPosition(-50, -10, -50);
-        leftAngkleFront2.setPosition(-78, -31, -16);
-        leftAngkleBack.setPosition(-50, -10, 0);
-        leftAngkleBack2.setPosition(-50, -10, 25);
-
-        leftAngkleFront.setRotationX(0);
-        leftAngkleFront2.setRotationX(0);
-        leftAngkleBack.setRotationX(-30);
-        leftAngkleBack2.setRotationX(0);
-
-        leftAngkleFront.setRotationY(-30);
-        leftAngkleFront2.setRotationY(-6);
-        leftAngkleBack.setRotationY(-30);
-        leftAngkleBack2.setRotationY(-30);
-
-        leftAngkleFront.setRotationZ(0);
-        leftAngkleFront2.setRotationZ(8);
-        leftAngkleBack.setRotationZ(-20);
-        leftAngkleBack2.setRotationZ(-20);
-
-        // right angkle entity
-        rightAngkleFront.setPosition(50, -10, -50);
-        rightAngkleFront2.setPosition(50, -10, -25);
-        rightAngkleBack.setPosition(50, -10, 0);
-        rightAngkleBack2.setPosition(50, -10, 25);
-
-        rightAngkleFront.setRotationY(30);
-        rightAngkleFront2.setRotationY(20);
-        rightAngkleBack.setRotationY(10);
-        rightAngkleBack2.setRotationY(0);
-
-        rightAngkleFront.setRotationZ(20);
-        rightAngkleFront2.setRotationZ(20);
-        rightAngkleBack.setRotationZ(20);
-        rightAngkleBack2.setRotationZ(20);
-
-        // Left leg entity
-        leftLegFront.setPosition(-16, -23, -3);
-        leftLegFront2.setPosition(0, 0, 0);
-        leftLegBack.setPosition(8, 0, 0);
-        leftLegBack2.setPosition(23, -15, -12);
-
-        leftLegFront.setRotationX(1);
-        leftLegFront2.setRotationX(0);
-        leftLegBack.setRotationX(0);
-        leftLegBack2.setRotationX(-3);
-
-        leftLegFront.setRotationY(0);
-        leftLegFront2.setRotationY(0);
-        leftLegBack.setRotationY(0);
-        leftLegBack2.setRotationY(-1);
-
-        leftLegFront.setRotationZ(0);
-        leftLegFront2.setRotationZ(0);
-        leftLegBack.setRotationZ(0);
-        leftLegBack2.setRotationZ(-4);
-
-        // Right leg entity
-        rightLegFront.setPosition(0, 0, 0);
-        rightLegFront2.setPosition(0, 0, 0);
-        rightLegBack.setPosition(0, 0, 0);
-        rightLegBack2.setPosition(0, 0, 0);
-
-        leftLegFront.setRotationX(0);
-        leftLegFront2.setRotationX(0);
-        leftLegBack.setRotationX(0);
-        leftLegBack2.setRotationX(0);
-
-        leftLegFront.setRotationY(0);
-        leftLegFront2.setRotationY(0);
-        leftLegBack.setRotationY(0);
-        leftLegBack2.setRotationY(0);
-
-        leftLegFront.setRotationZ(0);
-        leftLegFront2.setRotationZ(0);
-        leftLegBack.setRotationZ(0);
-        leftLegBack2.setRotationZ(0);
 
         orthographicCamera.setParent(originNode);
         obliqueCamera.setParent(originNode);
@@ -309,24 +140,101 @@ export class AustinScene extends Scene {
         leftEye.setParent(head);
         rightEye.setParent(head);
 
-        leftAngkleBack.setParent(body);
-        leftAngkleBack2.setParent(body);
-        leftAngkleFront.setParent(body);
-        leftAngkleFront2.setParent(body);
-        rightAngkleBack.setParent(body);
-        rightAngkleBack2.setParent(body);
-        rightAngkleFront.setParent(body);
-        rightAngkleFront2.setParent(body);
+        let leftFrontLegLimb = new Mesh(
+            new BoxGeometry(1, 1, 1, false),
+            materialEye
+        );
+        leftFrontLegLimb.name = "leftFrontLegLimb";
+        leftFrontLegLimb.setParent(body);
+        leftFrontLegLimb.setPosition(-30, -20, -30);
 
-        leftLegBack.setParent(leftAngkleBack);
-        leftLegBack2.setParent(leftAngkleBack2);
-        leftLegFront.setParent(leftAngkleFront);
-        leftLegFront2.setParent(leftAngkleFront2);
+        let leftFrontLeg = new Mesh(
+            new BoxGeometry(150, 20, 20, false),
+            materialEye
+        );
+        leftFrontLeg.name = "leftFrontLeg";
+        leftFrontLeg.setParent(leftFrontLegLimb);
+        leftFrontLeg.setPosition(0, 0, 0);
 
-        rightLegBack.setParent(rightAngkleBack);
-        rightLegBack2.setParent(rightAngkleBack2);
-        rightLegFront.setParent(rightAngkleFront);
-        rightLegFront2.setParent(rightAngkleFront2);
+        let leftMiddleLegLimb = new Mesh(
+            new BoxGeometry(1, 1, 1, false),
+            materialEye
+        );
+        leftMiddleLegLimb.name = "leftMiddleLegLimb";
+        leftMiddleLegLimb.setParent(body);
+        leftMiddleLegLimb.setPosition(-30, -20, 0);
+
+        let leftMiddleLeg = new Mesh(
+            new BoxGeometry(150, 20, 20, false),
+            materialEye
+        );
+        leftMiddleLeg.name = "leftMiddleLeg";
+        leftMiddleLeg.setParent(leftMiddleLegLimb);
+        leftMiddleLeg.setPosition(0, 0, 0);
+
+        let leftBackLegLimb = new Mesh(
+            new BoxGeometry(1, 1, 1, false),
+            materialEye
+        );
+        leftBackLegLimb.name = "leftBackLegLimb";
+        leftBackLegLimb.setParent(body);
+        leftBackLegLimb.setPosition(-30, -20, 30);
+
+        let leftBackLeg = new Mesh(
+            new BoxGeometry(150, 20, 20, false),
+            materialEye
+        );
+        leftBackLeg.name = "leftBackLeg";
+        leftBackLeg.setParent(leftBackLegLimb);
+        leftBackLeg.setPosition(0, 0, 0);
+
+        let rightFrontLegLimb = new Mesh(
+            new BoxGeometry(1, 1, 1, false),
+            materialEye
+        );
+        rightFrontLegLimb.name = "rightFrontLegLimb";
+        rightFrontLegLimb.setParent(body);
+        rightFrontLegLimb.setPosition(30, -20, -30);
+
+        let rightFrontLeg = new Mesh(
+            new BoxGeometry(150, 20, 20, false),
+            materialEye
+        );
+        rightFrontLeg.name = "rightFrontLeg";
+        rightFrontLeg.setParent(rightFrontLegLimb);
+        rightFrontLeg.setPosition(0, 0, 0);
+
+        let rightMiddleLegLimb = new Mesh(
+            new BoxGeometry(1, 1, 1, false),
+            materialEye
+        );
+        rightMiddleLegLimb.name = "rightMiddleLegLimb";
+        rightMiddleLegLimb.setParent(body);
+        rightMiddleLegLimb.setPosition(30, -20, 0);
+
+        let rightMiddleLeg = new Mesh(
+            new BoxGeometry(150, 20, 20, false),
+            materialEye
+        );
+        rightMiddleLeg.name = "rightMiddleLeg";
+        rightMiddleLeg.setParent(rightMiddleLegLimb);
+        rightMiddleLeg.setPosition(0, 0, 0);
+
+        let rightBackLegLimb = new Mesh(
+            new BoxGeometry(1, 1, 1, false),
+            materialEye
+        );
+        rightBackLegLimb.name = "rightBackLegLimb";
+        rightBackLegLimb.setParent(body);
+        rightBackLegLimb.setPosition(30, -20, 30);
+
+        let rightBackLeg = new Mesh(
+            new BoxGeometry(150, 20, 20, false),
+            materialEye
+        );
+        rightBackLeg.name = "rightBackLeg";
+        rightBackLeg.setParent(rightBackLegLimb);
+        rightBackLeg.setPosition(0, 0, 0);
 
         scene.setActiveCamera(OrthographicCamera);
         return scene;
