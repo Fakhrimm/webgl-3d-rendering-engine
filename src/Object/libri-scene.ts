@@ -2,7 +2,6 @@ import { Node } from "./node.ts";
 import { Mesh } from "./mesh.ts";
 import { BoxGeometry } from "../Geometry/boxGeometry.ts";
 import { BasicMaterial } from "../Material/basic-material.ts";
-import { PhongMaterial } from "../Material/phong-material.ts";
 import { OrthographicCamera } from "../Camera/orthographic-camera.ts";
 import { Camera } from "../Camera/camera.ts";
 import { ObliqueCamera } from "../Camera/oblique-camera.ts";
