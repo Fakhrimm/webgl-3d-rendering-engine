@@ -252,6 +252,7 @@ export class LibriScene extends Scene {
 
         // Create material for meshes
         let material1 = new BasicMaterial(Color.BLACK);
+        material1.setAmbientColorFromRGB(51,51,51);
 
         // Create pipe
         let pipe = new Mesh(new PipeHollow(), material1);
