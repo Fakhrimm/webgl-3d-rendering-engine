@@ -196,3 +196,86 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
     scene.setActiveCamera(PerspectiveCamera)
     return scene
 }
+
+export function getDummyScene(canva: HTMLCanvasElement): Scene {
+    const scene = new Scene();
+    scene.name = "scene"
+    const origin = new Node()
+    origin.setParent(scene)
+    origin.name = "origin"
+    const perspectiveCamera = new PerspectiveCamera(
+        60,
+        canva.width / canva.height,
+        0.1,
+        20000,
+        1)
+    perspectiveCamera.name = "PerspectiveCamera"
+    perspectiveCamera.setPosition(0, 0, 500)
+    perspectiveCamera.setParent(origin)
+
+    const orthographicCamera = new OrthographicCamera(
+        -canva.width / 2,
+        canva.width / 2,
+        canva.height / 2,
+        -canva.height / 2,
+        -1000,
+        +1000
+    )
+    orthographicCamera.name = "OrthoCamera"
+    orthographicCamera.setParent(origin)
+
+    const obliqueCamera = new ObliqueCamera(
+        -canva.width / 2,
+        canva.width / 2,
+        canva.height / 2,
+        -canva.height / 2,
+        1000,
+        -1000
+    )
+    obliqueCamera.name = "ObliqueCamera"
+    obliqueCamera.setParent(origin)
+
+    const m1 = new BasicMaterial(
+        Color.BLUE,
+        TextureTypes.DIFFUSE_0
+    )
+    const m2 = new PhongMaterial(
+        Color.WHITE,
+        Color.WHITE,
+        50,
+        0.2,
+        0.8,
+        0.5,
+        TextureTypes.DIFFUSE_0,
+        TextureTypes.SPECULAR_0,
+        TextureTypes.NORMAL_1,
+        TextureTypes.DISPLACEMENT_0,
+        100,
+        0.0
+    )
+    const m3 = new ParallaxMaterial(
+        Color.WHITE,
+        Color.WHITE,
+        50,
+        0.2,
+        0.8,
+        0.5,
+        TextureTypes.DIFFUSE_BRICKS,
+        TextureTypes.SPECULAR_0,
+        TextureTypes.NORMAL_BRICKS,
+        TextureTypes.HEIGHT_BRICKS,
+        0.05,
+    )
+    const m4 = new ReflectionMaterial()
+    const m5 = new BasicMaterial(
+        Color.BLACK,
+        TextureTypes.DIFFUSE_0
+    )
+
+    const mesh1 = new Mesh(new BoxGeometry(100, 100, 100), m3);
+    mesh1.name = "mesh1"
+    mesh1.setParent(scene)
+
+    scene.setActiveCamera(PerspectiveCamera)
+    return scene
+}
