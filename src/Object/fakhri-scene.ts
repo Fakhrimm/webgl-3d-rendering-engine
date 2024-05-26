@@ -12,6 +12,7 @@ import {Node} from "./node.ts";
 import {Color} from "../Math/color.ts";
 import {TextureTypes} from "../Types/texture-types.ts";
 import {tesseractHollowGeometry} from "../Geometry/tesseract-hollow-geometry.ts";
+import {PlaneGeometry} from "../Geometry/plane-geometry.ts";
 
 export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
     const scene = new Scene();
@@ -246,18 +247,18 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         TextureTypes.DIFFUSE_0
     )
     const m2 = new PhongMaterial(
-        Color.BLACK,
         Color.WHITE,
+        Color.BLACK,
         Color.WHITE,
         50,
         0.2,
         0.8,
         0.5,
-        TextureTypes.DIFFUSE_0,
-        TextureTypes.SPECULAR_0,
-        TextureTypes.NORMAL_0,
-        TextureTypes.DISPLACEMENT_0,
-        100,
+        TextureTypes.DIFFUSE_2,
+        TextureTypes.SPECULAR_2,
+        TextureTypes.NORMAL_2,
+        TextureTypes.DISPLACEMENT_2,
+        50,
         0.0
     )
     const m3 = new ParallaxMaterial(
@@ -267,10 +268,10 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         0.2,
         0.8,
         0.5,
-        TextureTypes.DIFFUSE_0,
+        TextureTypes.DIFFUSE_BRICKS,
         TextureTypes.SPECULAR_0,
-        TextureTypes.NORMAL_0,
-        TextureTypes.HEIGHT_WOOD,
+        TextureTypes.NORMAL_BRICKS,
+        TextureTypes.HEIGHT_BRICKS,
         0.05,
     )
     const m4 = new ReflectionMaterial()
@@ -280,7 +281,7 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
         TextureTypes.DIFFUSE_0
     )
 
-    const mesh1 = new Mesh(tesseractHollowGeometry(80, 250, 20), m1);
+    const mesh1 = new Mesh(new PlaneGeometry(300, 300, 300, 100, 100, "z+"), m3);
     mesh1.name = "mesh1"
     mesh1.setParent(scene)
 
