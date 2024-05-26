@@ -6,7 +6,7 @@
 - Austin Gabriel Pardosi (13521084)
 
 ## General Information
-Pixar 3D engine is TypeScript Web app that can be used to process 3D model. Pixar 3d Engine use WebGL as a Graphics application programming interface (API) to process 3D model.
+Pixar 3D engine is TypeScript Web app that can be used to process 3D model. Pixar 3D Engine use WebGL as the Graphics Application Programming Interface (API) to process 3D model.
 
 ## Technologies Used
 - WebGL
@@ -30,6 +30,49 @@ Pixar 3D engine is TypeScript Web app that can be used to process 3D model. Pixa
 
 4. Load the model and animation in ```test``` folder
 5. Enjoy your model
+
+## Features
+1. Component Tree
+2. Camera
+    - Camera Angle (X Axis dan Y Axis)
+    - Camera Radius
+    - Reset Camera
+    - Orthographic Projection
+    - Oblique Projection
+    - Perspective Projection
+3. Smooth Shading
+4. Color Picker
+    - Diffuse Color
+    - Specular Color
+5. Shininess
+6. Displacement Scale
+7. Displacement Bias  
+8. Height Texture  
+9. Height Scale
+10. Load
+11. Save
+12. Help   
+13. Transformation
+    - Rotate
+    - Scale
+    - Translate
+15. Texture
+    - Type (Diffuse, Specular, dan Normal)
+    - Index (1, 2, 3, dan 4)
+16. Animation
+    - Play
+    - Pause
+    - Reverse
+    - Auto Replay
+    - Next
+    - Prev
+    - First
+    - Last
+    - Easing Type (Normal, Ease In Sine, Ease In Quad, Ease In Cubic, Ease In Quart, Ease In Quart, Ease In Expo, Ease In Circ)
+    - FPS
+
+for guide on how to use them you can check out the guidebook on ```docs``` folder or visit this link https://drive.google.com/file/d/1cCt04FIItlkYmnVUMD6qgZvk__HkweeL/view?usp=sharing
+
 
 ## Member and Contributions
 | Member                                  | Contribution                              
