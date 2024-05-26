@@ -60,7 +60,7 @@
                       "rotation": [0, 1, 0]
                     },
                     "26": {
-                      "rotation": [0, 1,25, 0]
+                      "rotation": [0, 1.25, 0]
                     },
                     "27": {
                       "rotation": [0, 1.5, 0]
@@ -84,7 +84,7 @@
                       "rotation": [0, 3, 0]
                     },
                     "34": {
-                      "rotation": [0, 3.14, 0]
+                      "rotation": [0, 3.25, 0]
                     },
                     "35": {
                       "rotation": [0, 3, 0]
@@ -163,12 +163,6 @@
                       "children": {
                         "indexTip": {
                           "keyframe": {
-                            "0": {
-                              "rotation": [0, 0, 0]
-                            },
-                            "1": {
-                              "rotation": [0, 1, 0]
-                            }
                           }
                         }
                       }

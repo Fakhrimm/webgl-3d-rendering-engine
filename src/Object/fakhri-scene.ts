@@ -24,7 +24,7 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
         20000,
         1)
     perspectiveCamera.name = "PerspectiveCamera"
-    perspectiveCamera.setPosition(0, 0, 500)
+
 
     const orthographicCamera = new OrthographicCamera(
         -canvas.width / 2,
@@ -197,6 +197,7 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
     palm.setParent(scene)
 
 
+    perspectiveCamera.setPosition(10, 0, 500)
     scene.setActiveCamera(PerspectiveCamera)
     return scene
 }
