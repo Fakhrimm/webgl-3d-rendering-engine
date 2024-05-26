@@ -9,7 +9,9 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
 import { Scene } from "./scene.ts";
 import { Color } from "../Math/color.ts";
-import { Angel } from "../Geometry/biblicallyAccurateAngel.ts";
+import { Orb } from "../Geometry/orb.ts";
+import { DiffuseTextureTypes } from "../Types/diffuse_texture_types.ts";
+import { TextureTypes } from "../Types/texture-types.ts";
 
 export class LuisScene extends Scene {
     activeCamera: Camera | null = null;
@@ -66,9 +68,9 @@ export class LuisScene extends Scene {
         originNode.name = "OriginNode";
         originNode.setParent(scene);
 
-        let material1 = new PhongMaterial();
-        let material2 = new BasicMaterial(Color.BLACK);
-        let material3 = new BasicMaterial(Color.DARKGREEN);
+        let material1 = new BasicMaterial(Color.GREEN, TextureTypes.DIFFUSE_WOOD);
+        let material2 = new BasicMaterial(Color.BLACK, TextureTypes.NORMAL_WOOD);
+        let material3 = new BasicMaterial(Color.DARKGREEN, TextureTypes.DIFFUSE_BRICKS);
 
         let head = new Mesh(new BoxGeometry(90, 90, 90, true), material1);
         head.name = "head";
@@ -76,57 +78,69 @@ export class LuisScene extends Scene {
         let body = new Mesh(new BoxGeometry(75, 170, 75, false), material3);
         body.name = "body";
 
+        let leftLegFrontLimb = new Mesh(new BoxGeometry(1, 1, 1, false), material2);
+        leftLegFrontLimb.name = "leftLegFrontLimb";
+
         let leftLegFront = new Mesh(new BoxGeometry(25, 40, 25, false), material2);
         leftLegFront.name = "leftLegFront";
+
+        let leftLegBackLimb = new Mesh(new BoxGeometry(1, 1, 1, false), material2);
+        leftLegBackLimb.name = "leftLegBackLimb";
 
         let leftLegBack = new Mesh(new BoxGeometry(25, 40, 25, false), material2);
         leftLegBack.name = "leftLegBack";
         
-        let rightLegFront = new Mesh(new BoxGeometry(25, 40, 25, false), material2);
-        rightLegFront.name = "rightLegFront";
+        let rightLegBackLimb = new Mesh(new BoxGeometry(1, 1, 1, false), material2);
+        rightLegBackLimb.name = "rightLegBackLimb";
 
         let rightLegBack = new Mesh(new BoxGeometry(25, 40, 25, false), material2);
         rightLegBack.name = "rightLegBack";
+        
+        let rightLegFrontLimb = new Mesh(new BoxGeometry(1, 1, 1, false), material2);
+        rightLegFrontLimb.name = "rightLegFrontLimb";
 
+        let rightLegFront = new Mesh(new BoxGeometry(25, 40, 25, false), material2);
+        rightLegFront.name = "rightLegFront";
+
+        const perspectiveCamera = new PerspectiveCamera(
+            60,
+            canvas.width / canvas.height,
+            0.1,
+            20000,
+            1)
+        perspectiveCamera.name = "PerspectiveCamera"
+        perspectiveCamera.setPosition(0, 0, 1000)
+    
         const orthographicCamera = new OrthographicCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            -500,
-            500
-        );
-        orthographicCamera.name = "OrthoCamera";
-
+            -1000,
+            +1000
+        )
+        orthographicCamera.name = "OrthoCamera"
+    
         const obliqueCamera = new ObliqueCamera(
             -canvas.width / 2,
             canvas.width / 2,
             canvas.height / 2,
             -canvas.height / 2,
-            100,
-            -1000
-        );
-        obliqueCamera.name = "ObliqueCamera";
-
-        const perspectiveCamera = new PerspectiveCamera(
-            70,
-            canvas.width / canvas.height,
-            0.1,
             1000,
-            1
-        );
-        perspectiveCamera.name = "PerspectiveCamera";
-        perspectiveCamera.setPosition(0, 0, 300);
+            -1000
+        )
+        obliqueCamera.name = "ObliqueCamera"
 
         head.setPosition(0, 130, 0);
         body.setPosition(0, 50, 300);
-        leftLegFront.setPosition(50, -105, -25);
-        rightLegFront.setPosition(50, -105, 25);
-        leftLegBack.setPosition(-50, -105, -25);
-        rightLegBack.setPosition(-50, -105, 25);
-
-
-        // mesh3.setPosition(0, 0, -300);
+        leftLegFrontLimb.setPosition(30, -80, -25);
+        leftLegFront.setPosition(20, -18, -25);
+        leftLegBackLimb.setPosition(-30, -80, -25);
+        leftLegBack.setPosition(-20, -18, -25);
+        rightLegBackLimb.setPosition(-30, -80, 25);
+        rightLegBack.setPosition(-20, -18, 25);
+        rightLegFrontLimb.setPosition(30, -80, 25);
+        rightLegFront.setPosition(20, -18, 0);
 
         orthographicCamera.setParent(originNode);
         obliqueCamera.setParent(originNode);
@@ -134,42 +148,25 @@ export class LuisScene extends Scene {
 
         body.setParent(scene);
         head.setParent(body);
-        leftLegFront.setParent(body);
-        rightLegFront.setParent(body);
-        leftLegBack.setParent(body);
-        rightLegBack.setParent(body);
+        leftLegFrontLimb.setParent(body);
+        leftLegFront.setParent(leftLegFrontLimb);
+        rightLegFrontLimb.setParent(body);
+        rightLegFront.setParent(rightLegFrontLimb);
+        leftLegBackLimb.setParent(body);
+        leftLegBack.setParent(leftLegBackLimb);
+        rightLegBackLimb.setParent(body);
+        rightLegBack.setParent(rightLegBackLimb);
 
-
-
-
-
-        
-        // const node = new Node();
-        // node.name = "Node";
-        // node.setParent(scene);
-
-        // mesh3.setParent(node);
-        // mesh4.setParent(node);
-        // mesh5.setParent(node);
-        // mesh6.setParent(node);
-        // mesh7.setParent(node);
-        // mesh8.setParent(node);
-
-        // const meshRing = new Mesh(new BoxGeometry(), material2);
-        // meshRing.name = "Ring";
-        // meshRing.setPosition(0, 0, 300);
-        // meshRing.setParent(scene);
-
-        scene.setActiveCamera(OrthographicCamera);
+        scene.setActiveCamera(PerspectiveCamera)
         return scene;
     }
 
-    public static createAngelScene(canvas: HTMLCanvasElement | null): LuisScene {
+    public static createOrbScene(canvas: HTMLCanvasElement | null): LuisScene {
         if (!canvas) {
             throw new Error("Canvas is null");
         }
         const scene = new LuisScene();
-        scene.name = "CreeperScene";
+        scene.name = "OrbScene";
 
         const originNode = new Node();
         originNode.name = "OriginNode";
@@ -210,11 +207,12 @@ export class LuisScene extends Scene {
 
 
         let material1 = new PhongMaterial();
-        let angel = new Mesh(new Angel(), material1);
-        angel.name = "Angel";
-        angel.setParent(scene);
+        let orb = new Mesh(new Orb(), material1);
+        orb.name = "Orb";
+        orb.setParent(scene);
+        orb.setRotationY(-1.3);
 
-        scene.setActiveCamera(OrthographicCamera);
+        scene.setActiveCamera(PerspectiveCamera)
         return scene;
     }
 }
