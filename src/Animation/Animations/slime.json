@@ -71,7 +71,7 @@
                         }
                     },
                     "children": {
-                        "RightLeg": {
+                        "RightLegJoint": {
                             "keyframe": {
                                 "0": {
                                     "rotation": [-0.15, 0, 0]
@@ -138,7 +138,7 @@
                                 }
                             }
                         },
-                        "LeftLeg": {
+                        "LeftLegJoint": {
                             "keyframe": {
                                 "0": {
                                     "rotation": [0.15, 0, 0]
@@ -205,7 +205,7 @@
                                 }
                             }
                         },
-                        "RightHand": {
+                        "RightHandJoint": {
                             "keyframe": {
                                 "0": {
                                     "rotation": [0.15, 0, 0]
@@ -272,7 +272,7 @@
                                 }
                             }
                         },
-                        "LeftHand": {
+                        "LeftHandJoint": {
                             "keyframe": {
                                 "0": {
                                     "rotation": [-0.15, 0, 0]

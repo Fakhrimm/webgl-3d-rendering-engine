@@ -121,17 +121,33 @@ export class LibriScene extends Scene {
         let body = new Mesh(new BoxGeometry(190, 240, 100, false), material3);
         body.name = "Body";
 
+        // Create right hand joint
+        let rightHandJoint = new Node();
+        rightHandJoint.name = "RightHandJoint";
+
         // Create slime right hand
         let rightHand = new Mesh(new BoxGeometry(75, 240, 50, false), material1);
         rightHand.name = "RightHand";
+
+        // Create left hand joint
+        let leftHandJoint = new Node();
+        leftHandJoint.name = "LeftHandJoint";
 
         // Create slime left hand
         let leftHand = new Mesh(new BoxGeometry(75, 240, 50, false), material1);
         leftHand.name = "LeftHand";
 
+        // Create right leg joint
+        let rightLegJoint = new Node();
+        rightLegJoint.name = "RightLegJoint";
+
         // Create slime right leg
         let rightLeg = new Mesh(new BoxGeometry(90, 220, 50, false), material1);
         rightLeg.name = "RightLeg";
+
+        // Create left leg joint
+        let leftLegJoint = new Node();
+        leftLegJoint.name = "LeftLegJoint";
 
         // Create slime left leg
         let leftLeg = new Mesh(new BoxGeometry(90, 220, 50, false), material1);
@@ -145,11 +161,17 @@ export class LibriScene extends Scene {
 
         body.setPosition(0, 0, 0);
 
-        rightHand.setPosition(130, 0, 0);
-        leftHand.setPosition(-130, 0, 0);
+        rightHandJoint.setPosition(130, 120, 0);
+        rightHand.setPosition(0, -120, 0);
 
-        rightLeg.setPosition(45, -230, 0);
-        leftLeg.setPosition(-45, -230, 0);
+        leftHandJoint.setPosition(-130, 120, 0);
+        leftHand.setPosition(0, -120, 0);
+
+        rightLegJoint.setPosition(45, -120, 0);
+        rightLeg.setPosition(0, -110, 0);
+
+        leftLegJoint.setPosition(-45, -120, 0);
+        leftLeg.setPosition(0, -110, 0);
 
         // Setting parent for all node
         originNode.setParent(scene);
@@ -165,10 +187,17 @@ export class LibriScene extends Scene {
 
         body.setParent(scene);
 
-        rightHand.setParent(body);
-        leftHand.setParent(body);
-        rightLeg.setParent(body);
-        leftLeg.setParent(body);
+        rightHandJoint.setParent(body);
+        rightHand.setParent(rightHandJoint);
+
+        leftHandJoint.setParent(body);
+        leftHand.setParent(leftHandJoint);
+
+        rightLegJoint.setParent(body);
+        rightLeg.setParent(rightLegJoint);
+
+        leftLegJoint.setParent(body);
+        leftLeg.setParent(leftLegJoint);
 
         scene.setActiveCamera(PerspectiveCamera);
         return scene;
