@@ -81,6 +81,14 @@ export class PhongMaterial extends Material {
         this.u_diffuseColor.setFromRGB(r, g, b);
     }
 
+    public getAmbientColor(): Color {
+        return this.u_ambientColor;
+    }
+
+    public setAmbientColorFromRGB(r: number, g: number, b: number) {
+        this.u_ambientColor.setFromRGB(r, g, b);
+    }
+
     public getSpecularColor(): Color {
         return this.u_specularColor;
     }
