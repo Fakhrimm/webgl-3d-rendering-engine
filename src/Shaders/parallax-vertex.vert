@@ -20,11 +20,11 @@ void main() {
     // Dikalikan world inverse transpose untuk mendapatkan normal yang benar
     // Ketika dilakukan scaling
     // webglfundamentals.org/webgl/lessons/webgl-3d-lighting-directional.html
-    vec3 normal = normalize(u_world * vec4(a_normal, 0)).xyz;
+    vec3 normal = normalize(mat3(u_worldInverseTranspose) * a_normal).xyz;
 
     // Perhitungan TBN
     // Dikalikan world inverse transpose untuk mendapatkan tangent yang benar
-    vec3 tangent = (u_world * vec4(a_tangent, 0)).xyz;
+    vec3 tangent = (mat3(u_worldInverseTranspose) * a_tangent).xyz;
     // Gram-Schmidt process
     tangent = normalize(tangent - dot(tangent, normal) * normal);
     vec3 bitangent = cross(normal, tangent);
