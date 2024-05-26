@@ -126,6 +126,14 @@ export class Node {
         this.quaternion.setFromEuler( euler, true );
     }
 
+    public setRotationDegrees(x: number, y: number, z: number) {
+        x = x * Math.PI / 180;
+        y = y * Math.PI / 180;
+        z = z * Math.PI / 180;
+
+        this.setRotationFromEuler(new Euler(x, y, z))
+    }
+
     public setRotationX(x: number) {
         this.rotation.x =  x;
     }

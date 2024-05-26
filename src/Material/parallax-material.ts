@@ -66,7 +66,6 @@ export class ParallaxMaterial extends Material {
     }
 
     public getDiffuseColor(): Color {
-        console.log("warna", this.u_diffuseColor.get());
         return this.u_diffuseColor;
     }
 
