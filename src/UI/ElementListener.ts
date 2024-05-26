@@ -218,6 +218,8 @@ export function elementListner(variables: Variables) {
             selectedNode.geometry.setToFlatShading();
             shader.checked = false;
         }
+        getOriginNode().setRotationX(0)
+        getOriginNode().setRotationY(0)
     });
 
     const colorPickerDiffuse = container.getElement(
