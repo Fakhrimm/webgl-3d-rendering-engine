@@ -41,7 +41,7 @@ export class BasicMaterial extends Material {
         this.u_diffuseColor.setFromRGB(r, g, b);
     }
 
-    public setAmbientColor(): Color {
+    public getAmbientColor(): Color {
         return this.u_ambientColor;
     }
 

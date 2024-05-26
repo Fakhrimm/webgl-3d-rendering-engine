@@ -100,8 +100,11 @@ export class LibriScene extends Scene {
 
         // Create material for meshes
         let material1 = new BasicMaterial(Color.SLIMEGREEN);
+        material1.setAmbientColorFromRGB(51,51,51);
         let material2 = new BasicMaterial(Color.SLIMEGRAY);
+        material2.setAmbientColorFromRGB(51,51,51);
         let material3 = new BasicMaterial(Color.SLIMMEDARKGREEN);
+        material3.setAmbientColorFromRGB(51,51,51);
 
         // Create slime head
         let head = new Mesh(new BoxGeometry(150, 150, 125, false), material1);
