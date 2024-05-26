@@ -10,7 +10,7 @@ import { AnimationRunner } from "../Animation/animationRunner.ts";
 import { Tree } from "./Tree.ts";
 import { renderScene } from "../main.ts";
 import { ParallaxMaterial } from "../Material/parallax-material.ts";
-import {loadScene} from "../Utils/loader.ts";
+import { loadScene } from "../Utils/loader.ts";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -92,10 +92,14 @@ export function elementListner(variables: Variables) {
         }
         console.log(file);
         const scene = await loadScene(file);
+        const originNode = scene.getChildren()[0];
         try {
             console.log("YESS");
             Tree.resetTree(container);
             variables.setScene(scene);
+            variables.setOriginNode(originNode);
+            variables.setOriginScene(scene);
+
             const tree = Tree.mapSceneToTree(variables.getScene());
             console.log("TREE", tree);
             Tree.mapTreeToComponentTree(container, tree, variables);
@@ -109,7 +113,6 @@ export function elementListner(variables: Variables) {
         } catch (error) {
             throw new Error(`Failed to load model: ${error}`);
         }
-
     });
 
     // LEFT
@@ -134,6 +137,7 @@ export function elementListner(variables: Variables) {
         const val = cameraSlider.valueAsNumber;
         const degrees = (val / 3.3) * 180;
         const radians = degrees * (Math.PI / 180);
+        console.log(getOriginNode());
         if (rotateAxis === "x") {
             getOriginNode().setRotationX(radians);
         } else if (rotateAxis === "y") {
