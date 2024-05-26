@@ -91,11 +91,11 @@ export function elementListner(variables: Variables) {
             return;
         }
         console.log(file);
-        const model = await loadScene(file);
+        const scene = await loadScene(file);
         try {
             console.log("YESS");
             Tree.resetTree(container);
-            variables.setScene(model);
+            variables.setScene(scene);
             const tree = Tree.mapSceneToTree(variables.getScene());
             console.log("TREE", tree);
             Tree.mapTreeToComponentTree(container, tree, variables);
