@@ -12,6 +12,7 @@ import { Color } from "../Math/color.ts";
 import { Orb } from "../Geometry/orb.ts";
 import { DiffuseTextureTypes } from "../Types/diffuse_texture_types.ts";
 import { TextureTypes } from "../Types/texture-types.ts";
+import { ParallaxMaterial } from "../Material/parallax-material.ts";
 
 export class LuisScene extends Scene {
     activeCamera: Camera | null = null;
@@ -68,9 +69,21 @@ export class LuisScene extends Scene {
         originNode.name = "OriginNode";
         originNode.setParent(scene);
 
-        let material1 = new BasicMaterial(Color.GREEN, TextureTypes.DIFFUSE_WOOD);
-        let material2 = new BasicMaterial(Color.BLACK, TextureTypes.NORMAL_WOOD);
-        let material3 = new BasicMaterial(Color.DARKGREEN, TextureTypes.DIFFUSE_BRICKS);
+        let material1 = new BasicMaterial(Color.GREEN, Color.GREEN, TextureTypes.DIFFUSE_WOOD);
+        let material2 = new BasicMaterial(Color.BLACK, Color.BLACK, TextureTypes.NORMAL_WOOD);
+        let material3 = new ParallaxMaterial(
+            Color.DARKGREEN,
+            Color.GREEN,
+            50,
+            0.2,
+            0.8,
+            0.5,
+            TextureTypes.DIFFUSE_0,
+            TextureTypes.SPECULAR_0,
+            TextureTypes.NORMAL_3,
+            TextureTypes.HEIGHT_0,
+            0.05,
+        )
 
         let head = new Mesh(new BoxGeometry(90, 90, 90, true), material1);
         head.name = "head";

@@ -39,6 +39,12 @@ export class Container {
         const rValueSpecular = document.getElementById("rValueSpecular");
         const gValueSpecular = document.getElementById("gValueSpecular");
         const bValueSpecular = document.getElementById("bValueSpecular");
+        const colorPickerAmbient = document.getElementById(
+            "colorPickerAmbient"
+        );
+        const rValueAmbient = document.getElementById("rValueAmbient");
+        const gValueAmbient = document.getElementById("gValueAmbient");
+        const bValueAmbient = document.getElementById("bValueAmbient");
         const shininess = document.getElementById("shininess");
         const displacementScale = document.getElementById("displacementScale");
         const displacementBias = document.getElementById("displacementBias");
@@ -130,6 +136,13 @@ export class Container {
         this.elementRefs.set("rValueSpecular", rValueSpecular as HTMLElement);
         this.elementRefs.set("gValueSpecular", gValueSpecular as HTMLElement);
         this.elementRefs.set("bValueSpecular", bValueSpecular as HTMLElement);
+        this.elementRefs.set(
+            "colorPickerAmbient",
+            colorPickerAmbient as HTMLElement
+        );
+        this.elementRefs.set("rValueAmbient", rValueAmbient as HTMLElement);
+        this.elementRefs.set("gValueAmbient", gValueAmbient as HTMLElement);
+        this.elementRefs.set("bValueAmbient", bValueAmbient as HTMLElement);
         this.elementRefs.set("shininess", shininess as HTMLElement);
         this.elementRefs.set("displacementScale", displacementScale as HTMLElement);
         this.elementRefs.set("displacementBias", displacementBias as HTMLElement);

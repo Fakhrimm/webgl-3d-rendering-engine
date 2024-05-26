@@ -48,6 +48,7 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
 
     const m1 = new BasicMaterial(
         Color.BLUE,
+        Color.BLUE,
         TextureTypes.DIFFUSE_0
     )
     const m2 = new PhongMaterial(
@@ -79,6 +80,7 @@ export function getFakhriScene(canvas: HTMLCanvasElement): Scene {
     )
     const m4 = new ReflectionMaterial()
     const m5 = new BasicMaterial(
+        Color.BLACK,
         Color.BLACK,
         TextureTypes.DIFFUSE_0
     )
@@ -237,6 +239,7 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
 
     const m1 = new BasicMaterial(
         Color.BLUE,
+        Color.BLUE,
         TextureTypes.DIFFUSE_0
     )
     const m2 = new PhongMaterial(
@@ -268,6 +271,7 @@ export function getDummyScene(canva: HTMLCanvasElement): Scene {
     )
     const m4 = new ReflectionMaterial()
     const m5 = new BasicMaterial(
+        Color.BLACK,
         Color.BLACK,
         TextureTypes.DIFFUSE_0
     )

@@ -41,6 +41,8 @@ export function elementListner(variables: Variables) {
                 const material = selectedNode.material;
                 if (material instanceof PhongMaterial) {
                     switch (selectedType) {
+                        default:
+                            throw new Error("The function is not accessible by PhongMaterial");
                         case "diffuse":
                             material.setDiffuseTextureType(selectedIndex);
                             break;
@@ -52,11 +54,24 @@ export function elementListner(variables: Variables) {
                             break;
                         case "displacement":
                             material.setDisplacementTextureType(selectedIndex);
+                            break;
                     }
                 } else if (material instanceof ParallaxMaterial) {
                     switch (selectedType) {
+                        default:
+                            throw new Error("The function is not accessible by Parallax");
                         case "height":
                             material.setHeightTextureType(selectedIndex);
+                            break;
+                        case "diffuse":
+                            material.setDiffuseTextureType(selectedIndex);
+                            break;
+                        case "specular":
+                            material.setSpecularTextureType(selectedIndex);
+                            break;
+                        case "normal":
+                            material.setNormalTextureType(selectedIndex);
+                            break;
                     }
                 } else {
                     throw new Error(
@@ -246,6 +261,18 @@ export function elementListner(variables: Variables) {
     const bValueSpecular = container.getElement(
         "bValueSpecular"
     ) as HTMLInputElement;
+    const colorPickerAmbient = container.getElement(
+        "colorPickerAmbient"
+    ) as HTMLInputElement;
+    const rValueAmbient = container.getElement(
+        "rValueAmbient"
+    ) as HTMLInputElement;
+    const gValueAmbient = container.getElement(
+        "gValueAmbient"
+    ) as HTMLInputElement;
+    const bValueAmbient = container.getElement(
+        "bValueAmbient"
+    ) as HTMLInputElement;
     const shininess = container.getElement("shininess") as HTMLInputElement;
     const displacementScale = container.getElement(
         "displacementScale"
@@ -352,6 +379,49 @@ export function elementListner(variables: Variables) {
             rValueSpecular.value = previousRValueSpecular;
             gValueSpecular.value = previousGValueSpecular;
             bValueSpecular.value = previousBValueSpecular;
+        }
+    });
+
+    let previousAmbientColor = colorPickerAmbient.value;
+    let previousRValueAmbient = rValueAmbient.value;
+    let previousGValueAmbient = gValueAmbient.value;
+    let previousBValueAmbient = bValueAmbient.value;
+
+    colorPickerAmbient.addEventListener("input", (event) => {
+        const color = (event.target as HTMLInputElement).value;
+        const r = parseInt(color.substr(1, 2), 16);
+        const g = parseInt(color.substr(3, 2), 16);
+        const b = parseInt(color.substr(5, 2), 16);
+        rValueAmbient.value = r.toString();
+        gValueAmbient.value = g.toString();
+        bValueAmbient.value = b.toString();
+
+        const selectedNode = variables.getTree().reference;
+
+        try {
+            if (selectedNode instanceof Mesh) {
+                const material = selectedNode.material;
+                if (
+                    material instanceof BasicMaterial
+                ) {
+                    material.setAmbientColorFromRGB(r, g, b);
+                    previousAmbientColor = color;
+                } else {
+                    throw new Error(
+                        "Only Mesh with Phong Material or Paralax Material can access this function."
+                    );
+                }
+            } else {
+                throw new Error(
+                    "Only Mesh with Phong Material or Paralax Material can access this function."
+                );
+            }
+        } catch (error) {
+            showError(String(error));
+            colorPickerAmbient.value = previousAmbientColor;
+            rValueAmbient.value = previousRValueAmbient;
+            gValueAmbient.value = previousGValueAmbient;
+            bValueAmbient.value = previousBValueAmbient;
         }
     });
 

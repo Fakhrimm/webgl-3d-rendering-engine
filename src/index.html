@@ -267,6 +267,46 @@
                                     />
                                 </div>
                             </div>
+                            
+                            <!-- Ambient Color -->
+                            <div class="flex flex-col justify-center">
+                                <h1 class="text-lg">Ambient Color</h1>
+                                <input
+                                    type="color"
+                                    id="colorPickerAmbient"
+                                    class="w-full h-12 p-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                />
+                                <div
+                                    class="grid grid-cols-3 gap-4 text-center text-sm font-semibold mt-2"
+                                >
+                                    <span>R:</span>
+                                    <span>G:</span>
+                                    <span>B:</span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 mt-1">
+                                    <input
+                                        id="rValueAmbient"
+                                        type="number"
+                                        class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
+                                        readonly
+                                        value="0"
+                                    />
+                                    <input
+                                        id="gValueAmbient"
+                                        type="number"
+                                        class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
+                                        readonly
+                                        value="0"
+                                    />
+                                    <input
+                                        id="bValueAmbient"
+                                        type="number"
+                                        class="bg-gray-800 border border-gray-600 text-white text-center rounded-lg col-span-1 w-full justify-center"
+                                        readonly
+                                        value="0"
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         <div
@@ -598,12 +638,12 @@
                                     name="textureIndex"
                                     class="p-2 w-full text-white cursor-pointer bg-gray-800 border border-gray-600 text-sm font-bold rounded-lg active:bg-violet-500"
                                 >
-                                    <option value="0">1</option>
-                                    <option value="1">2</option>
-                                    <option value="2">3</option>
-                                    <option value="3">4</option>
-                                    <option value="4">5</option>
-                                    <option value="5">6</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
                                 </select>
                             </div>
                         </div>

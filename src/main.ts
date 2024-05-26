@@ -8,6 +8,7 @@ import { elementListner } from "./UI/ElementListener.ts";
 import { Tree } from "./UI/Tree.ts";
 import { TextureLoader } from "./Texture/texture-loader.ts";
 import { LuisScene } from "./Object/luis-scene.ts";
+import { getDummyScene } from "./Object/fakhri-scene.ts";
 
 const main = async () => {
     // Get Canvas and WebGL context
@@ -37,7 +38,7 @@ const main = async () => {
     // Setup and render
     const renderer = new Render(webGLRenderer);
 
-    const sceneDummy = LuisScene.createSceneDummy(webGLRenderer.canvas);
+    const sceneDummy = getDummyScene(webGLRenderer.canvas);
 
     const treeRoot = Tree.mapSceneToTree(sceneDummy);
     const originNode = sceneDummy.getOriginNode();
