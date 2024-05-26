@@ -10,7 +10,8 @@ import { AnimationRunner } from "../Animation/animationRunner.ts";
 import { Tree } from "./Tree.ts";
 import { renderScene } from "../main.ts";
 import { ParallaxMaterial } from "../Material/parallax-material.ts";
-import { loadScene } from "../Utils/loader.ts";
+import { loadAnimation, loadScene } from "../Utils/loader.ts";
+import { throwDeprecation } from "process";
 
 export function elementListner(variables: Variables) {
     const container = variables.getContainer();
@@ -92,24 +93,31 @@ export function elementListner(variables: Variables) {
         }
         console.log(file);
         const scene = await loadScene(file);
-        const originNode = scene.getChildren()[0];
+        const animation = await loadAnimation(file);
+        const originNode = scene?.getChildren()[0];
         try {
-            console.log("YESS");
-            Tree.resetTree(container);
-            variables.setScene(scene);
-            variables.setOriginNode(originNode);
-            variables.setOriginScene(scene);
-
-            const tree = Tree.mapSceneToTree(variables.getScene());
-            console.log("TREE", tree);
-            Tree.mapTreeToComponentTree(container, tree, variables);
-            console.log("LANJUT");
-            container.getElement("activeComponent").innerHTML = tree.name;
-            console.log("FINAL");
-            requestAnimationFrame(() =>
-                renderScene(variables.getWebGL(), variables, false)
-            );
-            console.log("BERHASIL");
+            if (scene && originNode) {
+                console.log("YESS");
+                Tree.resetTree(container);
+                variables.setScene(scene);
+                variables.setOriginNode(originNode);
+                variables.setOriginScene(scene);
+    
+                const tree = Tree.mapSceneToTree(variables.getScene());
+                console.log("TREE", tree);
+                Tree.mapTreeToComponentTree(container, tree, variables);
+                console.log("LANJUT");
+                container.getElement("activeComponent").innerHTML = tree.name;
+                console.log("FINAL");
+                requestAnimationFrame(() =>
+                    renderScene(variables.getWebGL(), variables, false)
+                );
+                console.log("BERHASIL");
+            } else if (animation) {
+                animationRunner.setAnimation(animation);
+            } else {
+                throw new Error(`Failed to load model and/or animation`);
+            }
         } catch (error) {
             throw new Error(`Failed to load model: ${error}`);
         }
@@ -549,7 +557,6 @@ export function elementListner(variables: Variables) {
     // ANIMATION
     let lastFrameTime: number | undefined;
     const animationRunner = new AnimationRunner(
-        "../Animation/Animations/creeper.json",
         variables
     );
 
@@ -572,7 +579,12 @@ export function elementListner(variables: Variables) {
     const fpsSlider = container.getElement("fpsSlider") as HTMLInputElement;
 
     play.addEventListener("click", () => {
-        animationRunner.play();
+        try {
+            animationRunner.play();
+        } catch (error) {
+            showError(String(error));
+        }
+        
 
         function runAnim(currentTime: number) {
             if (lastFrameTime === undefined) lastFrameTime = currentTime;
@@ -582,10 +594,6 @@ export function elementListner(variables: Variables) {
             } catch (error) {
                 showError(String(error));
                 animationRunner.pause();
-                colorPickerDiffuse.value = previousDiffuseColor;
-                rValueDiffuse.value = previousRValueDiffuse;
-                gValueDiffuse.value = previousGValueDiffuse;
-                bValueDiffuse.value = previousBValueDiffuse;
             }
             lastFrameTime = currentTime;
             requestAnimationFrame(runAnim);

@@ -9,6 +9,7 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
 import { Scene } from "./scene.ts";
 import { Color } from "../Math/color.ts";
+import { Angel } from "../Geometry/biblicallyAccurateAngel.ts";
 
 export class LuisScene extends Scene {
     activeCamera: Camera | null = null;
@@ -158,6 +159,60 @@ export class LuisScene extends Scene {
         // meshRing.name = "Ring";
         // meshRing.setPosition(0, 0, 300);
         // meshRing.setParent(scene);
+
+        scene.setActiveCamera(OrthographicCamera);
+        return scene;
+    }
+
+    public static createAngelScene(canvas: HTMLCanvasElement | null): LuisScene {
+        if (!canvas) {
+            throw new Error("Canvas is null");
+        }
+        const scene = new LuisScene();
+        scene.name = "CreeperScene";
+
+        const originNode = new Node();
+        originNode.name = "OriginNode";
+        originNode.setParent(scene);
+
+        const orthographicCamera = new OrthographicCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            -500,
+            500
+        );
+        orthographicCamera.name = "OrthoCamera";
+
+        const obliqueCamera = new ObliqueCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            100,
+            -1000
+        );
+        obliqueCamera.name = "ObliqueCamera";
+
+        const perspectiveCamera = new PerspectiveCamera(
+            70,
+            canvas.width / canvas.height,
+            0.1,
+            1000,
+            1
+        );
+        perspectiveCamera.name = "PerspectiveCamera";
+        perspectiveCamera.setPosition(0, 0, 300);
+        orthographicCamera.setParent(originNode);
+        obliqueCamera.setParent(originNode);
+        perspectiveCamera.setParent(originNode);
+
+
+        let material1 = new PhongMaterial();
+        let angel = new Mesh(new Angel(), material1);
+        angel.name = "Angel";
+        angel.setParent(scene);
 
         scene.setActiveCamera(OrthographicCamera);
         return scene;

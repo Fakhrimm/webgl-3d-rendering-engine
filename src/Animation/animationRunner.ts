@@ -120,12 +120,8 @@ export class AnimationRunner {
     private easingType: string = "normal";
 
     constructor(
-        animFile: string,
         variables: Variables
     ) {
-        this.load(animFile).then((animationClip) => {
-            this.currentAnimation = animationClip;
-        });
         this.isPlaying = false;
         this.isReverse = false;
         this.isAuto = true;
@@ -133,7 +129,11 @@ export class AnimationRunner {
     }
 
     public play() {
-        this.isPlaying = true;
+        if (this.currentAnimation) {
+            this.isPlaying = true;
+        } else {
+            throw new Error("Animation must be inserted before playing");
+        }
     }
 
     public pause() {
@@ -199,6 +199,19 @@ export class AnimationRunner {
         this.fps = fps;
     }
 
+    public setAnimation(animation: AnimationClip) {
+        this.currentAnimation = animation;
+        console.log(animation);
+    }
+
+    public animationExists(): boolean {
+        if (this.currentAnimation) {
+            return true;
+        }
+
+        return false;
+    }
+
     update(deltaSecond: number) {
         if (this.isPlaying) {
             this.deltaFrame += deltaSecond * this.fps;
@@ -214,8 +227,14 @@ export class AnimationRunner {
                 this.updateSceneGraph();
             }
 
-            if (this.currentFrame == this.length-1 && !this.isAuto) {
-                this.isPlaying = false;
+            if (!this.isReverse) {
+                if (this.currentFrame == this.length-1 && !this.isAuto) {
+                    this.isPlaying = false;
+                }
+            } else {
+                if (this.currentFrame == 0 && !this.isAuto) {
+                    this.isPlaying = false;
+                }
             }
         }
     }
@@ -360,19 +379,5 @@ export class AnimationRunner {
                 }
             }
         }
-    }
-
-    private async load(animFile: string): Promise<AnimationClip | undefined> {
-        const response = await fetch(animFile);
-        if (!response.ok) {
-            console.error(
-                `Failed to load animation file: ${response.statusText}`
-            );
-            return;
-        }
-
-        const animationClip: AnimationClip = await response.json();
-
-        return animationClip;
     }
 }

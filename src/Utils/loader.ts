@@ -16,12 +16,23 @@ import {PerspectiveCamera} from "../Camera/perspective-camera.ts";
 
 export async function loadScene(file: File) {
     const data = await loadJSON(file);
+    
+    if (!data.nodes) {
+        return;
+    }
+
     const geometryArray = getGeometryArray(data);
     const materialArray = getMaterialArray(data);
     const nodeArray = getNodeArray(data, geometryArray, materialArray);
     const scene = getScene(data, nodeArray);
     scenePreparation(scene);
     return scene;
+}
+
+export async function loadAnimation(file: File) {
+    const data = await loadJSON(file);
+
+    return data;
 }
 
 function scenePreparation(scene: Scene) {
@@ -120,4 +131,8 @@ function getMaterialArray(data: any){
         }
     });
     return materialArray;
+}
+
+function getAnimation(data: any){
+
 }
