@@ -1,6 +1,6 @@
 export enum TextureTypes {
-    DIFFUSE_0 ,
-    DIFFUSE_1 ,
+    DIFFUSE_0,
+    DIFFUSE_1,
     DIFFUSE_2,
     DIFFUSE_3,
     DIFFUSE_BRICKS ,
