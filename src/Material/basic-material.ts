@@ -28,7 +28,7 @@ export class BasicMaterial extends Material {
     ): void {
         programInfo.setUniforms({
             u_diffuseColor: this.u_diffuseColor.get(),
-            u_ambientColor: this.u_ambientColor,
+            u_ambientColor: this.u_ambientColor.get(),
             u_diffuseTexture: textures[this.diffuseTextureType],
         });
     }
