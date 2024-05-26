@@ -58,7 +58,6 @@ const main = async () => {
 
     // Render tree
     Tree.resetTree(container);
-    // console.log(variables);
     Tree.mapTreeToComponentTree(container, treeRoot, variables);
 
     requestAnimationFrame(() => renderScene(webGLRenderer, variables, false));
@@ -83,11 +82,7 @@ export function renderScene(
     } finally {
         isRendering = false;
     }
-    // console.log("\n-----PREPARE-----");
-    // console.log(webGLRenderer);
-    // console.log(variables);
-    // console.log(isRendering);
-    // console.log("-----PREPARE-----\n");
+    
     requestAnimationFrame(() =>
         renderScene(webGLRenderer, variables, isRendering)
     );

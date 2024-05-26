@@ -8,6 +8,7 @@ import { ObliqueCamera } from "../Camera/oblique-camera.ts";
 import { PerspectiveCamera } from "../Camera/perspective-camera.ts";
 import { Scene } from "./scene.ts";
 import { Color } from "../Math/color.ts";
+import { PipeHollow } from "../Geometry/pipeHollow.ts";
 
 export class LibriScene extends Scene {
     activeCamera: Camera | null = null;
@@ -120,17 +121,33 @@ export class LibriScene extends Scene {
         let body = new Mesh(new BoxGeometry(190, 240, 100, false), material3);
         body.name = "Body";
 
+        // Create right hand joint
+        let rightHandJoint = new Node();
+        rightHandJoint.name = "RightHandJoint";
+
         // Create slime right hand
         let rightHand = new Mesh(new BoxGeometry(75, 240, 50, false), material1);
         rightHand.name = "RightHand";
+
+        // Create left hand joint
+        let leftHandJoint = new Node();
+        leftHandJoint.name = "LeftHandJoint";
 
         // Create slime left hand
         let leftHand = new Mesh(new BoxGeometry(75, 240, 50, false), material1);
         leftHand.name = "LeftHand";
 
+        // Create right leg joint
+        let rightLegJoint = new Node();
+        rightLegJoint.name = "RightLegJoint";
+
         // Create slime right leg
         let rightLeg = new Mesh(new BoxGeometry(90, 220, 50, false), material1);
         rightLeg.name = "RightLeg";
+
+        // Create left leg joint
+        let leftLegJoint = new Node();
+        leftLegJoint.name = "LeftLegJoint";
 
         // Create slime left leg
         let leftLeg = new Mesh(new BoxGeometry(90, 220, 50, false), material1);
@@ -144,11 +161,17 @@ export class LibriScene extends Scene {
 
         body.setPosition(0, 0, 0);
 
-        rightHand.setPosition(130, 0, 0);
-        leftHand.setPosition(-130, 0, 0);
+        rightHandJoint.setPosition(130, 120, 0);
+        rightHand.setPosition(0, -120, 0);
 
-        rightLeg.setPosition(45, -230, 0);
-        leftLeg.setPosition(-45, -230, 0);
+        leftHandJoint.setPosition(-130, 120, 0);
+        leftHand.setPosition(0, -120, 0);
+
+        rightLegJoint.setPosition(45, -120, 0);
+        rightLeg.setPosition(0, -110, 0);
+
+        leftLegJoint.setPosition(-45, -120, 0);
+        leftLeg.setPosition(0, -110, 0);
 
         // Setting parent for all node
         originNode.setParent(scene);
@@ -164,12 +187,83 @@ export class LibriScene extends Scene {
 
         body.setParent(scene);
 
-        rightHand.setParent(body);
-        leftHand.setParent(body);
-        rightLeg.setParent(body);
-        leftLeg.setParent(body);
+        rightHandJoint.setParent(body);
+        rightHand.setParent(rightHandJoint);
+
+        leftHandJoint.setParent(body);
+        leftHand.setParent(leftHandJoint);
+
+        rightLegJoint.setParent(body);
+        rightLeg.setParent(rightLegJoint);
+
+        leftLegJoint.setParent(body);
+        leftLeg.setParent(leftLegJoint);
 
         scene.setActiveCamera(PerspectiveCamera);
         return scene;
     }
+
+    public static createScenePipe(canvas: HTMLCanvasElement | null): LibriScene {
+        if (!canvas) {
+            throw new Error("Canvas is null");
+        }
+        // Create new scene
+        const scene = new LibriScene();
+        scene.name = "PipeScene";
+
+        // Create origin node
+        const originNode = new Node();
+        originNode.name = "OriginNode";
+
+        // Create cameras
+        const orthographicCamera = new OrthographicCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            1000,
+            -1000
+        );
+        orthographicCamera.name = "OrthoCamera";
+
+        const obliqueCamera = new ObliqueCamera(
+            -canvas.width / 2,
+            canvas.width / 2,
+            canvas.height / 2,
+            -canvas.height / 2,
+            100,
+            -1000
+        );
+        obliqueCamera.name = "ObliqueCamera";
+
+        const perspectiveCamera = new PerspectiveCamera(
+            60,
+            canvas.width / canvas.height,
+            0.1,
+            20000,
+            1
+        );
+        perspectiveCamera.name = "PerspectiveCamera";
+        perspectiveCamera.setPosition(0, 0, 1000);
+        orthographicCamera.setPosition(0, 0, 650);
+
+        // Create material for meshes
+        let material1 = new BasicMaterial(Color.BLACK);
+
+        // Create pipe
+        let pipe = new Mesh(new PipeHollow(), material1);
+        pipe.name = "Pipe";
+
+        // Setting parent for all node
+        originNode.setParent(scene);
+
+        orthographicCamera.setParent(originNode);
+        obliqueCamera.setParent(originNode);
+        perspectiveCamera.setParent(originNode);
+
+        pipe.setParent(scene);
+
+        scene.setActiveCamera(PerspectiveCamera);
+        return scene;
+    }   
 }

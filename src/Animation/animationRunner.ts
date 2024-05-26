@@ -124,7 +124,7 @@ export class AnimationRunner {
     ) {
         this.isPlaying = false;
         this.isReverse = false;
-        this.isAuto = true;
+        this.isAuto = false;
         this.variables = variables;
     }
 

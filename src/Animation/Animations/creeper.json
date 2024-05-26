@@ -1,6 +1,6 @@
 {
     "name": "CreeperScene",
-    "totalFrames": 11,
+    "totalFrames": 16,
     "frames": [
         {  
             "keyframe": {
@@ -33,34 +33,49 @@
                             "translation": [-250, 50, 0]
                         },
                         "1": {
-                            "translation": [-200, 50, 0]
+                            "translation": [-210, 50, 0]
                         },
                         "2": {
-                            "translation": [-150, 50, 0]
+                            "translation": [-170, 50, 0]
                         },
                         "3": {
-                            "translation": [-100, 50, 0]
+                            "translation": [-130, 50, 0]
                         },
                         "4": {
-                            "translation": [-50, 50, 0]
+                            "translation": [-90, 50, 0]
                         },
                         "5": {
-                            "translation": [0, 50, 0]
+                            "translation": [-50, 50, 0]
                         },
                         "6": {
-                            "translation": [50, 50, 0]
+                            "translation": [-10, 50, 0]
                         },
                         "7": {
-                            "translation": [100, 50, 0]
+                            "translation": [30, 50, 0]
                         },
                         "8": {
-                            "translation": [150, 50, 0]
+                            "translation": [70, 50, 0]
                         },
                         "9": {
-                            "translation": [200, 50, 0]
+                            "translation": [110, 50, 0]
                         },
                         "10": {
-                            "translation": [250, 50, 0]
+                            "translation": [150, 50, 0]
+                        },
+                        "11": {
+                            "translation": [190, 50, 0]
+                        },
+                        "12": {
+                            "translation": [230, 50, 0]
+                        },
+                        "13": {
+                            "translation": [270, 50, 0]
+                        },
+                        "14": {
+                            "translation": [310, 50, 0]
+                        },
+                        "15": {
+                            "translation": [350, 50, 0]
                         }
                     },
                     "children": {
@@ -101,7 +116,7 @@
                                 }
                             }
                         },
-                        "leftLegFront": {
+                        "leftLegFrontLimb": {
                             "keyframe": {
                                 "0": {
                                     "rotation": [0, 0, 0.4]
@@ -110,19 +125,19 @@
                                     "rotation": [0, 0, 0.2]
                                 },
                                 "2": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, 0]
                                 },
                                 "3": {
-                                    "rotation": [0, 0, 0.2]
+                                    "rotation": [0, 0, -0.2]
                                 },
                                 "4": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, -0.4]
                                 },
                                 "5": {
-                                    "rotation": [0, 0, 0.2]
+                                    "rotation": [0, 0, -0.2]
                                 },
                                 "6": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, 0]
                                 },
                                 "7": {
                                     "rotation": [0, 0, 0.2]
@@ -134,48 +149,26 @@
                                     "rotation": [0, 0, 0.2]
                                 },
                                 "10": {
-                                    "rotation": [0, 0, 0.4]
-                                }
-                            }
-                        },
-                        "rightLegFront": {
-                            "keyframe": {
-                                "0": {
-                                    "rotation": [0, 0, 0.2]
+                                    "rotation": [0, 0, 0]
                                 },
-                                "1": {
-                                    "rotation": [0, 0, 0.4]
+                                "11": {
+                                    "rotation": [0, 0, -0.2]
                                 },
-                                "2": {
-                                    "rotation": [0, 0, 0.2]
+                                "12": {
+                                    "rotation": [0, 0, -0.4]
                                 },
-                                "3": {
-                                    "rotation": [0, 0, 0.4]
+                                "13": {
+                                    "rotation": [0, 0, -0.2]
                                 },
-                                "4": {
-                                    "rotation": [0, 0, 0.2]
+                                "14": {
+                                    "rotation": [0, 0, 0]
                                 },
-                                "5": {
-                                    "rotation": [0, 0, 0.4]
-                                },
-                                "6": {
-                                    "rotation": [0, 0, 0.2]
-                                },
-                                "7": {
-                                    "rotation": [0, 0, 0.4]
-                                },
-                                "8": {
-                                    "rotation": [0, 0, 0.2]
-                                },
-                                "9": {
-                                    "rotation": [0, 0, 0.4]
-                                },
-                                "10": {
+                                "15": {
                                     "rotation": [0, 0, 0.2]
                                 }
                             }
                         },
-                        "leftLegBack": {
+                        "rightLegFrontLimb": {
                             "keyframe": {
                                 "0": {
                                     "rotation": [0, 0, 0.2]
@@ -187,19 +180,19 @@
                                     "rotation": [0, 0, 0.2]
                                 },
                                 "3": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, 0]
                                 },
                                 "4": {
-                                    "rotation": [0, 0, 0.2]
+                                    "rotation": [0, 0, -0.2]
                                 },
                                 "5": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, -0.4]
                                 },
                                 "6": {
-                                    "rotation": [0, 0, 0.2]
+                                    "rotation": [0, 0, -0.2]
                                 },
                                 "7": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, 0]
                                 },
                                 "8": {
                                     "rotation": [0, 0, 0.2]
@@ -209,10 +202,77 @@
                                 },
                                 "10": {
                                     "rotation": [0, 0, 0.2]
+                                },
+                                "11": {
+                                    "rotation": [0, 0, 0]
+                                },
+                                "12": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "13": {
+                                    "rotation": [0, 0, -0.4]
+                                },
+                                "14": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "15": {
+                                    "rotation": [0, 0, 0]
                                 }
                             }
                         },
-                        "rightLegBack": {
+                        "leftLegBackLimb": {
+                            "keyframe": {
+                                "0": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "1": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "2": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "3": {
+                                    "rotation": [0, 0, 0]
+                                },
+                                "4": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "5": {
+                                    "rotation": [0, 0, -0.4]
+                                },
+                                "6": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "7": {
+                                    "rotation": [0, 0, 0]
+                                },
+                                "8": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "9": {
+                                    "rotation": [0, 0, 0.4]
+                                },
+                                "10": {
+                                    "rotation": [0, 0, 0.2]
+                                },
+                                "11": {
+                                    "rotation": [0, 0, 0]
+                                },
+                                "12": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "13": {
+                                    "rotation": [0, 0, -0.4]
+                                },
+                                "14": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "15": {
+                                    "rotation": [0, 0, 0]
+                                }
+                            }
+                        },
+                        "rightLegBackLimb": {
                             "keyframe": {
                                 "0": {
                                     "rotation": [0, 0, 0.4]
@@ -221,19 +281,19 @@
                                     "rotation": [0, 0, 0.2]
                                 },
                                 "2": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, 0]
                                 },
                                 "3": {
-                                    "rotation": [0, 0, 0.2]
+                                    "rotation": [0, 0, -0.2]
                                 },
                                 "4": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, -0.4]
                                 },
                                 "5": {
-                                    "rotation": [0, 0, 0.2]
+                                    "rotation": [0, 0, -0.2]
                                 },
                                 "6": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, 0]
                                 },
                                 "7": {
                                     "rotation": [0, 0, 0.2]
@@ -245,7 +305,22 @@
                                     "rotation": [0, 0, 0.2]
                                 },
                                 "10": {
-                                    "rotation": [0, 0, 0.4]
+                                    "rotation": [0, 0, 0]
+                                },
+                                "11": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "12": {
+                                    "rotation": [0, 0, -0.4]
+                                },
+                                "13": {
+                                    "rotation": [0, 0, -0.2]
+                                },
+                                "14": {
+                                    "rotation": [0, 0, 0]
+                                },
+                                "15": {
+                                    "rotation": [0, 0, 0.2]
                                 }
                             }
                         }
