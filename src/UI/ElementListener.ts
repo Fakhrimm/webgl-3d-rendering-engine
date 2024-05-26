@@ -402,7 +402,7 @@ export function elementListner(variables: Variables) {
             if (selectedNode instanceof Mesh) {
                 const material = selectedNode.material;
                 if (
-                    material instanceof BasicMaterial
+                    material instanceof BasicMaterial || material instanceof PhongMaterial
                 ) {
                     material.setAmbientColorFromRGB(r, g, b);
                     previousAmbientColor = color;
