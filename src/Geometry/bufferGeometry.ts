@@ -5,9 +5,9 @@ import { IBufferGeometry } from "../Utils/model-interface.ts";
 
 export class BufferGeometry {
     private readonly _attributes: { [name: string]: BufferAttribute };
-    private inputPosition!: Float32Array;
-    private inputIndices!: Uint16Array;
-    private inputTexcoord!: Float32Array;
+    protected inputPosition!: Float32Array;
+    protected inputIndices!: Uint16Array;
+    protected inputTexcoord!: Float32Array;
     private _indices?: BufferAttribute;
     private isSmoothShading: boolean;
 

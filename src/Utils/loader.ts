@@ -42,11 +42,9 @@ function loadJSON(file: File): Promise<any> {
 
 function getScene(data: any, nodeArray: Node[]){
     data.nodes.forEach((object: INode, index: number) => {
-        console.log("parent index", index)
         const parent = nodeArray[index];
         parent.updateWorldMatrix();
         object.children.forEach((childIndex: number) => {
-            console.log(childIndex)
             const child = nodeArray[childIndex];
             child.setParent(parent)
         });
