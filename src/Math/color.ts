@@ -22,7 +22,11 @@ export class Color {
     }
 
     getFromRGB(): { r: number; g: number; b: number } {
-        return { r: this.r, g: this.g, b: this.b };
+        return {
+            r: Math.round(this.r * 255),
+            g: Math.round(this.g * 255),
+            b: Math.round(this.b * 255),
+        };
     }
 
     setFromRGB(r: number, g: number, b: number) {
@@ -54,12 +58,16 @@ export class Color {
     public static get BLACK(): Color {
         return new Color(0, 0, 0);
     }
-    
+
     public static get DARKGREEN(): Color {
         return new Color(0, 0.25, 0.07);
     }
 
     static fromArray(u_diffuseColor: number[]) {
-        return new Color(u_diffuseColor[0], u_diffuseColor[1], u_diffuseColor[2]);
+        return new Color(
+            u_diffuseColor[0],
+            u_diffuseColor[1],
+            u_diffuseColor[2]
+        );
     }
 }

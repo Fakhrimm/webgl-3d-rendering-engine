@@ -66,6 +66,7 @@ export class ParallaxMaterial extends Material {
     }
 
     public getDiffuseColor(): Color {
+        console.log("warna", this.u_diffuseColor.get());
         return this.u_diffuseColor;
     }
 
@@ -123,8 +124,16 @@ export class ParallaxMaterial extends Material {
     }
     public static fromRaw(object: IParallaxMaterial) {
         return new ParallaxMaterial(
-            new Color(object.u_diffuseColor[0], object.u_diffuseColor[1], object.u_diffuseColor[2]),
-            new Color(object.u_specularColor[0], object.u_specularColor[1], object.u_specularColor[2]),
+            new Color(
+                object.u_diffuseColor[0],
+                object.u_diffuseColor[1],
+                object.u_diffuseColor[2]
+            ),
+            new Color(
+                object.u_specularColor[0],
+                object.u_specularColor[1],
+                object.u_specularColor[2]
+            ),
             object.u_shininess,
             object.u_ka,
             object.u_kd,
@@ -133,7 +142,7 @@ export class ParallaxMaterial extends Material {
             object.specTextureType,
             object.normalTextureType,
             object.heightTextureType,
-            object.heightScale,
-        )
+            object.heightScale
+        );
     }
 }

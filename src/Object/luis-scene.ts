@@ -65,11 +65,11 @@ export class LuisScene extends Scene {
         originNode.name = "OriginNode";
         originNode.setParent(scene);
 
-        let material1 = new BasicMaterial(Color.GREEN);
+        let material1 = new PhongMaterial();
         let material2 = new BasicMaterial(Color.BLACK);
         let material3 = new BasicMaterial(Color.DARKGREEN);
 
-        let head = new Mesh(new BoxGeometry(90, 90, 90, true), material3);
+        let head = new Mesh(new BoxGeometry(90, 90, 90, true), material1);
         head.name = "head";
 
         let body = new Mesh(new BoxGeometry(75, 170, 75, false), material3);
