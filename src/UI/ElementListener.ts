@@ -91,7 +91,7 @@ export function elementListner(variables: Variables) {
             return;
         }
         console.log(file);
-        const model = await loadScene(file, variables.getWebGL().canvas);
+        const model = await loadScene(file);
         try {
             console.log("YESS");
             Tree.resetTree(container);

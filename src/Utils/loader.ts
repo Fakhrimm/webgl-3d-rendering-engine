@@ -14,16 +14,12 @@ import {ReflectionMaterial} from "../Material/reflection-material.ts";
 import {OrthographicCamera} from "../Camera/orthographic-camera.ts";
 import {PerspectiveCamera} from "../Camera/perspective-camera.ts";
 
-export async function loadScene(file: File, canvas: HTMLCanvasElement) {
+export async function loadScene(file: File) {
     const data = await loadJSON(file);
     const geometryArray = getGeometryArray(data);
-    console.log(geometryArray);
     const materialArray = getMaterialArray(data);
-    console.log(materialArray);
     const nodeArray = getNodeArray(data, geometryArray, materialArray);
-    console.log(nodeArray);
     const scene = getScene(data, nodeArray);
-    console.log(scene);
     scenePreparation(scene);
     return scene;
 }
