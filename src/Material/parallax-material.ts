@@ -118,7 +118,7 @@ export class ParallaxMaterial extends Material {
         if (index < 0 || index > 2) {
             throw new Error("Invalid texture type, displacement max index 3");
         }
-        this.heightTextureType = (index + 20) as TextureTypes;
+        this.heightTextureType = (index + 19) as TextureTypes;
     }
 
     public getHeightScale(): number {
